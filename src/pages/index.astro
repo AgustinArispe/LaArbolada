@@ -1,0 +1,28 @@
+---
+import Footer from '@/components/Footer.astro';
+import FutureTourNote from '@/components/FutureTourNote.astro';
+import ImmersiveContact from '@/components/contact/ImmersiveContact.astro';
+import SectionedGallery from '@/components/gallery/SectionedGallery.astro';
+import { ImmersiveHero } from '@/components/hero/ImmersiveHero';
+import PropertyJourney from '@/components/journey/PropertyJourney.astro';
+import PropertyPrelude from '@/components/journey/PropertyPrelude.astro';
+import VisualPause from '@/components/journey/VisualPause.astro';
+import { ImmersiveNavbar } from '@/components/navigation/ImmersiveNavbar';
+import { heroFrames, journeys } from '@/data/journeys';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <ImmersiveNavbar client:load />
+  <main id="contenido">
+    <ImmersiveHero client:load frames={heroFrames} />
+    <PropertyPrelude />
+    <PropertyJourney journey={journeys.casa} />
+    <VisualPause />
+    <PropertyJourney journey={journeys.departamento} />
+    <SectionedGallery />
+    <FutureTourNote />
+    <ImmersiveContact />
+  </main>
+  <Footer />
+</BaseLayout>

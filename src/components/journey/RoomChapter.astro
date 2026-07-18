@@ -1,0 +1,103 @@
+---
+import { HorizontalFlipGallery } from '@/components/gallery/HorizontalFlipGallery';
+import type { CuratedImage, PropertyKey } from '@/data/journeys';
+import type { LayoutVariant } from '@/data/roomOrder';
+
+interface Props {
+  property: PropertyKey;
+  room: string;
+  roomNumber: number;
+  title: string;
+  description?: string;
+  images: CuratedImage[];
+  theme: 'warm' | 'forest';
+  layoutVariant: LayoutVariant;
+  totalRooms: number;
+  previous?: { href: string; label: string };
+  next?: { href: string; label: string };
+}
+
+const {
+  property,
+  room,
+  roomNumber,
+  title,
+  description,
+  images,
+  theme,
+  layoutVariant,
+  totalRooms,
+  previous,
+  next,
+} = Astro.props;
+
+const chapterId = `${property}-ambiente-${roomNumber}`;
+---
+
+<section
+  id={chapterId}
+  class:list={['room-chapter', `room-chapter--${theme}`, `room-chapter--${layoutVariant}`]}
+  aria-labelledby={`${chapterId}-title`}
+  data-nav-section={property}
+  data-nav-theme={theme === 'forest' ? 'dark' : 'light'}
+  data-property={property}
+  data-room={room}
+  data-room-number={roomNumber}
+  data-total-rooms={totalRooms}
+  data-image-ids={JSON.stringify(images.map((image) => image.id))}
+  data-image-rooms={JSON.stringify(images.map((image) => image.room))}
+>
+  <div class="room-chapter__inner">
+    <header class="room-chapter__header">
+      <p class="room-chapter__progress">
+        {String(roomNumber).padStart(2, '0')} de {String(totalRooms).padStart(2, '0')}
+      </p>
+      <h3 id={`${chapterId}-title`}>{title}</h3>
+      {description && <p class="room-chapter__description">{description}</p>}
+      <span class="room-chapter__image-count">
+        {images.length}
+        {images.length === 1 ? 'fotografía' : 'fotografías'}
+      </span>
+    </header>
+
+    <div class="room-chapter__gallery">
+      <HorizontalFlipGallery
+        client:visible
+        id={`${chapterId}-galeria`}
+        property={property}
+        room={room}
+        images={images}
+      />
+    </div>
+
+    <nav
+      class="room-chapter__navigation"
+      aria-label={`Navegación desde ${title}`}
+      data-current-room={room}
+    >
+      {
+        previous ? (
+          <a href={previous.href} data-direction="previous">
+            <span>Anterior</span>
+            {previous.label}
+          </a>
+        ) : (
+          <span aria-hidden="true" />
+        )
+      }
+      {
+        next ? (
+          <a href={next.href} data-direction="next">
+            <span>Siguiente</span>
+            {next.label}
+          </a>
+        ) : (
+          <a href={property === 'casa' ? '#departamento' : '#galeria'} data-direction="next">
+            <span>Continuar</span>
+            {property === 'casa' ? 'El departamento' : 'Galería por ambientes'}
+          </a>
+        )
+      }
+    </nav>
+  </div>
+</section>

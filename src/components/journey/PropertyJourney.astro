@@ -1,0 +1,92 @@
+---
+import { JourneyProgress } from '@/components/journey/JourneyProgress';
+import RoomChapter from '@/components/journey/RoomChapter.astro';
+import type { PropertyJourneyData } from '@/data/journeys';
+
+interface Props {
+  journey: PropertyJourneyData;
+}
+
+const { journey } = Astro.props;
+const focal = journey.headerImage.focalPoint ?? {
+  desktop: { x: 50, y: 50 },
+  mobile: { x: 50, y: 50 },
+};
+const progressRooms = journey.rooms.map((room) => ({
+  id: `${journey.id}-ambiente-${room.roomNumber}`,
+  title: room.title,
+}));
+---
+
+<section class="property-journey" aria-labelledby={`${journey.id}-title`}>
+  <header
+    id={journey.id}
+    class="property-journey__header"
+    data-nav-section={journey.id}
+    data-nav-theme="photo"
+    style={`--focal-desktop:${focal.desktop.x}% ${focal.desktop.y}%;--focal-mobile:${focal.mobile.x}% ${focal.mobile.y}%`}
+  >
+    <picture aria-hidden="true">
+      <source
+        media="(max-width: 767px)"
+        srcset={`${journey.headerImage.sources.mobile} 900w, ${journey.headerImage.sources.desktop} 1600w`}
+        sizes="100vw"
+      />
+      <img
+        src={journey.headerImage.sources.large ?? journey.headerImage.sources.desktop}
+        srcset={`${journey.headerImage.sources.desktop} 1600w${journey.headerImage.sources.large ? `, ${journey.headerImage.sources.large} 2400w` : ''}`}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+    <div class="property-journey__shade" aria-hidden="true"></div>
+    <div class="property-journey__copy site-shell">
+      <p>{journey.name}</p>
+      <h2 id={`${journey.id}-title`}>{journey.heading}</h2>
+      <span>{journey.introduction}</span>
+    </div>
+  </header>
+
+  <div class="property-journey__body">
+    <JourneyProgress client:visible label={journey.name} rooms={progressRooms} />
+    <div class="property-journey__chapters">
+      {
+        journey.rooms.map((room, index) => {
+          const previous = journey.rooms[index - 1];
+          const next = journey.rooms[index + 1];
+          return (
+            <RoomChapter
+              property={room.property}
+              room={room.room}
+              roomNumber={room.roomNumber}
+              title={room.title}
+              description={room.description}
+              images={room.images}
+              theme={room.theme}
+              layoutVariant={room.layoutVariant}
+              totalRooms={journey.rooms.length}
+              previous={
+                previous
+                  ? {
+                      href: `#${journey.id}-ambiente-${previous.roomNumber}`,
+                      label: previous.title,
+                    }
+                  : undefined
+              }
+              next={
+                next
+                  ? {
+                      href: `#${journey.id}-ambiente-${next.roomNumber}`,
+                      label: next.title,
+                    }
+                  : undefined
+              }
+            />
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

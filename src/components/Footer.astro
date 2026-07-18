@@ -1,0 +1,29 @@
+---
+import { contact } from '@/config/contact';
+
+const phoneReady = contact.phoneDisplay && contact.phoneDisplay !== 'TODO';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner site-shell">
+    <a href="#inicio" class="site-footer__brand">Casa La Arbolada</a>
+    <nav aria-label="Navegación del pie de página">
+      <a href="#casa">La casa</a>
+      <a href="#departamento">El departamento</a>
+      <a href="#galeria">Galería</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="site-footer__meta">
+      {
+        phoneReady && (
+          <a href={`tel:${contact.phoneDisplay.replace(/[^\d+]/g, '')}`}>
+            {contact.phoneDisplay}
+          </a>
+        )
+      }
+      <span>Alquiler temporal en Tandil</span>
+      <span>© {year}</span>
+    </div>
+  </div>
+</footer>

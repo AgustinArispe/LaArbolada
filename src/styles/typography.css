@@ -1,0 +1,43 @@
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/source-sans-3';
+
+html {
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  font-size: 112.5%;
+}
+
+body,
+button,
+a,
+input {
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+h1 {
+  font-weight: 630;
+}
+
+h2 {
+  font-weight: 600;
+}
+
+h3 {
+  font-weight: 560;
+}
+
+p {
+  max-width: 62ch;
+  text-wrap: pretty;
+}

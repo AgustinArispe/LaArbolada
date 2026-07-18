@@ -1,0 +1,33 @@
+---
+import { SectionedGalleryClient } from '@/components/gallery/SectionedGalleryClient';
+import { journeys } from '@/data/journeys';
+
+const toGroups = (property: 'casa' | 'departamento') =>
+  journeys[property].rooms.map((room) => ({
+    room: room.title,
+    anchor: `archivo-${property}-${room.roomNumber}`,
+    images: room.images,
+  }));
+---
+
+<section
+  id="galeria"
+  class="gallery-archive"
+  aria-labelledby="gallery-archive-title"
+  data-nav-section="galeria"
+  data-nav-theme="light"
+>
+  <div class="gallery-archive__intro site-shell">
+    <h2 id="gallery-archive-title">Galería por ambientes</h2>
+    <p>
+      Cada fotografía permanece dentro de su propiedad y del ambiente al que pertenece.
+    </p>
+  </div>
+  <div class="site-shell">
+    <SectionedGalleryClient
+      client:visible
+      casa={toGroups('casa')}
+      departamento={toGroups('departamento')}
+    />
+  </div>
+</section>

@@ -1,0 +1,22 @@
+---
+import { journeys } from '@/data/journeys';
+
+const image = journeys.casa.rooms[11].images[0];
+---
+
+<section
+  class="visual-pause"
+  aria-label="El arroyo en el parque"
+  data-nav-section="casa"
+  data-nav-theme="photo"
+>
+  <img
+    src={image.sources.large ?? image.sources.desktop}
+    srcset={`${image.sources.mobile} 900w, ${image.sources.desktop} 1600w${image.sources.large ? `, ${image.sources.large} 2400w` : ''}`}
+    sizes="100vw"
+    alt={image.alt}
+    loading="lazy"
+    decoding="async"
+  />
+  <p>El arroyo atraviesa el parque.</p>
+</section>

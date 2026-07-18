@@ -1,0 +1,55 @@
+@import 'tailwindcss';
+
+:root {
+  --cream: #fff9f1;
+  --true-white: #ffffff;
+  --forest: #0b392e;
+  --emerald: #176149;
+  --green-soft: #75a98b;
+  --burgundy: #982f4b;
+  --terracotta: #c96143;
+  --charcoal: #17201c;
+  --ink-muted: #3f5149;
+  --warm-muted: #dce6df;
+  --hairline-dark: rgb(11 57 46 / 18%);
+  --hairline-light: rgb(255 249 241 / 24%);
+  --overlay-strong: rgb(7 31 25 / 74%);
+  --overlay-soft: rgb(7 31 25 / 34%);
+
+  --green-deep: var(--forest);
+  --green-english: var(--emerald);
+  --wine: var(--burgundy);
+  --warm-white: var(--cream);
+
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-sans: 'Source Sans 3 Variable', Arial, sans-serif;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --site-gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --section-space: clamp(4.5rem, 8vw, 8rem);
+  --content-max: 1500px;
+  --nav-height: 76px;
+  --radius-photo: clamp(1.5rem, 2vw, 2rem);
+  --radius-photo-mobile: 1.25rem;
+  --radius-panel: 1.25rem;
+  --radius-button: 0.8rem;
+  --shadow-photo: 0 2rem 5.5rem rgb(11 57 46 / 14%);
+
+  --z-content: 1;
+  --z-sticky: 20;
+  --z-nav: 40;
+  --z-overlay: 60;
+  --z-modal: 70;
+}
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-editorial: var(--font-display);
+  --color-primary: var(--forest);
+  --color-accent: var(--burgundy);
+  --color-background: var(--cream);
+  --color-foreground: var(--charcoal);
+}

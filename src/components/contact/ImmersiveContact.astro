@@ -1,0 +1,78 @@
+---
+import { Mail, MessageCircle, Phone } from 'lucide-react';
+import { contact } from '@/config/contact';
+import { journeys } from '@/data/journeys';
+
+const background = journeys.casa.rooms[11].images[2];
+const whatsappNumber = contact.whatsappNumber.replace(/\D/g, '');
+const whatsappReady = /^\d{8,}$/.test(whatsappNumber);
+const emailReady = /^\S+@\S+\.\S+$/.test(contact.email);
+const phoneReady = Boolean(contact.phoneDisplay && contact.phoneDisplay !== 'TODO');
+const location =
+  contact.location && contact.location !== 'TODO' ? contact.location : 'Tandil, Buenos Aires';
+const whatsappUrl = whatsappReady
+  ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(contact.whatsappDefaultMessage)}`
+  : null;
+const missing = [
+  !whatsappReady && 'WhatsApp',
+  !emailReady && 'correo',
+  !phoneReady && 'teléfono',
+].filter(Boolean);
+---
+
+<section
+  id="contacto"
+  class="immersive-contact"
+  aria-labelledby="contact-title"
+  data-nav-section="contacto"
+  data-nav-theme="photo"
+>
+  <img
+    src={background.sources.large ?? background.sources.desktop}
+    srcset={`${background.sources.mobile} 900w, ${background.sources.desktop} 1600w${background.sources.large ? `, ${background.sources.large} 2400w` : ''}`}
+    sizes="100vw"
+    alt=""
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="immersive-contact__shade" aria-hidden="true"></div>
+  <div class="immersive-contact__content site-shell">
+    <h2 id="contact-title">Consultar disponibilidad</h2>
+    <p>Casa y departamento para alquiler temporal en Tandil.</p>
+    <div class="immersive-contact__links">
+      {
+        whatsappUrl && (
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+            <MessageCircle size={21} strokeWidth={1.5} aria-hidden="true" />
+            WhatsApp
+          </a>
+        )
+      }
+      {
+        emailReady && (
+          <a href={`mailto:${contact.email}`}>
+            <Mail size={21} strokeWidth={1.5} aria-hidden="true" />
+            Correo
+          </a>
+        )
+      }
+      {
+        phoneReady && (
+          <a href={`tel:${contact.phoneDisplay.replace(/[^\d+]/g, '')}`}>
+            <Phone size={21} strokeWidth={1.5} aria-hidden="true" />
+            Teléfono
+          </a>
+        )
+      }
+    </div>
+    <span>{location}</span>
+  </div>
+</section>
+
+{
+  import.meta.env.DEV && missing.length > 0 && (
+    <script is:inline define:vars={{ missing }}>
+      console.warn(`[Casa La Arbolada] Datos de contacto sin configurar: ${missing.join(', ')}`);
+    </script>
+  )
+}

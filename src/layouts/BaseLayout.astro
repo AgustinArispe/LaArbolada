@@ -1,0 +1,60 @@
+---
+import '@/styles/globals.css';
+import { site } from '@/config/site';
+import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = site.title, description = site.description } = Astro.props;
+const canonical = site.canonicalUrl
+  ? new URL(Astro.url.pathname, site.canonicalUrl).toString()
+  : undefined;
+const socialImage = site.canonicalUrl
+  ? new URL(site.socialImage, site.canonicalUrl).toString()
+  : site.socialImage;
+const lodgingJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['LodgingBusiness', 'TouristAccommodation'],
+  name: site.name,
+  description: site.description,
+  image: socialImage,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Tandil',
+    addressRegion: 'Buenos Aires',
+    addressCountry: 'AR',
+  },
+};
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0B392E" />
+    <link rel="preload" href={frauncesUrl} as="font" type="font/woff2" crossorigin="anonymous" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:locale" content="es_AR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(lodgingJsonLd)} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <slot />
+  </body>
+</html>
