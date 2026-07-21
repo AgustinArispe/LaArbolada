@@ -514,10 +514,10 @@ export const propertyImages: PropertyImage[] = [
     "orientation": "landscape",
     "alt": "Living de Casa La Arbolada.",
     "sources": {
-      "thumbnail": "/images/casa/livingcasa3-thumbnail.webp",
-      "mobile": "/images/casa/livingcasa3-mobile.webp",
-      "desktop": "/images/casa/livingcasa3-desktop.webp",
-      "large": "/images/casa/livingcasa3-large.webp"
+      "thumbnail": "/images/nuevas/living/living-2-thumbnail.webp",
+      "mobile": "/images/nuevas/living/living-2-mobile.webp",
+      "desktop": "/images/nuevas/living/living-2-desktop.webp",
+      "large": "/images/nuevas/living/living-2-large.webp"
     }
   },
   {
@@ -532,10 +532,10 @@ export const propertyImages: PropertyImage[] = [
     "orientation": "landscape",
     "alt": "Living de Casa La Arbolada.",
     "sources": {
-      "thumbnail": "/images/casa/livingcasa-thumbnail.webp",
-      "mobile": "/images/casa/livingcasa-mobile.webp",
-      "desktop": "/images/casa/livingcasa-desktop.webp",
-      "large": "/images/casa/livingcasa-large.webp"
+      "thumbnail": "/images/nuevas/living/living-1-thumbnail.webp",
+      "mobile": "/images/nuevas/living/living-1-mobile.webp",
+      "desktop": "/images/nuevas/living/living-1-desktop.webp",
+      "large": "/images/nuevas/living/living-1-large.webp"
     }
   },
   {
@@ -550,10 +550,10 @@ export const propertyImages: PropertyImage[] = [
     "orientation": "landscape",
     "alt": "Living de Casa La Arbolada.",
     "sources": {
-      "thumbnail": "/images/casa/mesalivingcasa4-thumbnail.webp",
-      "mobile": "/images/casa/mesalivingcasa4-mobile.webp",
-      "desktop": "/images/casa/mesalivingcasa4-desktop.webp",
-      "large": "/images/casa/mesalivingcasa4-large.webp"
+      "thumbnail": "/images/nuevas/living/living-3-thumbnail.webp",
+      "mobile": "/images/nuevas/living/living-3-mobile.webp",
+      "desktop": "/images/nuevas/living/living-3-desktop.webp",
+      "large": "/images/nuevas/living/living-3-large.webp"
     }
   },
   {
