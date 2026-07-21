@@ -1,6 +1,6 @@
 # Casa La Arbolada
 
-Sitio editorial para el alquiler temporal de Casa La Arbolada y su departamento independiente, en Tandil.
+Sitio editorial para el alquiler temporal de Casa La Arbolada y su alojamiento independiente, en Tandil.
 
 ## Stack
 

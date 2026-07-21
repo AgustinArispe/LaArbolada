@@ -102,19 +102,19 @@ export const imageOverrides: Record<string, ImageOverride> = {
   'departamento-banio1dpto': {
     room: 'Baño',
     order: 1,
-    alt: 'Baño del departamento independiente.',
+    alt: 'Baño del alojamiento independiente.',
     note: 'Se unifica con banioDPTO2 en un único capítulo Baño.',
   },
   'departamento-baniodpto2': {
     room: 'Baño',
     order: 2,
-    alt: 'Ducha y sanitarios del baño del departamento.',
+    alt: 'Ducha y sanitarios del alojamiento independiente.',
     note: 'Se unifica con banio1DPTO en un único capítulo Baño.',
   },
   'departamento-verdedpto1': {
     room: 'Acceso y entorno',
     order: 1,
-    alt: 'Vista del parque al ingresar al departamento.',
+    alt: 'Vista del parque al ingresar al alojamiento independiente.',
     focalPoint: {
       desktop: { x: 53, y: 53 },
       mobile: { x: 53, y: 55 },
@@ -124,7 +124,7 @@ export const imageOverrides: Record<string, ImageOverride> = {
   'departamento-verdedpto2': {
     room: 'Entorno verde',
     order: 1,
-    alt: 'Parque arbolado junto al departamento.',
+    alt: 'Parque arbolado junto al alojamiento independiente.',
     note: 'Se reserva para el cierre del recorrido por el departamento.',
   },
 };

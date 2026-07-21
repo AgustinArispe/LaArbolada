@@ -74,6 +74,13 @@ async function inspectViewport(viewport) {
       .map(
         (element) => element.getAttribute('aria-label') || element.textContent?.trim() || 'button',
       );
+    const overflowing = [...document.querySelectorAll('body *')]
+      .filter((element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.width > 0 && (rect.left < -1 || rect.right > innerWidth + 1);
+      })
+      .map((element) => `${element.tagName.toLowerCase()}.${element.className || ''}`)
+      .slice(0, 20);
     return {
       viewport: `${innerWidth}x${innerHeight}`,
       overflow: Math.ceil(root.scrollWidth - root.clientWidth),
@@ -85,6 +92,7 @@ async function inspectViewport(viewport) {
       tooSmall,
       tooSmallControls,
       undersizedButtons,
+      overflowing,
       leakedPlaceholder: document.body.innerText.includes('Espacio 5'),
     };
   });
@@ -115,10 +123,16 @@ async function inspectViewport(viewport) {
   await context.close();
 }
 
-if (!process.env.INTERACTION_ONLY) {
+if (!process.env.INTERACTION_ONLY && !process.env.SKIP_MATRIX) {
   for (const viewport of requestedViewports) {
     await inspectViewport(viewport);
   }
+}
+
+if (process.env.MATRIX_ONLY) {
+  await browser.close();
+  console.log(JSON.stringify({ measurements, failures }, null, 2));
+  process.exit(failures.length ? 1 : 0);
 }
 
 async function warmLazyImages(page) {
@@ -143,7 +157,9 @@ async function warmLazyImages(page) {
   await page.evaluate(async () => {
     const visibleImages = [...document.images].filter((image) => image.getClientRects().length > 0);
     await Promise.allSettled(
-      visibleImages.map((image) => (typeof image.decode === 'function' ? image.decode() : undefined)),
+      visibleImages.map((image) =>
+        typeof image.decode === 'function' ? image.decode() : undefined,
+      ),
     );
   });
 }
@@ -205,7 +221,9 @@ async function captureSet(width, height, suffix) {
   await page.evaluate(() => {
     document.documentElement.style.scrollBehavior = 'auto';
   });
-  await warmLazyImages(page);
+  if (!process.env.FOCUSED_CAPTURE) {
+    await warmLazyImages(page);
+  }
   await page.waitForTimeout(700);
 
   const imageState = await page.evaluate(() => ({
@@ -214,23 +232,24 @@ async function captureSet(width, height, suffix) {
       .map((image) => image.currentSrc || image.src),
     broken: [...document.images]
       .filter(
-        (image) =>
-          image.complete && image.naturalWidth === 0 && image.getClientRects().length > 0,
+        (image) => image.complete && image.naturalWidth === 0 && image.getClientRects().length > 0,
       )
       .map((image) => image.currentSrc || image.src),
   }));
-  if (imageState.pending.length) {
+  if (!process.env.FOCUSED_CAPTURE && imageState.pending.length) {
     failures.push(`pending images ${width}x${height}: ${imageState.pending.join(', ')}`);
   }
   if (imageState.broken.length) {
     failures.push(`broken images ${width}x${height}: ${imageState.broken.join(', ')}`);
   }
 
-  const homeScreenshot = path.join(outputDirectory, `home-${suffix}.png`);
-  if (suffix === 'mobile-390') {
-    await captureLongMobilePage(page, homeScreenshot, width, height);
-  } else {
-    await page.screenshot({ path: homeScreenshot, fullPage: true });
+  if (!process.env.FOCUSED_CAPTURE) {
+    const homeScreenshot = path.join(outputDirectory, `home-${suffix}.png`);
+    if (suffix === 'mobile-390') {
+      await captureLongMobilePage(page, homeScreenshot, width, height);
+    } else {
+      await page.screenshot({ path: homeScreenshot, fullPage: true });
+    }
   }
   await page.evaluate(() => scrollTo(0, 0));
   await page.waitForTimeout(700);
@@ -266,17 +285,31 @@ async function captureSet(width, height, suffix) {
   await page.evaluate((top) => scrollTo({ top, behavior: 'instant' }), roomTop);
   await page.waitForTimeout(700);
   await page.screenshot({ path: path.join(outputDirectory, `room-${suffix}.png`) });
-  const galleryTop = await page.locator('#galeria').evaluate((element) => {
+  const independentRoomTop = await page.locator('#departamento-ambiente-4').evaluate((element) => {
     const navHeight = Number.parseFloat(
       getComputedStyle(document.documentElement).getPropertyValue('--nav-height'),
     );
     return element.getBoundingClientRect().top + scrollY - navHeight - 24;
   });
-  await page.evaluate((top) => scrollTo({ top: top + 140, behavior: 'instant' }), galleryTop);
+  await page.evaluate(
+    (top) => scrollTo({ top: top + 140, behavior: 'instant' }),
+    independentRoomTop,
+  );
   await page.waitForTimeout(120);
-  await page.evaluate((top) => scrollTo({ top, behavior: 'instant' }), galleryTop);
+  await page.evaluate((top) => scrollTo({ top, behavior: 'instant' }), independentRoomTop);
   await page.waitForTimeout(700);
-  await page.screenshot({ path: path.join(outputDirectory, `gallery-${suffix}.png`) });
+  await page.screenshot({ path: path.join(outputDirectory, `independent-room-${suffix}.png`) });
+  const locationTop = await page.locator('#ubicacion').evaluate((element) => {
+    const navHeight = Number.parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue('--nav-height'),
+    );
+    return element.getBoundingClientRect().top + scrollY - navHeight - 24;
+  });
+  await page.evaluate((top) => scrollTo({ top: top + 140, behavior: 'instant' }), locationTop);
+  await page.waitForTimeout(120);
+  await page.evaluate((top) => scrollTo({ top, behavior: 'instant' }), locationTop);
+  await page.waitForTimeout(700);
+  await page.screenshot({ path: path.join(outputDirectory, `location-${suffix}.png`) });
 
   await context.close();
 }
@@ -333,7 +366,7 @@ const journeyIntegrity = await interactionPage.evaluate(() => {
       if (Number(chapter.dataset.roomNumber) !== number) {
         issues.push(`${property} ${title}: número ${chapter.dataset.roomNumber}`);
       }
-      if (!progress?.startsWith(String(number).padStart(2, '0'))) {
+      if (!progress?.includes(String(number).padStart(2, '0'))) {
         issues.push(`${property} ${title}: progreso ${progress}`);
       }
       if (gallery?.dataset.room !== title) {
@@ -362,9 +395,14 @@ if (journeyIntegrity.length) {
 const mobileJourneyProgress = await interactionPage
   .locator('.journey-progress')
   .first()
-  .evaluate((element) => getComputedStyle(element).display);
-if (mobileJourneyProgress !== 'none') {
-  failures.push(`mobile journey progress should not be sticky/visible: ${mobileJourneyProgress}`);
+  .evaluate((element) => ({
+    display: getComputedStyle(element).display,
+    position: getComputedStyle(element).position,
+  }));
+if (mobileJourneyProgress.display === 'none' || mobileJourneyProgress.position === 'sticky') {
+  failures.push(
+    `mobile journey selector should be visible and non-sticky: ${JSON.stringify(mobileJourneyProgress)}`,
+  );
 }
 
 const menuButton = interactionPage.getByRole('button', { name: /abrir men/i });
@@ -406,7 +444,7 @@ await interactionPage.waitForTimeout(700);
 const galleryStatus = await interactionPage
   .locator('#casa-ambiente-3 .horizontal-gallery__status span')
   .textContent();
-if (!galleryStatus?.includes('2 de 4'))
+if (!galleryStatus?.includes('02 / 04'))
   failures.push(`flip gallery did not advance: ${galleryStatus}`);
 const galleryRoom = await interactionPage
   .locator('#casa-ambiente-3 .horizontal-gallery')
@@ -418,21 +456,23 @@ if (galleryRoom !== 'Living y comedor' || visibleImageRoom !== 'Living y comedor
   failures.push(`living gallery desynchronized: ${galleryRoom} / ${visibleImageRoom}`);
 }
 
-await interactionPage.locator('#galeria').scrollIntoViewIfNeeded();
+await interactionPage.locator('#ubicacion').scrollIntoViewIfNeeded();
 await interactionPage.waitForTimeout(300);
 await interactionPage.evaluate(() => scrollBy({ top: -120, behavior: 'instant' }));
 await interactionPage.waitForTimeout(400);
 const activeNav = await interactionPage
   .locator('.immersive-nav a[aria-current="location"]')
   .textContent();
-if (activeNav?.trim() !== 'Galería') failures.push(`navbar active section is ${activeNav}`);
+if (activeNav?.trim() !== 'Ubicación') failures.push(`navbar active section is ${activeNav}`);
 const visibleNavbar = await interactionPage.locator('.immersive-nav').evaluate((element) => {
   const rect = element.getBoundingClientRect();
   return rect.bottom > 0 && getComputedStyle(element).visibility !== 'hidden';
 });
 if (!visibleNavbar) failures.push('navbar did not return after upward scroll');
-const archiveImage = interactionPage.locator('#galeria .archive-room button').first();
-await archiveImage.click();
+const fullscreenButton = interactionPage
+  .locator('#casa-ambiente-3')
+  .getByRole('button', { name: /pantalla completa/i });
+await fullscreenButton.click();
 await interactionPage.getByRole('dialog').waitFor();
 await interactionPage.keyboard.press('ArrowRight');
 await interactionPage.keyboard.press('Escape');

@@ -1,6 +1,7 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowDownRight } from 'lucide-react';
 import type { HeroFrame } from '@/data/journeys';
 
 type Props = {
@@ -25,11 +26,35 @@ export function ImmersiveHero({ frames }: Props) {
     const context = gsap.context(() => {
       const frameElements = gsap.utils.toArray<HTMLElement>('[data-hero-frame]');
       const frameImages = gsap.utils.toArray<HTMLElement>('[data-hero-image]');
-      const copyElements = gsap.utils.toArray<HTMLElement>('[data-hero-copy]');
+      const titleLines = gsap.utils.toArray<HTMLElement>('[data-hero-line]');
+      const supportingCopy = gsap.utils.toArray<HTMLElement>('[data-hero-support]');
+      const copy = sectionRef.current?.querySelector<HTMLElement>('[data-hero-copy]');
+      const scrim = sectionRef.current?.querySelector<HTMLElement>('[data-hero-scrim]');
       const progress = sectionRef.current?.querySelector<HTMLElement>('[data-hero-progress]');
 
       gsap.set(frameElements.slice(1), { clipPath: 'inset(0 0 0 100%)' });
-      gsap.set(copyElements.slice(1), { autoAlpha: 0, yPercent: 30 });
+      gsap.fromTo(
+        titleLines,
+        { transform: 'translateY(112%)' },
+        {
+          transform: 'translateY(0%)',
+          duration: 0.82,
+          stagger: 0.08,
+          ease: 'power4.out',
+        },
+      );
+      gsap.fromTo(
+        supportingCopy,
+        { autoAlpha: 0, clipPath: 'inset(0 100% 0 0)' },
+        {
+          autoAlpha: 1,
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 0.72,
+          stagger: 0.07,
+          delay: 0.24,
+          ease: 'power3.out',
+        },
+      );
 
       const timeline = gsap.timeline({
         defaults: { ease: 'none' },
@@ -51,17 +76,20 @@ export function ImmersiveHero({ frames }: Props) {
         );
       }
 
+      if (scrim) {
+        timeline.fromTo(scrim, { opacity: 0.72 }, { opacity: 1, duration: 3.8 }, 0);
+      }
+
+      if (copy) {
+        timeline.to(copy, { autoAlpha: 0.52, transform: 'translateY(-1.25rem)', duration: 1 }, 2.5);
+      }
+
       timeline
         .to(frameImages[0], { transform: 'scale(1.055)', duration: 1.1 }, 0)
-        .to(copyElements[0], { autoAlpha: 0, yPercent: -28, duration: 0.3 }, 0.52)
         .to(frameElements[1], { clipPath: 'inset(0 0 0 0%)', duration: 0.65 }, 0.72)
         .to(frameImages[1], { transform: 'scale(1.05)', duration: 1.1 }, 0.72)
-        .to(copyElements[1], { autoAlpha: 1, yPercent: 0, duration: 0.3 }, 0.95)
-        .to(copyElements[1], { autoAlpha: 0, yPercent: -26, duration: 0.28 }, 1.45)
         .to(frameElements[2], { clipPath: 'inset(0 0 0 0%)', duration: 0.65 }, 1.63)
         .to(frameImages[2], { transform: 'scale(1.05)', duration: 1.1 }, 1.63)
-        .to(copyElements[2], { autoAlpha: 1, yPercent: 0, duration: 0.35 }, 1.88)
-        .to(copyElements[2], { autoAlpha: 0, yPercent: -22, duration: 0.3 }, 2.48)
         .to(frameElements[3], { clipPath: 'inset(0 0 0 0%)', duration: 0.7 }, 2.65)
         .to(frameImages[3], { transform: 'scale(1.045)', duration: 1.15 }, 2.65);
     }, sectionRef);
@@ -127,13 +155,24 @@ export function ImmersiveHero({ frames }: Props) {
             );
           })}
         </div>
-        <div className="immersive-hero__scrim" aria-hidden="true" />
-        <div className="immersive-hero__copy">
-          <h1 id="hero-title" data-hero-copy>
-            Casa La Arbolada
+        <div className="immersive-hero__scrim" data-hero-scrim aria-hidden="true" />
+        <div className="immersive-hero__copy" data-hero-copy>
+          <h1 id="hero-title">
+            <span className="immersive-hero__title-line">
+              <span data-hero-line>Casa</span>
+            </span>
+            <span className="immersive-hero__title-line">
+              <span data-hero-line>La Arbolada</span>
+            </span>
           </h1>
-          <p data-hero-copy>Alquiler temporal en Tandil.</p>
-          <p data-hero-copy>Una casa y un departamento independiente rodeados de naturaleza.</p>
+          <div className="immersive-hero__support">
+            <p data-hero-support>Una estadía entre piedra, árboles y agua.</p>
+            <p data-hero-support>Alquiler temporal en Tandil.</p>
+            <a href="#casa" data-hero-support>
+              Descubrir los espacios
+              <ArrowDownRight size={20} strokeWidth={1.6} aria-hidden="true" />
+            </a>
+          </div>
         </div>
         <div className="immersive-hero__progress" aria-hidden="true">
           <span data-hero-progress />

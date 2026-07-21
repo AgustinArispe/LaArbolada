@@ -94,18 +94,39 @@ test('la foto visible y el contador del Living avanzan juntos', async ({ page })
     'data-image-room',
     'Living y comedor',
   );
-  await expect(chapter.locator('.horizontal-gallery__status')).toContainText('1 de 4');
+  await expect(chapter.locator('.horizontal-gallery__status')).toContainText('01 / 04');
 
   await chapter.getByRole('button', { name: /siguiente/i }).click();
-  await expect(chapter.locator('.horizontal-gallery__status')).toContainText('2 de 4');
+  await expect(chapter.locator('.horizontal-gallery__status')).toContainText('02 / 04');
   await expect(chapter.locator('.horizontal-gallery__image')).toHaveAttribute(
     'data-image-room',
     'Living y comedor',
   );
 });
 
-test('el progreso global no tapa contenido en móvil', async ({ page }) => {
+test('el selector móvil es horizontal, visible y no sticky', async ({ page }) => {
   await page.goto(baseUrl, { waitUntil: 'networkidle' });
-  await expect(page.locator('.journey-progress').first()).toBeHidden();
+  const selector = page.locator('.journey-progress').first();
+  await expect(selector).toBeVisible();
+  expect(await selector.evaluate((element) => getComputedStyle(element).position)).not.toBe(
+    'sticky',
+  );
   await expect(page.locator('#casa-ambiente-3 .room-chapter__progress')).toBeVisible();
+});
+
+test('WhatsApp usa una única URL configurada', async ({ page }) => {
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+  const url =
+    'https://wa.me/5492494567808?text=Hola%2C%20quisiera%20consultar%20disponibilidad%20en%20Casa%20La%20Arbolada.';
+  await expect(page.locator('.whatsapp-bubble')).toHaveAttribute('href', url);
+  await expect(page.locator('.contact-panel__action')).toHaveAttribute('href', url);
+});
+
+test('cada ambiente conserva apertura en pantalla completa', async ({ page }) => {
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+  const chapter = page.locator('#casa-ambiente-3');
+  await chapter.scrollIntoViewIfNeeded();
+  await chapter.getByRole('button', { name: /pantalla completa/i }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.keyboard.press('Escape');
 });

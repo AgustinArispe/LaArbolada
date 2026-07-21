@@ -38,7 +38,7 @@ const chapterId = `${property}-ambiente-${roomNumber}`;
   id={chapterId}
   class:list={['room-chapter', `room-chapter--${theme}`, `room-chapter--${layoutVariant}`]}
   aria-labelledby={`${chapterId}-title`}
-  data-nav-section={property}
+  data-nav-section={property === 'casa' ? 'casa' : 'alojamiento-independiente'}
   data-nav-theme={theme === 'forest' ? 'dark' : 'light'}
   data-property={property}
   data-room={room}
@@ -50,19 +50,19 @@ const chapterId = `${property}-ambiente-${roomNumber}`;
   <div class="room-chapter__inner">
     <header class="room-chapter__header">
       <p class="room-chapter__progress">
-        {String(roomNumber).padStart(2, '0')} de {String(totalRooms).padStart(2, '0')}
+        Ambiente {String(roomNumber).padStart(2, '0')} / {String(totalRooms).padStart(2, '0')}
       </p>
       <h3 id={`${chapterId}-title`}>{title}</h3>
       {description && <p class="room-chapter__description">{description}</p>}
       <span class="room-chapter__image-count">
-        {images.length}
+        {images.length}{' '}
         {images.length === 1 ? 'fotografía' : 'fotografías'}
       </span>
     </header>
 
     <div class="room-chapter__gallery">
       <HorizontalFlipGallery
-        client:visible
+        client:visible={{ rootMargin: '480px' }}
         id={`${chapterId}-galeria`}
         property={property}
         room={room}
@@ -92,9 +92,12 @@ const chapterId = `${property}-ambiente-${roomNumber}`;
             {next.label}
           </a>
         ) : (
-          <a href={property === 'casa' ? '#departamento' : '#galeria'} data-direction="next">
+          <a
+            href={property === 'casa' ? '#alojamiento-independiente' : '#ubicacion'}
+            data-direction="next"
+          >
             <span>Continuar</span>
-            {property === 'casa' ? 'El departamento' : 'Galería por ambientes'}
+            {property === 'casa' ? 'Alojamiento independiente' : 'Ubicación y cómo llegar'}
           </a>
         )
       }

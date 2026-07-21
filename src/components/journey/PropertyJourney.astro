@@ -8,10 +8,6 @@ interface Props {
 }
 
 const { journey } = Astro.props;
-const focal = journey.headerImage.focalPoint ?? {
-  desktop: { x: 50, y: 50 },
-  mobile: { x: 50, y: 50 },
-};
 const progressRooms = journey.rooms.map((room) => ({
   id: `${journey.id}-ambiente-${room.roomNumber}`,
   title: room.title,
@@ -20,28 +16,14 @@ const progressRooms = journey.rooms.map((room) => ({
 
 <section class="property-journey" aria-labelledby={`${journey.id}-title`}>
   <header
-    id={journey.id}
-    class="property-journey__header"
-    data-nav-section={journey.id}
-    data-nav-theme="photo"
-    style={`--focal-desktop:${focal.desktop.x}% ${focal.desktop.y}%;--focal-mobile:${focal.mobile.x}% ${focal.mobile.y}%`}
+    id={journey.anchorId}
+    class:list={['property-journey__header', `property-journey__header--${journey.id}`]}
+    data-nav-section={journey.anchorId}
+    data-nav-theme={journey.id === 'casa' ? 'light' : 'dark'}
   >
-    <picture aria-hidden="true">
-      <source
-        media="(max-width: 767px)"
-        srcset={`${journey.headerImage.sources.mobile} 900w, ${journey.headerImage.sources.desktop} 1600w`}
-        sizes="100vw"
-      />
-      <img
-        src={journey.headerImage.sources.large ?? journey.headerImage.sources.desktop}
-        srcset={`${journey.headerImage.sources.desktop} 1600w${journey.headerImage.sources.large ? `, ${journey.headerImage.sources.large} 2400w` : ''}`}
-        sizes="100vw"
-        alt=""
-        loading="lazy"
-        decoding="async"
-      />
-    </picture>
-    <div class="property-journey__shade" aria-hidden="true"></div>
+    <span class="property-journey__chapter" aria-hidden="true">
+      {journey.id === 'casa' ? '01' : '02'}
+    </span>
     <div class="property-journey__copy site-shell">
       <p>{journey.name}</p>
       <h2 id={`${journey.id}-title`}>{journey.heading}</h2>

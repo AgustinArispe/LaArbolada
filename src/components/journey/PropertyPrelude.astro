@@ -1,13 +1,3 @@
----
-import { journeys } from '@/data/journeys';
-import { coverFocalPoints } from '@/data/imageOverrides';
-
-const house = journeys.casa.rooms[1].images[3];
-const apartment = journeys.departamento.headerImage;
-const houseFocal = coverFocalPoints[house.id];
-const apartmentFocal = apartment.focalPoint;
----
-
 <section
   class="property-prelude"
   data-nav-section="inicio"
@@ -15,42 +5,17 @@ const apartmentFocal = apartment.focalPoint;
   aria-labelledby="prelude-title"
 >
   <div class="property-prelude__intro site-shell">
-    <h2 id="prelude-title">Una casa rodeada de árboles, piedra y agua.</h2>
-    <p>
-      En el mismo entorno, un departamento independiente permite elegir otra forma de hospedarse.
-    </p>
-  </div>
-
-  <div id="alojamientos" class="property-selector" aria-label="Elegir alojamiento">
-    <a
-      href="#casa"
-      class="property-selector__option"
-      style={`--focal-desktop:${houseFocal.desktop.x}% ${houseFocal.desktop.y}%;--focal-mobile:${houseFocal.mobile.x}% ${houseFocal.mobile.y}%`}
-    >
-      <img
-        src={house.sources.desktop}
-        srcset={`${house.sources.mobile} 900w, ${house.sources.desktop} 1600w${house.sources.large ? `, ${house.sources.large} 2400w` : ''}`}
-        sizes="(max-width: 767px) 100vw, 50vw"
-        alt=""
-        loading="lazy"
-        decoding="async"
-      />
-      <span>La casa</span>
-    </a>
-    <a
-      href="#departamento"
-      class="property-selector__option"
-      style={`--focal-desktop:${apartmentFocal?.desktop.x ?? 50}% ${apartmentFocal?.desktop.y ?? 50}%;--focal-mobile:${apartmentFocal?.mobile.x ?? 50}% ${apartmentFocal?.mobile.y ?? 50}%`}
-    >
-      <img
-        src={apartment.sources.desktop}
-        srcset={`${apartment.sources.mobile} 900w, ${apartment.sources.desktop} 1600w${apartment.sources.large ? `, ${apartment.sources.large} 2400w` : ''}`}
-        sizes="(max-width: 767px) 100vw, 50vw"
-        alt=""
-        loading="lazy"
-        decoding="async"
-      />
-      <span>El departamento</span>
-    </a>
+    <div class="property-prelude__line" aria-hidden="true"></div>
+    <h2 id="prelude-title">
+      La Arbolada reúne una casa principal y un alojamiento independiente dentro de un entorno de
+      parque, piedra y arroyo.
+    </h2>
+    <div class="property-prelude__copy">
+      <p>Cada espacio puede recorrerse ambiente por ambiente antes de consultar disponibilidad.</p>
+      <div class="property-prelude__gallery-copy" aria-labelledby="gallery-intro-title">
+        <h3 id="gallery-intro-title">Recorré cada ambiente</h3>
+        <p>Seleccioná un espacio y descubrilo fotografía por fotografía.</p>
+      </div>
+    </div>
   </div>
 </section>

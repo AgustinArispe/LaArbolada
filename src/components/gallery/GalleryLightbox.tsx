@@ -54,7 +54,9 @@ export function GalleryLightbox({ images, selected, onOpenChange }: Props) {
         <Dialog.Content className="gallery-dialog__content" aria-describedby={undefined}>
           <Dialog.Title className="sr-only">{image.room}</Dialog.Title>
           <div className="gallery-dialog__top">
-            <span>{image.property === 'casa' ? 'Casa La Arbolada' : 'El departamento'}</span>
+            <span>
+              {image.property === 'casa' ? 'Casa principal' : 'Alojamiento independiente'}
+            </span>
             <Dialog.Close asChild>
               <button type="button" className="gallery-dialog__close" aria-label="Cerrar galería">
                 <X size={23} strokeWidth={1.5} aria-hidden="true" />

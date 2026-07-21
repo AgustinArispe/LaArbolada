@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 
 type RoomLink = {
   id: string;
@@ -12,6 +12,8 @@ type Props = {
 
 export function JourneyProgress({ label, rooms }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const activeLinkRef = useRef<HTMLAnchorElement>(null);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const elements = rooms
@@ -34,6 +36,17 @@ export function JourneyProgress({ label, rooms }: Props) {
     return () => observer.disconnect();
   }, [rooms]);
 
+  useEffect(() => {
+    if (window.innerWidth >= 1024) return;
+    const nav = navRef.current;
+    const active = activeLinkRef.current;
+    if (!nav || !active) return;
+    nav.scrollTo({
+      left: active.offsetLeft - (nav.clientWidth - active.clientWidth) / 2,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    });
+  }, [currentIndex]);
+
   const room = rooms[currentIndex];
 
   return (
@@ -42,6 +55,7 @@ export function JourneyProgress({ label, rooms }: Props) {
       aria-label={`Índice de ${label}`}
       data-active-room={room?.title}
       data-active-room-number={currentIndex + 1}
+      style={{ '--journey-ratio': (currentIndex + 1) / rooms.length } as CSSProperties}
     >
       <p>{label}</p>
       <div
@@ -55,11 +69,15 @@ export function JourneyProgress({ label, rooms }: Props) {
         </strong>
         <span>{room?.title}</span>
       </div>
-      <nav aria-label={`Ambientes de ${label}`}>
+      <div className="journey-progress__line" aria-hidden="true">
+        <i />
+      </div>
+      <nav ref={navRef} aria-label={`Ambientes de ${label}`}>
         {rooms.map((item, index) => (
           <a
             key={item.id}
             href={`#${item.id}`}
+            ref={index === currentIndex ? activeLinkRef : undefined}
             className={index === currentIndex ? 'is-active' : ''}
             aria-current={index === currentIndex ? 'location' : undefined}
           >

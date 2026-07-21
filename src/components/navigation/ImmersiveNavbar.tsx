@@ -4,9 +4,13 @@ import { Menu, X } from 'lucide-react';
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react';
 
 const links = [
-  { href: '#casa', label: 'La casa', section: 'casa' },
-  { href: '#departamento', label: 'El departamento', section: 'departamento' },
-  { href: '#galeria', label: 'Galería', section: 'galeria' },
+  { href: '#casa', label: 'Casa principal', section: 'casa' },
+  {
+    href: '#alojamiento-independiente',
+    label: 'Alojamiento independiente',
+    section: 'alojamiento-independiente',
+  },
+  { href: '#ubicacion', label: 'Ubicación', section: 'ubicacion' },
   { href: '#contacto', label: 'Contacto', section: 'contacto' },
 ];
 

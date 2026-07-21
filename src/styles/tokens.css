@@ -32,11 +32,11 @@
   --section-space: clamp(4.5rem, 8vw, 8rem);
   --content-max: 1500px;
   --nav-height: 76px;
-  --radius-photo: clamp(1.5rem, 2vw, 2rem);
+  --radius-photo: clamp(1.35rem, 1.8vw, 1.75rem);
   --radius-photo-mobile: 1.25rem;
-  --radius-panel: 1.25rem;
+  --radius-panel: 1rem;
   --radius-button: 0.8rem;
-  --shadow-photo: 0 2rem 5.5rem rgb(11 57 46 / 14%);
+  --shadow-photo: 0 1.25rem 2.5rem rgb(11 57 46 / 11%);
 
   --z-content: 1;
   --z-sticky: 20;

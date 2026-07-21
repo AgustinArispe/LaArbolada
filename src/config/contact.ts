@@ -1,8 +1,7 @@
 export const contact = {
-  phoneDisplay: 'TODO',
-  whatsappNumber: 'TODO',
-  email: 'TODO',
-  location: 'TODO',
-  whatsappDefaultMessage:
-    'Hola, quisiera consultar por disponibilidad para un alquiler temporal en Casa La Arbolada.',
+  whatsappNumber: '5492494567808',
+  whatsappMessage: 'Hola, quisiera consultar disponibilidad en Casa La Arbolada.',
+  location: 'Tandil, Buenos Aires',
 } as const;
+
+export const whatsappUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(contact.whatsappMessage)}`;

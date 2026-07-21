@@ -38,10 +38,10 @@ export type JourneyRoom = {
 
 export type PropertyJourneyData = {
   id: PropertyKey;
+  anchorId: string;
   name: string;
   heading: string;
   introduction: string;
-  headerImage: CuratedImage;
   rooms: JourneyRoom[];
 };
 
@@ -59,7 +59,7 @@ function curateImage(id: string, room: string, fallbackOrder: number): CuratedIm
     order: override?.order ?? fallbackOrder,
     alt:
       override?.alt ??
-      `${room} de ${image.property === 'casa' ? 'Casa La Arbolada' : 'Departamento La Arbolada'}.`,
+      `${room} de ${image.property === 'casa' ? 'Casa La Arbolada' : 'el alojamiento independiente de La Arbolada'}.`,
     focalPoint: override?.focalPoint ?? coverFocalPoints[id],
   };
 }
@@ -195,20 +195,18 @@ const departamentoRooms: JourneyRoom[] = [
 export const journeys: Record<PropertyKey, PropertyJourneyData> = {
   casa: {
     id: 'casa',
-    name: 'La casa',
-    heading: 'Recorrer la casa',
-    introduction:
-      'Una secuencia completa desde el acceso y la fachada hasta los dormitorios, el patio y el arroyo.',
-    headerImage: curateImage('casa-livingcasa', 'Living y comedor', 1),
+    anchorId: 'casa',
+    name: 'Casa principal',
+    heading: 'Recorré la casa principal',
+    introduction: 'Ambientes amplios, piedra, madera y grandes aberturas conectadas con el parque.',
     rooms: casaRooms,
   },
   departamento: {
     id: 'departamento',
-    name: 'El departamento',
-    heading: 'Recorrer el departamento',
-    introduction:
-      'Una alternativa independiente, organizada ambiente por ambiente y abierta al mismo parque.',
-    headerImage: curateImage('departamento-livingdpto1', 'Living', 1),
+    anchorId: 'alojamiento-independiente',
+    name: 'Alojamiento independiente',
+    heading: 'Conocé el alojamiento independiente',
+    introduction: 'Una opción privada dentro del mismo entorno natural de La Arbolada.',
     rooms: departamentoRooms,
   },
 };
@@ -285,12 +283,3 @@ export function validateJourneys(
 }
 
 validateJourneys();
-
-export const allCuratedImages = [...casaRooms, ...departamentoRooms]
-  .flatMap((room) => room.images)
-  .sort((a, b) => {
-    if (a.property !== b.property) return a.property === 'casa' ? -1 : 1;
-    const rooms = a.property === 'casa' ? casaRoomOrder : departamentoRoomOrder;
-    const roomDifference = rooms.indexOf(a.room as never) - rooms.indexOf(b.room as never);
-    return roomDifference || a.order - b.order;
-  });
