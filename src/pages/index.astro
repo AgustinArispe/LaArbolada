@@ -1,5 +1,6 @@
 ---
 import Footer from '@/components/Footer.astro';
+import AmenitiesSection from '@/components/amenities/AmenitiesSection.astro';
 import ImmersiveContact from '@/components/contact/ImmersiveContact.astro';
 import { WhatsAppBubble } from '@/components/contact/WhatsAppBubble';
 import { ImmersiveHero } from '@/components/hero/ImmersiveHero';
@@ -15,10 +16,11 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
   <main id="contenido">
     <ImmersiveHero client:load frames={heroFrames} />
     <PropertyPrelude />
+    <AmenitiesSection />
     <PropertyJourney journey={journeys.casa} />
     <PropertyJourney journey={journeys.departamento} />
     <ImmersiveContact />
   </main>
   <Footer />
-  <WhatsAppBubble />
+  <WhatsAppBubble client:load />
 </BaseLayout>

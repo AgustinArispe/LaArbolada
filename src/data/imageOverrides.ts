@@ -18,15 +18,15 @@ export type ImageOverride = {
  */
 export const imageOverrides: Record<string, ImageOverride> = {
   'casa-5casa': {
-    room: 'Living y comedor',
+    room: 'Sala de estar y comedor',
     order: 5,
-    alt: 'Hogar de piedra y madera del living de Casa La Arbolada.',
-    note: '5CASA.HEIC muestra el hogar del living. Se elimina la clasificación “Espacio 5”.',
+    alt: 'Hogar de piedra y madera de la sala de estar de Casa La Arbolada.',
+    note: '5CASA.HEIC muestra el hogar de la sala de estar. Se elimina la clasificación “Espacio 5”.',
   },
   'casa-livingcasa': {
-    room: 'Living y comedor',
+    room: 'Sala de estar y comedor',
     order: 1,
-    alt: 'Vista amplia del living y comedor de Casa La Arbolada.',
+    alt: 'Vista amplia de la sala de estar y el comedor de Casa La Arbolada.',
     note: 'El archivo no tiene número final; se ubica primero por ser la vista general.',
   },
   'casa-verdeliving3casa': {
@@ -90,13 +90,13 @@ export const imageOverrides: Record<string, ImageOverride> = {
   'casa-verdeliving1casa': {
     room: 'Parque, arroyo y entorno verde',
     order: 7,
-    alt: 'Vista del parque y las sierras desde el living.',
+    alt: 'Vista del parque y las sierras desde la sala de estar.',
     note: 'La numeración original describe el punto de toma, no un ambiente independiente.',
   },
   'casa-verdeliving2casa': {
     room: 'Parque, arroyo y entorno verde',
     order: 8,
-    alt: 'Vista del parque desde la salida del living.',
+    alt: 'Vista del parque desde la salida de la sala de estar.',
     note: 'La numeración original describe el punto de toma, no un ambiente independiente.',
   },
   'departamento-banio1dpto': {

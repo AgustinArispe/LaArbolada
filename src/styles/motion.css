@@ -27,25 +27,7 @@
   }
 }
 
-@keyframes title-mask-reveal {
-  from {
-    clip-path: inset(0 0 100% 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes horizontal-mask-reveal {
-  from {
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes editorial-line-reveal {
+@keyframes line-reveal {
   from {
     transform: scaleX(0);
   }
@@ -54,10 +36,21 @@
   }
 }
 
-@keyframes media-mask-reveal {
+@keyframes text-mask-reveal {
   from {
-    clip-path: var(--media-entry-clip, inset(0 0 8% 0));
-    transform: scale(0.992);
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(0.7rem);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+
+@keyframes media-clip-reveal {
+  from {
+    clip-path: inset(0 10% 0 0);
+    transform: scale(0.985);
   }
   to {
     clip-path: inset(0 0 0 0);
@@ -65,28 +58,10 @@
   }
 }
 
-@keyframes chapter-warm-wash {
+@keyframes amenity-mask-reveal {
   from {
-    background-color: var(--true-white);
-  }
-  to {
-    background-color: var(--cream);
-  }
-}
-
-@keyframes chapter-forest-wash {
-  from {
-    background-color: var(--emerald);
-  }
-  to {
-    background-color: var(--forest);
-  }
-}
-
-@keyframes panel-reveal {
-  from {
-    clip-path: inset(0 8% 0 0);
-    opacity: 0.35;
+    clip-path: inset(0 0 16% 0);
+    opacity: 0.45;
   }
   to {
     clip-path: inset(0 0 0 0);
@@ -94,7 +69,7 @@
   }
 }
 
-@keyframes footer-reveal {
+@keyframes service-reveal {
   from {
     clip-path: inset(0 100% 0 0);
   }
@@ -103,100 +78,66 @@
   }
 }
 
-@keyframes journey-progress-swap {
-  from {
-    opacity: 0;
-    transform: translate3d(-0.35rem, 0, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.journey-progress__current {
-  animation: journey-progress-swap 220ms var(--ease-out) both;
-}
-
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .property-prelude__line {
-      animation: editorial-line-reveal both linear;
-      animation-range: entry 12% entry 62%;
+      animation: line-reveal both linear;
+      animation-range: entry 10% entry 65%;
       animation-timeline: view();
     }
 
     .property-prelude__intro h2,
+    .amenities-section__header h2,
     .property-journey__copy h2,
     .room-chapter__header h3 {
-      animation: title-mask-reveal both linear;
-      animation-range: entry 0% entry 68%;
+      animation: text-mask-reveal both linear;
+      animation-range: entry 0% entry 66%;
       animation-timeline: view();
     }
 
-    .property-prelude__copy > p,
-    .property-prelude__gallery-copy {
-      animation: horizontal-mask-reveal both var(--ease-out);
-      animation-range: entry 8% entry 70%;
+    .property-prelude__copy p,
+    .property-journey__copy > span,
+    .property-journey__copy > strong {
+      animation: service-reveal both var(--ease-out);
+      animation-range: entry 8% entry 72%;
       animation-timeline: view();
     }
 
-    .property-prelude__gallery-copy {
-      animation-range: entry 22% entry 82%;
-    }
-
-    .room-chapter__gallery {
-      animation: media-mask-reveal both var(--ease-out);
-      animation-range: entry 8% entry 64%;
+    .amenity-feature {
+      animation: amenity-mask-reveal both var(--ease-out);
+      animation-range: entry 4% entry 58%;
       animation-timeline: view();
     }
 
-    .room-chapter__progress,
-    .room-chapter__image-count {
-      animation: horizontal-mask-reveal both var(--ease-out);
-      animation-range: entry 10% entry 55%;
+    .amenity-feature:nth-child(2n) {
+      animation-range: entry 10% entry 66%;
+    }
+    .amenity-feature:nth-child(3n) {
+      animation-range: entry 16% entry 72%;
+    }
+
+    .supporting-amenity {
+      animation: service-reveal both var(--ease-out);
+      animation-range: entry 0% entry 72%;
       animation-timeline: view();
     }
 
-    .room-chapter--offset-left {
-      --media-entry-clip: inset(0 7% 0 0);
-    }
-
-    .room-chapter--offset-right {
-      --media-entry-clip: inset(0 0 0 7%);
-    }
-
-    .room-chapter--panoramic {
-      --media-entry-clip: inset(7% 0 7% 0);
-    }
-
-    .room-chapter--warm {
-      animation: chapter-warm-wash both linear;
-      animation-range: entry 0% entry 38%;
+    .property-journey__media,
+    .room-chapter__gallery .horizontal-gallery__frame,
+    .location-story__media,
+    .contact-panel__media {
+      animation: media-clip-reveal both var(--ease-out);
+      animation-range: entry 5% entry 64%;
       animation-timeline: view();
     }
 
-    .room-chapter--forest {
-      animation: chapter-forest-wash both linear;
-      animation-range: entry 0% entry 38%;
-      animation-timeline: view();
+    .room-chapter--detail .room-chapter__gallery {
+      --clip-origin: right;
     }
 
-    .location-story__media {
-      animation: horizontal-mask-reveal both var(--ease-out);
-      animation-range: entry 0% entry 52%;
-      animation-timeline: view();
-    }
-
-    .contact-panel__inner {
-      animation: panel-reveal both var(--ease-out);
-      animation-range: entry 0% entry 58%;
-      animation-timeline: view();
-    }
-
-    .site-footer__inner {
-      animation: footer-reveal both var(--ease-out);
-      animation-range: entry 0% entry 55%;
+    .interactive-map {
+      animation: amenity-mask-reveal both var(--ease-out);
+      animation-range: entry 5% entry 55%;
       animation-timeline: view();
     }
   }
@@ -206,7 +147,6 @@
   .immersive-hero {
     height: 100svh !important;
   }
-
   html {
     scroll-behavior: auto !important;
   }
@@ -223,7 +163,6 @@
   .immersive-hero__frame:not(:first-child) {
     display: none;
   }
-
   .immersive-hero__copy,
   .immersive-hero__copy > *,
   .immersive-hero__title-line > span {

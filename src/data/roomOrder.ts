@@ -1,7 +1,7 @@
 export const casaRoomOrder = [
-  'Entorno y llegada',
-  'Fachada',
-  'Living y comedor',
+  'Parque y llegada',
+  'Exterior',
+  'Sala de estar y comedor',
   'Cocina',
   'Dormitorio 1',
   'Dormitorio 2',
@@ -10,29 +10,16 @@ export const casaRoomOrder = [
   'Baño 1',
   'Baño 2',
   'Patio',
-  'Parque, arroyo y entorno verde',
+  'Parque y arroyo',
 ] as const;
 
 export const departamentoRoomOrder = [
-  'Acceso y entorno',
-  'Living',
+  'Acceso privado',
+  'Sala de estar',
   'Cocina',
   'Dormitorio',
   'Baño',
-  'Entorno verde',
+  'Entorno natural',
 ] as const;
 
-export type LayoutVariant =
-  | 'offset-left'
-  | 'offset-right'
-  | 'panoramic'
-  | 'text-column'
-  | 'sticky-title';
-
-export const layoutVariants: LayoutVariant[] = [
-  'offset-left',
-  'offset-right',
-  'panoramic',
-  'text-column',
-  'sticky-title',
-];
+export type Presentation = 'hero-media' | 'framed' | 'split' | 'dark' | 'panoramic' | 'detail';

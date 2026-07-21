@@ -1,5 +1,4 @@
-@import '@fontsource-variable/fraunces';
-@import '@fontsource-variable/source-sans-3';
+@import '@fontsource-variable/dm-sans';
 
 html {
   font-family: var(--font-sans);
@@ -20,21 +19,21 @@ h3 {
   margin: 0;
   font-family: var(--font-display);
   font-optical-sizing: auto;
-  letter-spacing: -0.035em;
-  line-height: 1.02;
+  letter-spacing: 0;
+  line-height: 1.06;
   text-wrap: balance;
 }
 
 h1 {
-  font-weight: 630;
+  font-weight: 720;
 }
 
 h2 {
-  font-weight: 600;
+  font-weight: 680;
 }
 
 h3 {
-  font-weight: 560;
+  font-weight: 640;
 }
 
 p {

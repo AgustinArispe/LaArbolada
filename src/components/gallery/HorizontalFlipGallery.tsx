@@ -1,7 +1,8 @@
 import { useEffect, useId, useRef, useState, type CSSProperties } from 'react';
-import { ArrowLeft, ArrowRight, Maximize2 } from 'lucide-react';
+import { Maximize2 } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { GalleryLightbox } from '@/components/gallery/GalleryLightbox';
+import { GalleryNavigationButton } from '@/components/gallery/GalleryNavigationButton';
 import type { CuratedImage } from '@/data/journeys';
 
 type Props = {
@@ -27,10 +28,12 @@ function ResponsiveImage({
       data-image-room={image.room}
       src={image.sources.desktop}
       srcSet={`${image.sources.mobile} 900w, ${image.sources.desktop} 1600w${image.sources.large ? `, ${image.sources.large} 2400w` : ''}`}
-      sizes="(max-width: 767px) calc(100vw - 2rem), min(78vw, 1380px)"
+      sizes="(max-width: 767px) calc(100vw - 2.5rem), min(78vw, 1380px)"
       alt={alt}
+      draggable={false}
       loading="lazy"
       decoding="async"
+      onDragStart={(event) => event.preventDefault()}
       style={
         {
           '--gallery-focal-desktop': `${image.focalPoint?.desktop.x ?? 50}% ${image.focalPoint?.desktop.y ?? 50}%`,
@@ -44,24 +47,25 @@ function ResponsiveImage({
 export function HorizontalFlipGallery({ id, property, room, images }: Props) {
   const [hydrated, setHydrated] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [displayIndex, setDisplayIndex] = useState(0);
   const [outgoingIndex, setOutgoingIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState(1);
   const [transitioning, setTransitioning] = useState(false);
-  const [mobileFallback, setMobileFallback] = useState(false);
+  const [mobile, setMobile] = useState(false);
   const [selected, setSelected] = useState<CuratedImage | null>(null);
   const currentRef = useRef(0);
-  const timerRef = useRef<number | null>(null);
+  const endTimerRef = useRef<number | null>(null);
+  const counterTimerRef = useRef<number | null>(null);
   const dragRef = useRef<{ id: number; x: number; time: number } | null>(null);
+  const thumbnailRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const reducedMotion = useReducedMotion();
   const instanceId = useId();
 
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
+  useEffect(() => setHydrated(true), []);
 
   useEffect(() => {
     const query = window.matchMedia('(max-width: 767px)');
-    const update = () => setMobileFallback(query.matches);
+    const update = () => setMobile(query.matches);
     update();
     query.addEventListener('change', update);
     return () => query.removeEventListener('change', update);
@@ -70,15 +74,24 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
   useEffect(() => {
     if (images.length < 2) return;
     [currentIndex - 1, currentIndex + 1].forEach((index) => {
-      const image = images[(index + images.length) % images.length];
+      const adjacent = images[(index + images.length) % images.length];
       const preload = new Image();
-      preload.src = image.sources.desktop;
+      preload.src = adjacent.sources.desktop;
     });
   }, [currentIndex, images]);
 
+  useEffect(() => {
+    thumbnailRefs.current[displayIndex]?.scrollIntoView({
+      behavior: reducedMotion ? 'auto' : 'smooth',
+      block: 'nearest',
+      inline: 'nearest',
+    });
+  }, [displayIndex, reducedMotion]);
+
   useEffect(
     () => () => {
-      if (timerRef.current) window.clearTimeout(timerRef.current);
+      if (endTimerRef.current) window.clearTimeout(endTimerRef.current);
+      if (counterTimerRef.current) window.clearTimeout(counterTimerRef.current);
     },
     [],
   );
@@ -87,8 +100,8 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
 
   const current = images[currentIndex];
   const outgoing = outgoingIndex === null ? null : images[outgoingIndex];
-  const progress = (currentIndex + 1) / images.length;
-  const useFallback = reducedMotion || mobileFallback;
+  const duration = reducedMotion ? 220 : mobile ? 500 : 660;
+  const progress = (displayIndex + 1) / images.length;
 
   const changeTo = (next: number, directionHint: number) => {
     if (transitioning || images.length < 2) return;
@@ -101,17 +114,18 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
     currentRef.current = normalized;
     setTransitioning(true);
 
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(
-      () => {
-        setOutgoingIndex(null);
-        setTransitioning(false);
-      },
-      reducedMotion ? 220 : mobileFallback ? 540 : 680,
-    );
+    if (counterTimerRef.current) window.clearTimeout(counterTimerRef.current);
+    if (endTimerRef.current) window.clearTimeout(endTimerRef.current);
+    counterTimerRef.current = window.setTimeout(() => setDisplayIndex(normalized), duration * 0.46);
+    endTimerRef.current = window.setTimeout(() => {
+      setOutgoingIndex(null);
+      setTransitioning(false);
+      setDisplayIndex(normalized);
+    }, duration);
   };
 
   const go = (step: number) => changeTo(currentRef.current + step, step);
+  const disabled = !hydrated || transitioning || images.length < 2;
 
   return (
     <>
@@ -120,11 +134,12 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
         className="horizontal-gallery"
         role="region"
         aria-roledescription="carrusel"
-        aria-label={`${room} de ${property === 'casa' ? 'la casa principal' : 'el alojamiento independiente'}`}
+        aria-label={`${room}, ${property === 'casa' ? 'casa principal' : 'alojamiento independiente'}`}
         data-property={property}
         data-room={room}
         data-gallery-index={currentIndex + 1}
         data-gallery-total={images.length}
+        data-transitioning={transitioning ? 'true' : 'false'}
         tabIndex={0}
         onKeyDown={(event) => {
           if (event.key === 'ArrowLeft') go(-1);
@@ -134,8 +149,7 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
         <div
           className="horizontal-gallery__frame"
           onPointerDown={(event) => {
-            if ((event.target as HTMLElement).closest('button')) return;
-            if (dragRef.current) return;
+            if ((event.target as HTMLElement).closest('button') || dragRef.current) return;
             dragRef.current = { id: event.pointerId, x: event.clientX, time: performance.now() };
             event.currentTarget.setPointerCapture(event.pointerId);
           }}
@@ -143,12 +157,10 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
             const drag = dragRef.current;
             if (!drag || drag.id !== event.pointerId) return;
             const distance = event.clientX - drag.x;
-            const elapsed = Math.max(performance.now() - drag.time, 1);
-            const velocity = Math.abs(distance) / elapsed;
+            const velocity = Math.abs(distance) / Math.max(performance.now() - drag.time, 1);
             dragRef.current = null;
-            if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+            if (event.currentTarget.hasPointerCapture(event.pointerId))
               event.currentTarget.releasePointerCapture(event.pointerId);
-            }
             if (Math.abs(distance) > 44 || velocity > 0.42) go(distance < 0 ? 1 : -1);
           }}
           onPointerCancel={() => {
@@ -159,12 +171,18 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
             key={`${instanceId}-${current.id}`}
             className="horizontal-gallery__current"
             initial={
-              outgoing && useFallback
-                ? { opacity: 0, clipPath: 'inset(49% 0 49% 0)', transform: 'scale(0.985)' }
+              outgoing && (mobile || reducedMotion)
+                ? reducedMotion
+                  ? { opacity: 0 }
+                  : {
+                      opacity: 0,
+                      clipPath: direction > 0 ? 'inset(0 12% 0 88%)' : 'inset(0 88% 0 12%)',
+                      scale: 0.985,
+                    }
                 : false
             }
-            animate={{ opacity: 1, clipPath: 'inset(0% 0 0% 0)', transform: 'scale(1)' }}
-            transition={{ duration: reducedMotion ? 0.2 : 0.52, ease: [0.23, 1, 0.32, 1] }}
+            animate={{ opacity: 1, clipPath: 'inset(0 0 0 0)', scale: 1 }}
+            transition={{ duration: duration / 1000, ease: [0.23, 1, 0.32, 1] }}
           >
             <ResponsiveImage
               image={current}
@@ -173,95 +191,86 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
             />
           </motion.div>
 
-          {outgoing &&
-            (useFallback ? (
+          {outgoing && (mobile || reducedMotion) && (
+            <motion.div
+              key={`${instanceId}-${outgoing.id}-crossfade`}
+              className="horizontal-gallery__crossfade"
+              initial={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 0, scale: reducedMotion ? 1 : 0.985 }}
+              transition={{ duration: duration / 1000, ease: [0.23, 1, 0.32, 1] }}
+              aria-hidden="true"
+            >
+              <ResponsiveImage image={outgoing} alt="" />
+            </motion.div>
+          )}
+
+          {outgoing && !mobile && !reducedMotion && (
+            <div
+              key={`${instanceId}-${outgoing.id}-split`}
+              className="horizontal-gallery__split"
+              aria-hidden="true"
+            >
               <motion.div
-                key={`${instanceId}-${outgoing.id}-fallback`}
-                className="horizontal-gallery__crossfade"
-                initial={{ opacity: 1, transform: 'scale(1)' }}
-                animate={{ opacity: 0, transform: 'scale(0.985)' }}
-                transition={{ duration: reducedMotion ? 0.2 : 0.5, ease: [0.23, 1, 0.32, 1] }}
-                aria-hidden="true"
+                className="horizontal-gallery__half horizontal-gallery__half--top"
+                initial={{ x: '0%' }}
+                animate={{ x: direction > 0 ? '-101%' : '101%' }}
+                transition={{ duration: 0.66, ease: [0.77, 0, 0.175, 1] }}
               >
                 <ResponsiveImage image={outgoing} alt="" />
               </motion.div>
-            ) : (
-              <div
-                key={`${instanceId}-${outgoing.id}-split`}
-                className="horizontal-gallery__split"
-                aria-hidden="true"
+              <motion.div
+                className="horizontal-gallery__half horizontal-gallery__half--bottom"
+                initial={{ x: '0%' }}
+                animate={{ x: direction > 0 ? '101%' : '-101%' }}
+                transition={{ duration: 0.66, ease: [0.77, 0, 0.175, 1] }}
               >
-                <motion.div
-                  className="horizontal-gallery__half horizontal-gallery__half--top"
-                  initial={{ transform: 'rotateX(0deg)', opacity: 1 }}
-                  animate={{
-                    transform: `rotateX(${direction > 0 ? -88 : 88}deg)`,
-                    opacity: 0,
-                  }}
-                  transition={{ duration: 0.46, delay: 0.08, ease: [0.77, 0, 0.175, 1] }}
-                >
-                  <ResponsiveImage image={outgoing} alt="" />
-                </motion.div>
-                <motion.div
-                  className="horizontal-gallery__half horizontal-gallery__half--bottom"
-                  initial={{ clipPath: 'inset(0 0 0% 0)', opacity: 1 }}
-                  animate={{ clipPath: 'inset(100% 0 0 0)', opacity: 0.08 }}
-                  transition={{ duration: 0.42, ease: [0.23, 1, 0.32, 1] }}
-                >
-                  <ResponsiveImage image={outgoing} alt="" />
-                </motion.div>
-              </div>
-            ))}
+                <ResponsiveImage image={outgoing} alt="" />
+              </motion.div>
+            </div>
+          )}
+        </div>
 
+        <div className="horizontal-gallery__controls">
+          <div className="horizontal-gallery__controls-main">
+            <GalleryNavigationButton
+              direction="previous"
+              disabled={disabled}
+              onClick={() => go(-1)}
+            />
+            <div className="horizontal-gallery__status" aria-live="polite" aria-atomic="true">
+              <span>
+                {String(displayIndex + 1).padStart(2, '0')} /{' '}
+                {String(images.length).padStart(2, '0')}
+              </span>
+              <i aria-hidden="true" style={{ transform: `scaleX(${progress})` }} />
+            </div>
+            <GalleryNavigationButton direction="next" disabled={disabled} onClick={() => go(1)} />
+          </div>
           <button
             type="button"
-            className="horizontal-gallery__fullscreen"
+            className="horizontal-gallery__fullscreen gallery-navigation-button"
             onClick={() => setSelected(current)}
             disabled={!hydrated}
             aria-label={`Abrir ${room} en pantalla completa`}
           >
-            <Maximize2 size={20} strokeWidth={1.6} aria-hidden="true" />
+            <Maximize2 size={21} strokeWidth={1.8} aria-hidden="true" />
           </button>
         </div>
 
-        <div className="horizontal-gallery__controls">
-          <button
-            type="button"
-            onClick={() => go(-1)}
-            disabled={!hydrated || transitioning || images.length < 2}
-            aria-label="Fotografía anterior"
-          >
-            <ArrowLeft size={20} strokeWidth={1.5} aria-hidden="true" />
-            <span>Anterior</span>
-          </button>
-          <div className="horizontal-gallery__status" aria-live="polite" aria-atomic="true">
-            <span>
-              {String(currentIndex + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
-            </span>
-            <i aria-hidden="true" style={{ transform: `scaleX(${progress})` }} />
-          </div>
-          <button
-            type="button"
-            onClick={() => go(1)}
-            disabled={!hydrated || transitioning || images.length < 2}
-            aria-label="Fotografía siguiente"
-          >
-            <span>Siguiente</span>
-            <ArrowRight size={20} strokeWidth={1.5} aria-hidden="true" />
-          </button>
-        </div>
-
-        {images.length > 3 && (
+        {images.length > 1 && (
           <div className="horizontal-gallery__thumbnails" aria-label={`Fotografías de ${room}`}>
             {images.map((image, index) => (
               <button
                 key={image.id}
+                ref={(node) => {
+                  thumbnailRefs.current[index] = node;
+                }}
                 type="button"
-                className={index === currentIndex ? 'is-active' : ''}
-                onClick={() => changeTo(index, index > currentIndex ? 1 : -1)}
+                className={index === displayIndex ? 'is-active' : ''}
+                onClick={() => changeTo(index, index > currentRef.current ? 1 : -1)}
                 disabled={!hydrated || transitioning}
                 aria-label={`Ver fotografía ${index + 1} de ${images.length}`}
-                aria-current={index === currentIndex ? 'true' : undefined}
+                aria-current={index === displayIndex ? 'true' : undefined}
               >
                 <img src={image.sources.thumbnail} alt="" loading="lazy" decoding="async" />
               </button>

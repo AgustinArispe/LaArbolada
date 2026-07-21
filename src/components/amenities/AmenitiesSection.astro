@@ -1,0 +1,20 @@
+---
+import { AmenitiesGrid } from '@/components/amenities/AmenitiesGrid';
+---
+
+<section
+  id="amenities"
+  class="amenities-section"
+  aria-labelledby="amenities-title"
+  data-nav-section="amenities"
+  data-nav-theme="light"
+>
+  <header class="amenities-section__header site-shell">
+    <p>En La Arbolada</p>
+    <h2 id="amenities-title">Todo lo necesario para una estadía completa</h2>
+    <span>Confort, amplitud y naturaleza en un mismo lugar.</span>
+  </header>
+  <div class="site-shell">
+    <AmenitiesGrid client:visible={{ rootMargin: '320px' }} />
+  </div>
+</section>

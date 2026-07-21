@@ -1,5 +1,4 @@
 ---
-import { JourneyProgress } from '@/components/journey/JourneyProgress';
 import RoomChapter from '@/components/journey/RoomChapter.astro';
 import type { PropertyJourneyData } from '@/data/journeys';
 
@@ -8,10 +7,6 @@ interface Props {
 }
 
 const { journey } = Astro.props;
-const progressRooms = journey.rooms.map((room) => ({
-  id: `${journey.id}-ambiente-${room.roomNumber}`,
-  title: room.title,
-}));
 ---
 
 <section class="property-journey" aria-labelledby={`${journey.id}-title`}>
@@ -21,23 +16,30 @@ const progressRooms = journey.rooms.map((room) => ({
     data-nav-section={journey.anchorId}
     data-nav-theme={journey.id === 'casa' ? 'light' : 'dark'}
   >
-    <span class="property-journey__chapter" aria-hidden="true">
-      {journey.id === 'casa' ? '01' : '02'}
-    </span>
-    <div class="property-journey__copy site-shell">
-      <p>{journey.name}</p>
-      <h2 id={`${journey.id}-title`}>{journey.heading}</h2>
-      <span>{journey.introduction}</span>
+    <div class="property-journey__overview site-shell">
+      <div class="property-journey__copy">
+        <p>{journey.id === 'casa' ? 'La residencia principal' : 'Otra forma de alojarse'}</p>
+        <h2 id={`${journey.id}-title`}>{journey.heading}</h2>
+        <span>{journey.introduction}</span>
+        <strong>{journey.facts}</strong>
+      </div>
+      <figure class="property-journey__media">
+        <img
+          src={journey.overviewImage.sources.desktop}
+          srcset={`${journey.overviewImage.sources.mobile} 900w, ${journey.overviewImage.sources.desktop} 1600w${journey.overviewImage.sources.large ? `, ${journey.overviewImage.sources.large} 2400w` : ''}`}
+          sizes="(max-width: 767px) calc(100vw - 2.5rem), 58vw"
+          alt={journey.overviewImage.alt}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
     </div>
   </header>
 
   <div class="property-journey__body">
-    <JourneyProgress client:visible label={journey.name} rooms={progressRooms} />
     <div class="property-journey__chapters">
       {
-        journey.rooms.map((room, index) => {
-          const previous = journey.rooms[index - 1];
-          const next = journey.rooms[index + 1];
+        journey.rooms.map((room) => {
           return (
             <RoomChapter
               property={room.property}
@@ -47,24 +49,7 @@ const progressRooms = journey.rooms.map((room) => ({
               description={room.description}
               images={room.images}
               theme={room.theme}
-              layoutVariant={room.layoutVariant}
-              totalRooms={journey.rooms.length}
-              previous={
-                previous
-                  ? {
-                      href: `#${journey.id}-ambiente-${previous.roomNumber}`,
-                      label: previous.title,
-                    }
-                  : undefined
-              }
-              next={
-                next
-                  ? {
-                      href: `#${journey.id}-ambiente-${next.roomNumber}`,
-                      label: next.title,
-                    }
-                  : undefined
-              }
+              presentation={room.presentation}
             />
           );
         })

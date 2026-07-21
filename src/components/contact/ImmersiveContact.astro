@@ -1,9 +1,13 @@
 ---
-import { ArrowUpRight, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, MapPinned, MessageCircle } from 'lucide-react';
+import { InteractiveMap } from '@/components/contact/InteractiveMap';
 import { contact, whatsappUrl } from '@/config/contact';
 import { journeys } from '@/data/journeys';
 
-const background = journeys.casa.rooms[11].images[2];
+const locationImage = journeys.casa.rooms[11].images[0];
+const contactImage = journeys.casa.rooms[2].images[0];
+const directionsUrl =
+  'https://www.google.com/maps/search/?api=1&query=Casa+La+Arbolada%2C+Tandil%2C+Buenos+Aires';
 ---
 
 <section
@@ -11,25 +15,35 @@ const background = journeys.casa.rooms[11].images[2];
   class="location-story"
   aria-labelledby="location-title"
   data-nav-section="ubicacion"
-  data-nav-theme="dark"
+  data-nav-theme="light"
 >
-  <div class="location-story__media">
-    <img
-      src={background.sources.large ?? background.sources.desktop}
-      srcset={`${background.sources.mobile} 900w, ${background.sources.desktop} 1600w${background.sources.large ? `, ${background.sources.large} 2400w` : ''}`}
-      sizes="100vw"
-      alt="Parque y arroyo en el entorno de Casa La Arbolada."
-      loading="lazy"
-      decoding="async"
-    />
-  </div>
-  <div class="location-story__shade" aria-hidden="true"></div>
-  <div class="location-story__content site-shell">
-    <h2 id="location-title">Ubicación y cómo llegar</h2>
-    <p>
-      La Arbolada se encuentra en {contact.location}. Escribinos para recibir la ubicación exacta y
-      las indicaciones de llegada.
-    </p>
+  <div class="location-story__inner site-shell">
+    <div class="location-story__copy">
+      <p>En Tandil, Buenos Aires</p>
+      <h2 id="location-title">Naturaleza cerca, acceso simple</h2>
+      <span>La Arbolada se encuentra dentro de un parque privado en {contact.location}.</span>
+      <a
+        class="location-story__action"
+        href={directionsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <MapPinned size={21} strokeWidth={1.7} aria-hidden="true" />
+        <span>Cómo llegar</span>
+        <ArrowUpRight size={19} strokeWidth={1.7} aria-hidden="true" />
+      </a>
+    </div>
+    <figure class="location-story__media">
+      <img
+        src={locationImage.sources.desktop}
+        srcset={`${locationImage.sources.mobile} 900w, ${locationImage.sources.desktop} 1600w${locationImage.sources.large ? `, ${locationImage.sources.large} 2400w` : ''}`}
+        sizes="(max-width: 767px) calc(100vw - 2.5rem), 52vw"
+        alt="El parque arbolado y el arroyo de Casa La Arbolada."
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+    <InteractiveMap client:visible />
   </div>
 </section>
 
@@ -41,14 +55,42 @@ const background = journeys.casa.rooms[11].images[2];
   data-nav-theme="dark"
 >
   <div class="contact-panel__inner site-shell">
+    <figure class="contact-panel__media">
+      <img
+        src={contactImage.sources.desktop}
+        srcset={`${contactImage.sources.mobile} 900w, ${contactImage.sources.desktop} 1600w${contactImage.sources.large ? `, ${contactImage.sources.large} 2400w` : ''}`}
+        sizes="(max-width: 767px) calc(100vw - 2.5rem), 46vw"
+        alt="Sala de estar y comedor de Casa La Arbolada."
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
     <div class="contact-panel__copy">
+      <p>Planificá tu estadía</p>
       <h2 id="contact-title">Consultá disponibilidad</h2>
-      <p>Escribinos para conocer fechas disponibles y opciones de alojamiento.</p>
+      <span>Contactanos para conocer fechas disponibles y opciones de alojamiento.</span>
+      <div class="contact-panel__actions">
+        <a
+          class="contact-panel__action contact-panel__action--primary"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <MessageCircle size={21} strokeWidth={1.7} aria-hidden="true" />
+          <span>Consultar disponibilidad</span>
+          <ArrowUpRight size={19} strokeWidth={1.7} aria-hidden="true" />
+        </a>
+        <a
+          class="contact-panel__action contact-panel__action--secondary"
+          href={directionsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <MapPinned size={21} strokeWidth={1.7} aria-hidden="true" />
+          <span>Cómo llegar</span>
+          <ArrowUpRight size={19} strokeWidth={1.7} aria-hidden="true" />
+        </a>
+      </div>
     </div>
-    <a class="contact-panel__action" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-      <MessageCircle size={22} strokeWidth={1.6} aria-hidden="true" />
-      <span>Consultar por WhatsApp</span>
-      <ArrowUpRight size={20} strokeWidth={1.6} aria-hidden="true" />
-    </a>
   </div>
 </section>

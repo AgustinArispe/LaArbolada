@@ -1,7 +1,7 @@
 ---
 import { HorizontalFlipGallery } from '@/components/gallery/HorizontalFlipGallery';
 import type { CuratedImage, PropertyKey } from '@/data/journeys';
-import type { LayoutVariant } from '@/data/roomOrder';
+import type { Presentation } from '@/data/roomOrder';
 
 interface Props {
   property: PropertyKey;
@@ -11,53 +11,30 @@ interface Props {
   description?: string;
   images: CuratedImage[];
   theme: 'warm' | 'forest';
-  layoutVariant: LayoutVariant;
-  totalRooms: number;
-  previous?: { href: string; label: string };
-  next?: { href: string; label: string };
+  presentation: Presentation;
 }
 
-const {
-  property,
-  room,
-  roomNumber,
-  title,
-  description,
-  images,
-  theme,
-  layoutVariant,
-  totalRooms,
-  previous,
-  next,
-} = Astro.props;
+const { property, room, roomNumber, title, description, images, theme, presentation } = Astro.props;
 
 const chapterId = `${property}-ambiente-${roomNumber}`;
 ---
 
 <section
   id={chapterId}
-  class:list={['room-chapter', `room-chapter--${theme}`, `room-chapter--${layoutVariant}`]}
+  class:list={['room-chapter', `room-chapter--${theme}`, `room-chapter--${presentation}`]}
   aria-labelledby={`${chapterId}-title`}
   data-nav-section={property === 'casa' ? 'casa' : 'alojamiento-independiente'}
   data-nav-theme={theme === 'forest' ? 'dark' : 'light'}
   data-property={property}
   data-room={room}
   data-room-number={roomNumber}
-  data-total-rooms={totalRooms}
   data-image-ids={JSON.stringify(images.map((image) => image.id))}
   data-image-rooms={JSON.stringify(images.map((image) => image.room))}
 >
   <div class="room-chapter__inner">
     <header class="room-chapter__header">
-      <p class="room-chapter__progress">
-        Ambiente {String(roomNumber).padStart(2, '0')} / {String(totalRooms).padStart(2, '0')}
-      </p>
       <h3 id={`${chapterId}-title`}>{title}</h3>
       {description && <p class="room-chapter__description">{description}</p>}
-      <span class="room-chapter__image-count">
-        {images.length}{' '}
-        {images.length === 1 ? 'fotografía' : 'fotografías'}
-      </span>
     </header>
 
     <div class="room-chapter__gallery">
@@ -69,38 +46,5 @@ const chapterId = `${property}-ambiente-${roomNumber}`;
         images={images}
       />
     </div>
-
-    <nav
-      class="room-chapter__navigation"
-      aria-label={`Navegación desde ${title}`}
-      data-current-room={room}
-    >
-      {
-        previous ? (
-          <a href={previous.href} data-direction="previous">
-            <span>Anterior</span>
-            {previous.label}
-          </a>
-        ) : (
-          <span aria-hidden="true" />
-        )
-      }
-      {
-        next ? (
-          <a href={next.href} data-direction="next">
-            <span>Siguiente</span>
-            {next.label}
-          </a>
-        ) : (
-          <a
-            href={property === 'casa' ? '#alojamiento-independiente' : '#ubicacion'}
-            data-direction="next"
-          >
-            <span>Continuar</span>
-            {property === 'casa' ? 'Alojamiento independiente' : 'Ubicación y cómo llegar'}
-          </a>
-        )
-      }
-    </nav>
   </div>
 </section>

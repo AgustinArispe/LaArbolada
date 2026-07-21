@@ -1,7 +1,7 @@
 ---
 import '@/styles/globals.css';
 import { site } from '@/config/site';
-import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
+import dmSansUrl from '@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url';
 
 interface Props {
   title?: string;
@@ -37,7 +37,7 @@ const lodgingJsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0B392E" />
-    <link rel="preload" href={frauncesUrl} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={dmSansUrl} as="font" type="font/woff2" crossorigin="anonymous" />
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:type" content="website" />

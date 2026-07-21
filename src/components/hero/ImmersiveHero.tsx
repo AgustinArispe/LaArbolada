@@ -62,7 +62,7 @@ export function ImmersiveHero({ frames }: Props) {
           trigger: sectionRef.current,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: window.innerWidth < 768 ? 0.55 : 0.9,
+          scrub: window.innerWidth < 768 ? 0.18 : 0.28,
           invalidateOnRefresh: true,
         },
       });
@@ -166,10 +166,10 @@ export function ImmersiveHero({ frames }: Props) {
             </span>
           </h1>
           <div className="immersive-hero__support">
-            <p data-hero-support>Una estadía entre piedra, árboles y agua.</p>
+            <p data-hero-support>Una estadía privada entre piedra, árboles y agua.</p>
             <p data-hero-support>Alquiler temporal en Tandil.</p>
             <a href="#casa" data-hero-support>
-              Descubrir los espacios
+              Ver la propiedad
               <ArrowDownRight size={20} strokeWidth={1.6} aria-hidden="true" />
             </a>
           </div>

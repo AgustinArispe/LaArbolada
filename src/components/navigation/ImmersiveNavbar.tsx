@@ -4,6 +4,7 @@ import { Menu, X } from 'lucide-react';
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react';
 
 const links = [
+  { href: '#amenities', label: 'Comodidades', section: 'amenities' },
   { href: '#casa', label: 'Casa principal', section: 'casa' },
   {
     href: '#alojamiento-independiente',

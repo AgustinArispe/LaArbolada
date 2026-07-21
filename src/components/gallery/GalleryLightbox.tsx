@@ -88,6 +88,7 @@ export function GalleryLightbox({ images, selected, onOpenChange }: Props) {
           >
             <img
               key={image.id}
+              data-image-id={image.id}
               src={image.sources.large ?? image.sources.desktop}
               srcSet={`${image.sources.mobile} 900w, ${image.sources.desktop} 1600w${image.sources.large ? `, ${image.sources.large} 2400w` : ''}`}
               sizes="100vw"

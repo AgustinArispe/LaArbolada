@@ -1,14 +1,16 @@
 @import 'tailwindcss';
 
 :root {
-  --cream: #fff9f1;
+  --cream: #fff8ee;
+  --warm-white: #fffdf9;
   --true-white: #ffffff;
-  --forest: #0b392e;
-  --emerald: #176149;
-  --green-soft: #75a98b;
-  --burgundy: #982f4b;
-  --terracotta: #c96143;
-  --charcoal: #17201c;
+  --forest: #0a3b30;
+  --emerald: #28634f;
+  --green-soft: #a6c5b3;
+  --burgundy: #9c2f50;
+  --terracotta: #c86b4b;
+  --charcoal: #19211d;
+  --stone: #d7c9b8;
   --ink-muted: #3f5149;
   --warm-muted: #dce6df;
   --hairline-dark: rgb(11 57 46 / 18%);
@@ -19,24 +21,23 @@
   --green-deep: var(--forest);
   --green-english: var(--emerald);
   --wine: var(--burgundy);
-  --warm-white: var(--cream);
 
-  --font-display: 'Fraunces Variable', Georgia, serif;
-  --font-sans: 'Source Sans 3 Variable', Arial, sans-serif;
+  --font-display: 'DM Sans Variable', Arial, sans-serif;
+  --font-sans: 'DM Sans Variable', Arial, sans-serif;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
   --site-gutter: clamp(1.25rem, 4vw, 4.5rem);
-  --section-space: clamp(4.5rem, 8vw, 8rem);
+  --section-space: clamp(4.25rem, 7vw, 7rem);
   --content-max: 1500px;
   --nav-height: 76px;
   --radius-photo: clamp(1.35rem, 1.8vw, 1.75rem);
   --radius-photo-mobile: 1.25rem;
-  --radius-panel: 1rem;
-  --radius-button: 0.8rem;
-  --shadow-photo: 0 1.25rem 2.5rem rgb(11 57 46 / 11%);
+  --radius-panel: 1.75rem;
+  --radius-button: 1rem;
+  --shadow-photo: 0 1.5rem 4rem rgb(10 59 48 / 13%);
 
   --z-content: 1;
   --z-sticky: 20;

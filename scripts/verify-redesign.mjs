@@ -328,9 +328,9 @@ const interactionPage = await loadPage(interactionContext, [390, 844]);
 const journeyIntegrity = await interactionPage.evaluate(() => {
   const expected = {
     casa: [
-      'Entorno y llegada',
-      'Fachada',
-      'Living y comedor',
+      'Parque y llegada',
+      'Exterior',
+      'Sala de estar y comedor',
       'Cocina',
       'Dormitorio 1',
       'Dormitorio 2',
@@ -339,9 +339,16 @@ const journeyIntegrity = await interactionPage.evaluate(() => {
       'Baño 1',
       'Baño 2',
       'Patio',
-      'Parque, arroyo y entorno verde',
+      'Parque y arroyo',
     ],
-    departamento: ['Acceso y entorno', 'Living', 'Cocina', 'Dormitorio', 'Baño', 'Entorno verde'],
+    departamento: [
+      'Acceso privado',
+      'Sala de estar',
+      'Cocina',
+      'Dormitorio',
+      'Baño',
+      'Entorno natural',
+    ],
   };
 
   return Object.entries(expected).flatMap(([property, titles]) => {
@@ -353,7 +360,6 @@ const journeyIntegrity = await interactionPage.evaluate(() => {
       const number = index + 1;
       const imageRooms = JSON.parse(chapter.dataset.imageRooms ?? '[]');
       const heading = chapter.querySelector('h3')?.textContent?.trim();
-      const progress = chapter.querySelector('.room-chapter__progress')?.textContent?.trim();
       const gallery = chapter.querySelector('.horizontal-gallery');
       const previous = chapter.querySelector('[data-direction="previous"]');
       const next = chapter.querySelector('[data-direction="next"]');
@@ -365,9 +371,6 @@ const journeyIntegrity = await interactionPage.evaluate(() => {
       }
       if (Number(chapter.dataset.roomNumber) !== number) {
         issues.push(`${property} ${title}: número ${chapter.dataset.roomNumber}`);
-      }
-      if (!progress?.includes(String(number).padStart(2, '0'))) {
-        issues.push(`${property} ${title}: progreso ${progress}`);
       }
       if (gallery?.dataset.room !== title) {
         issues.push(`${property} ${title}: galería ${gallery?.dataset.room}`);
@@ -452,7 +455,10 @@ const galleryRoom = await interactionPage
 const visibleImageRoom = await interactionPage
   .locator('#casa-ambiente-3 .horizontal-gallery__image')
   .getAttribute('data-image-room');
-if (galleryRoom !== 'Living y comedor' || visibleImageRoom !== 'Living y comedor') {
+if (
+  galleryRoom !== 'Sala de estar y comedor' ||
+  visibleImageRoom !== 'Sala de estar y comedor'
+) {
   failures.push(`living gallery desynchronized: ${galleryRoom} / ${visibleImageRoom}`);
 }
 
