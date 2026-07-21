@@ -1,0 +1,42 @@
+---
+import { ArrowUpRight, MapPinned } from 'lucide-react';
+import ResponsivePropertyImage from '@/components/media/ResponsivePropertyImage.astro';
+import { contact } from '@/config/contact';
+import { journeys } from '@/data/journeys';
+
+const locationImage = journeys.casa.rooms[11].images[0];
+---
+
+<section
+  id="ubicacion"
+  class="location-card-section"
+  aria-labelledby="location-title"
+  data-nav-section="ubicacion"
+  data-nav-theme="light"
+>
+  <div class="location-card site-shell">
+    <figure class="location-card__media">
+      <ResponsivePropertyImage
+        image={locationImage}
+        sizes="(max-width: 767px) calc(100vw - 2.5rem), 58vw"
+        alt="El parque arbolado y el arroyo de Casa La Arbolada en Tandil."
+      />
+      <figcaption>
+        <span class="location-card__pin"><MapPinned size={21} strokeWidth={1.7} aria-hidden="true" /></span>
+        <span>Tandil · Buenos Aires</span>
+      </figcaption>
+    </figure>
+    <div class="location-card__copy">
+      <p class="eyebrow">Dónde estamos</p>
+      <h2 id="location-title">La Arbolada, Tandil</h2>
+      <p>Un entorno natural dentro de Tandil, con acceso directo y estacionamiento en el predio.</p>
+      <a href={contact.directionsUrl} target="_blank" rel="noopener noreferrer">
+        Cómo llegar
+        <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
+      </a>
+      <div class="location-card__coordinates" aria-hidden="true">
+        <span></span><span></span><i></i>
+      </div>
+    </div>
+  </div>
+</section>

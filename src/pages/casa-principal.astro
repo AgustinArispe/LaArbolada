@@ -1,0 +1,48 @@
+---
+import { Bath, BedDouble, CookingPot, Flame, House, Sofa, ThermometerSun, Tv, Wifi } from 'lucide-react';
+import Footer from '@/components/Footer.astro';
+import { WhatsAppBubble } from '@/components/contact/WhatsAppBubble';
+import { ImmersiveNavbar } from '@/components/navigation/ImmersiveNavbar';
+import PropertyPage from '@/components/property/PropertyPage.astro';
+import { journeys } from '@/data/journeys';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const title = 'Casa principal | Casa La Arbolada, Tandil';
+const description = 'Casa principal de La Arbolada en Tandil: 4 dormitorios, 7 camas, 2 baños, cocina equipada, hogar a leña y acceso al parque.';
+const amenities = [
+  { label: '4 dormitorios y 7 camas', Icon: BedDouble },
+  { label: '2 baños', Icon: Bath },
+  { label: 'Cocina equipada', Icon: CookingPot },
+  { label: 'Sala de estar y comedor', Icon: Sofa },
+  { label: 'Calefacción por radiadores', Icon: ThermometerSun },
+  { label: 'Hogar a leña', Icon: Flame },
+  { label: 'Wi-Fi', Icon: Wifi },
+  { label: 'Smart TV', Icon: Tv },
+  { label: 'Ropa de cama y toallas', Icon: House },
+];
+---
+
+<BaseLayout {title} {description}>
+  <ImmersiveNavbar client:load pageKind="property" currentPath="/casa-principal" />
+  <main id="contenido">
+    <PropertyPage
+      journey={journeys.casa}
+      eyebrow="La residencia principal"
+      subtitle="Piedra, madera y amplitud frente al parque."
+      heroFacts="4 dormitorios · 7 camas · 2 baños"
+      overview="La casa principal reúne dormitorios amplios, cocina equipada y áreas de estar conectadas con el parque. La calefacción por radiadores y el hogar a leña acompañan la estadía durante todo el año."
+      quickFacts={[
+        { value: '4', label: 'Dormitorios' },
+        { value: '7', label: 'Camas' },
+        { value: '2', label: 'Baños' },
+        { value: 'Incluido', label: 'Acceso al parque' },
+      ]}
+      {amenities}
+      transitionName="casa-principal-image"
+      otherHref="/alojamiento-independiente"
+      otherLabel="Ver el alojamiento independiente"
+    />
+  </main>
+  <Footer />
+  <WhatsAppBubble client:load />
+</BaseLayout>

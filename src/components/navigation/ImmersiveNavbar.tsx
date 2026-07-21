@@ -3,29 +3,47 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Menu, X } from 'lucide-react';
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react';
 
-const links = [
-  { href: '#amenities', label: 'Comodidades', section: 'amenities' },
-  { href: '#casa', label: 'Casa principal', section: 'casa' },
+type PageKind = 'home' | 'property';
+
+type Props = {
+  pageKind?: PageKind;
+  currentPath?: string;
+};
+
+const homeLinks = [
+  { href: '/#inicio', label: 'La Arbolada', section: 'inicio' },
+  { href: '/#comodidades', label: 'Comodidades', section: 'comodidades' },
+  { href: '/casa-principal', label: 'Casa principal', section: 'casa-principal', route: '/casa-principal' },
   {
-    href: '#alojamiento-independiente',
+    href: '/alojamiento-independiente',
     label: 'Alojamiento independiente',
     section: 'alojamiento-independiente',
+    route: '/alojamiento-independiente',
   },
-  { href: '#ubicacion', label: 'Ubicación', section: 'ubicacion' },
-  { href: '#contacto', label: 'Contacto', section: 'contacto' },
+  { href: '/#ubicacion', label: 'Ubicación', section: 'ubicacion' },
+  { href: '/#contacto', label: 'Contacto', section: 'contacto' },
+];
+
+const propertyLinks = [
+  { href: '/', label: 'La Arbolada', section: 'inicio', route: '/' },
+  { href: '#espacios', label: 'Espacios', section: 'espacios' },
+  { href: '#comodidades', label: 'Comodidades', section: 'comodidades' },
+  { href: '#galeria', label: 'Galería', section: 'galeria' },
+  { href: '#contacto', label: 'Consultar', section: 'contacto' },
 ];
 
 type NavTheme = 'photo' | 'light' | 'dark';
 
 function sectionAtViewport() {
-  const sampleY = Math.min(window.innerHeight * 0.38, 360);
+  const sampleY = Math.min(window.innerHeight * 0.35, 320);
   return document
     .elementsFromPoint(window.innerWidth / 2, sampleY)
     .map((element) => element.closest<HTMLElement>('[data-nav-section]'))
     .find((element): element is HTMLElement => Boolean(element));
 }
 
-export function ImmersiveNavbar() {
+export function ImmersiveNavbar({ pageKind = 'home', currentPath = '/' }: Props) {
+  const links = pageKind === 'home' ? homeLinks : propertyLinks;
   const [hidden, setHidden] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
   const [theme, setTheme] = useState<NavTheme>('photo');
@@ -45,14 +63,12 @@ export function ImmersiveNavbar() {
   useMotionValueEvent(scrollY, 'change', (latest) => {
     const previous = previousScroll.current;
     previousScroll.current = latest;
-
     syncVisibleSection();
 
     if (latest < 120) {
       setHidden(false);
       return;
     }
-
     if (Math.abs(latest - previous) < 8) return;
     setHidden(latest > previous);
   });
@@ -61,26 +77,31 @@ export function ImmersiveNavbar() {
     syncVisibleSection();
   }, []);
 
+  const isActive = (link: (typeof links)[number]) => {
+    if (link.route) return currentPath === link.route;
+    return activeSection === link.section;
+  };
+
   return (
     <motion.header
-      className={['immersive-nav', `immersive-nav--${theme}`].filter(Boolean).join(' ')}
+      className={`immersive-nav immersive-nav--${theme}`}
       animate={{
         transform: hidden && !menuOpen && !reducedMotion ? 'translateY(-100%)' : 'translateY(0%)',
       }}
       transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }}
     >
       <div className="immersive-nav__inner">
-        <a href="#inicio" className="immersive-nav__brand" aria-label="Casa La Arbolada, inicio">
+        <a href="/" className="immersive-nav__brand" aria-label="Casa La Arbolada, inicio">
           Casa La Arbolada
         </a>
 
         <nav className="immersive-nav__links" aria-label="Navegación principal">
           {links.map((link) => (
             <a
-              key={link.section}
+              key={link.href}
               href={link.href}
-              className={activeSection === link.section ? 'is-active' : ''}
-              aria-current={activeSection === link.section ? 'location' : undefined}
+              className={isActive(link) ? 'is-active' : ''}
+              aria-current={isActive(link) ? (link.route ? 'page' : 'location') : undefined}
             >
               {link.label}
             </a>
@@ -107,10 +128,11 @@ export function ImmersiveNavbar() {
               <nav className="mobile-menu__nav" aria-label="Navegación móvil">
                 {links.map((link) => (
                   <a
-                    key={link.section}
+                    key={link.href}
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className={activeSection === link.section ? 'is-active' : ''}
+                    className={isActive(link) ? 'is-active' : ''}
+                    aria-current={isActive(link) ? (link.route ? 'page' : 'location') : undefined}
                   >
                     <span>{link.label}</span>
                   </a>

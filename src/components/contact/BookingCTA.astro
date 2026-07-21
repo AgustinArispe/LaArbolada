@@ -1,0 +1,82 @@
+---
+import { ArrowUpRight, MapPinned } from 'lucide-react';
+import { contact, whatsappUrl } from '@/config/contact';
+import ResponsivePropertyImage from '@/components/media/ResponsivePropertyImage.astro';
+import { journeys } from '@/data/journeys';
+
+interface Props {
+  id?: string;
+  compact?: boolean;
+  heading?: string;
+  eyebrow?: string;
+  showImportantInfo?: boolean;
+}
+
+const {
+  id = 'contacto',
+  compact = false,
+  heading = 'Tu estadía empieza por una fecha.',
+  eyebrow = 'Planificá tu visita',
+  showImportantInfo = false,
+} = Astro.props;
+const contactImage = journeys.casa.rooms[2].images[0];
+---
+
+<section
+  {id}
+  class:list={['booking-cta', { 'booking-cta--compact': compact }]}
+  aria-labelledby={compact ? undefined : 'booking-title'}
+  data-nav-section="contacto"
+  data-nav-theme="dark"
+>
+  <div class="booking-cta__layout site-shell">
+    {
+      !compact && (
+        <figure class="booking-cta__media">
+          <ResponsivePropertyImage
+            image={contactImage}
+            sizes="(max-width: 767px) calc(100vw - 2.5rem), 42vw"
+            alt="Sala de estar y comedor de Casa La Arbolada."
+          />
+        </figure>
+      )
+    }
+    <div class="booking-cta__copy">
+      <p class="eyebrow">{eyebrow}</p>
+      {compact ? <h2>{heading}</h2> : <h2 id="booking-title">{heading}</h2>}
+      <p>Escribinos para conocer fechas disponibles y elegir el alojamiento indicado para tu estadía.</p>
+      <div class="booking-cta__actions">
+        <a
+          class="booking-action booking-action--primary"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Consultar disponibilidad
+          <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
+        </a>
+        {
+          !compact && (
+            <a
+              class="booking-action booking-action--secondary"
+              href={contact.directionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MapPinned size={20} strokeWidth={1.7} aria-hidden="true" />
+              Cómo llegar
+            </a>
+          )
+        }
+      </div>
+      {
+        showImportantInfo && (
+          <aside class="important-info" aria-label="Información importante">
+            <strong>Información importante</strong>
+            <span>No se aceptan mascotas.</span>
+          </aside>
+        )
+      }
+    </div>
+  </div>
+</section>

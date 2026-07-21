@@ -1,0 +1,42 @@
+---
+import ResponsivePropertyImage from '@/components/media/ResponsivePropertyImage.astro';
+import type { CuratedImage } from '@/data/journeys';
+
+interface Props {
+  title: string;
+  eyebrow: string;
+  subtitle: string;
+  facts: string;
+  image: CuratedImage;
+  transitionName: string;
+}
+
+const { title, eyebrow, subtitle, facts, image, transitionName } = Astro.props;
+---
+
+<section
+  id="inicio"
+  class="property-hero"
+  aria-labelledby="property-hero-title"
+  data-nav-section="espacios"
+  data-nav-theme="photo"
+  style={`--property-transition-name: ${transitionName}`}
+>
+  <figure>
+    <ResponsivePropertyImage
+      image={image}
+      sizes="100vw"
+      alt={image.alt}
+      loading="eager"
+      fetchpriority="high"
+    />
+    <span aria-hidden="true"></span>
+  </figure>
+  <div class="property-hero__copy site-shell">
+    <p>{eyebrow}</p>
+    <h1 id="property-hero-title"><span>{title}</span></h1>
+    <p>{subtitle}</p>
+    <strong>{facts}</strong>
+    <a href="#espacios">Ver los espacios</a>
+  </div>
+</section>

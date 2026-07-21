@@ -12,9 +12,10 @@ interface Props {
   images: CuratedImage[];
   theme: 'warm' | 'forest';
   presentation: Presentation;
+  navSection?: string;
 }
 
-const { property, room, roomNumber, title, description, images, theme, presentation } = Astro.props;
+const { property, room, roomNumber, title, description, images, theme, presentation, navSection } = Astro.props;
 
 const chapterId = `${property}-ambiente-${roomNumber}`;
 ---
@@ -23,7 +24,7 @@ const chapterId = `${property}-ambiente-${roomNumber}`;
   id={chapterId}
   class:list={['room-chapter', `room-chapter--${theme}`, `room-chapter--${presentation}`]}
   aria-labelledby={`${chapterId}-title`}
-  data-nav-section={property === 'casa' ? 'casa' : 'alojamiento-independiente'}
+  data-nav-section={navSection ?? (property === 'casa' ? 'casa' : 'alojamiento-independiente')}
   data-nav-theme={theme === 'forest' ? 'dark' : 'light'}
   data-property={property}
   data-room={room}

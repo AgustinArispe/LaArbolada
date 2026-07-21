@@ -1,0 +1,47 @@
+---
+import { Bath, BedDouble, CookingPot, House, KeyRound, Sofa, Tv, Wifi } from 'lucide-react';
+import Footer from '@/components/Footer.astro';
+import { WhatsAppBubble } from '@/components/contact/WhatsAppBubble';
+import { ImmersiveNavbar } from '@/components/navigation/ImmersiveNavbar';
+import PropertyPage from '@/components/property/PropertyPage.astro';
+import { journeys } from '@/data/journeys';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const title = 'Alojamiento independiente | Casa La Arbolada, Tandil';
+const description = 'Alojamiento independiente de La Arbolada en Tandil con dormitorio, baño, sala de estar, cocina y acceso privado dentro del mismo parque.';
+const amenities = [
+  { label: 'Dormitorio equipado', Icon: BedDouble },
+  { label: 'Baño privado', Icon: Bath },
+  { label: 'Cocina propia', Icon: CookingPot },
+  { label: 'Sala de estar', Icon: Sofa },
+  { label: 'Acceso privado', Icon: KeyRound },
+  { label: 'Wi-Fi', Icon: Wifi },
+  { label: 'Smart TV', Icon: Tv },
+  { label: 'Ropa de cama y toallas', Icon: House },
+];
+---
+
+<BaseLayout {title} {description}>
+  <ImmersiveNavbar client:load pageKind="property" currentPath="/alojamiento-independiente" />
+  <main id="contenido">
+    <PropertyPage
+      journey={journeys.departamento}
+      eyebrow="Alojamiento independiente"
+      subtitle="Privacidad y confort dentro del mismo paisaje."
+      heroFacts="Dormitorio · baño · cocina · sala de estar"
+      overview="Un espacio privado y equipado dentro del mismo predio. Cuenta con dormitorio, baño, cocina, sala de estar y acceso propio, manteniendo la conexión con el parque y el entorno natural de La Arbolada."
+      quickFacts={[
+        { value: '1', label: 'Dormitorio' },
+        { value: 'Privado', label: 'Baño' },
+        { value: 'Equipada', label: 'Cocina' },
+        { value: 'Propio', label: 'Acceso' },
+      ]}
+      {amenities}
+      transitionName="alojamiento-independiente-image"
+      otherHref="/casa-principal"
+      otherLabel="Ver la casa principal"
+    />
+  </main>
+  <Footer />
+  <WhatsAppBubble client:load />
+</BaseLayout>

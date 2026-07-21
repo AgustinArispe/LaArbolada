@@ -1,0 +1,43 @@
+---
+import ResponsivePropertyImage from '@/components/media/ResponsivePropertyImage.astro';
+import { journeys } from '@/data/journeys';
+
+const landscape = journeys.casa.rooms[11].images[0];
+const detail = journeys.casa.rooms[10].images[3];
+const features = ['Parque arbolado', 'Arroyo', 'Parrilla', 'Horno de barro', 'Patio', 'Estacionamiento amplio'];
+---
+
+<section
+  class="outdoor-experience"
+  aria-labelledby="outdoor-title"
+  data-nav-section="comodidades"
+  data-nav-theme="light"
+>
+  <div class="outdoor-experience__layout site-shell">
+    <header class="outdoor-experience__copy">
+      <p class="eyebrow">El entorno compartido</p>
+      <h2 id="outdoor-title">Afuera, el tiempo cambia de ritmo.</h2>
+      <p>Árboles maduros, piedra y agua envuelven ambos alojamientos en un mismo paisaje.</p>
+      <ul aria-label="Experiencias exteriores">
+        {features.map((feature) => <li>{feature}</li>)}
+      </ul>
+    </header>
+
+    <div class="outdoor-experience__media">
+      <figure class="outdoor-experience__landscape" data-parallax-media>
+        <ResponsivePropertyImage
+          image={landscape}
+          sizes="(max-width: 767px) calc(100vw - 2.5rem), 68vw"
+          alt="Parque arbolado y arroyo de Casa La Arbolada."
+        />
+      </figure>
+      <figure class="outdoor-experience__detail">
+        <ResponsivePropertyImage
+          image={detail}
+          sizes="(max-width: 767px) 46vw, 25vw"
+          alt="Patio y espacios exteriores de Casa La Arbolada."
+        />
+      </figure>
+    </div>
+  </div>
+</section>

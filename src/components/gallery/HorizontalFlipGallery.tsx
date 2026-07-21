@@ -58,6 +58,8 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
   const counterTimerRef = useRef<number | null>(null);
   const dragRef = useRef<{ id: number; x: number; time: number } | null>(null);
   const thumbnailRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const thumbnailsContainerRef = useRef<HTMLDivElement | null>(null);
+  const thumbnailSyncReadyRef = useRef(false);
   const reducedMotion = useReducedMotion();
   const instanceId = useId();
 
@@ -81,12 +83,32 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
   }, [currentIndex, images]);
 
   useEffect(() => {
-    thumbnailRefs.current[displayIndex]?.scrollIntoView({
+    if (!hydrated) return;
+
+    // Hydrating a gallery must never reposition the document. The previous
+    // scrollIntoView call could move the whole page when an island became visible.
+    if (!thumbnailSyncReadyRef.current) {
+      thumbnailSyncReadyRef.current = true;
+      return;
+    }
+
+    const container = thumbnailsContainerRef.current;
+    const thumbnail = thumbnailRefs.current[displayIndex];
+    if (!container || !thumbnail) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const thumbnailRect = thumbnail.getBoundingClientRect();
+    const targetLeft =
+      container.scrollLeft +
+      thumbnailRect.left -
+      containerRect.left -
+      (containerRect.width - thumbnailRect.width) / 2;
+
+    container.scrollTo({
+      left: Math.max(0, targetLeft),
       behavior: reducedMotion ? 'auto' : 'smooth',
-      block: 'nearest',
-      inline: 'nearest',
     });
-  }, [displayIndex, reducedMotion]);
+  }, [displayIndex, hydrated, reducedMotion]);
 
   useEffect(
     () => () => {
@@ -258,7 +280,11 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
         </div>
 
         {images.length > 1 && (
-          <div className="horizontal-gallery__thumbnails" aria-label={`Fotografías de ${room}`}>
+          <div
+            ref={thumbnailsContainerRef}
+            className="horizontal-gallery__thumbnails"
+            aria-label={`Fotografías de ${room}`}
+          >
             {images.map((image, index) => (
               <button
                 key={image.id}

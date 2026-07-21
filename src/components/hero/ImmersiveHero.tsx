@@ -161,15 +161,16 @@ export function ImmersiveHero({ frames }: Props) {
             <span className="immersive-hero__title-line">
               <span data-hero-line>Casa</span>
             </span>
+            {' '}
             <span className="immersive-hero__title-line">
               <span data-hero-line>La Arbolada</span>
             </span>
           </h1>
           <div className="immersive-hero__support">
-            <p data-hero-support>Una estadía privada entre piedra, árboles y agua.</p>
+            <p data-hero-support>Una estadía entre piedra, árboles y agua.</p>
             <p data-hero-support>Alquiler temporal en Tandil.</p>
-            <a href="#casa" data-hero-support>
-              Ver la propiedad
+            <a href="#alojamientos" data-hero-support>
+              Conocer los alojamientos
               <ArrowDownRight size={20} strokeWidth={1.6} aria-hidden="true" />
             </a>
           </div>

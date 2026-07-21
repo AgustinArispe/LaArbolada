@@ -1,0 +1,81 @@
+---
+import { ArrowUpRight } from 'lucide-react';
+import ResponsivePropertyImage from '@/components/media/ResponsivePropertyImage.astro';
+import { whatsappUrl } from '@/config/contact';
+import { journeys } from '@/data/journeys';
+
+const choices = [
+  {
+    href: '/casa-principal',
+    eyebrow: 'La residencia',
+    title: 'Casa principal',
+    copy: 'Amplitud, piedra, madera y vistas abiertas al parque.',
+    facts: '4 dormitorios · 7 camas · 2 baños',
+    action: 'Ver la casa principal',
+    image: journeys.casa.overviewImage,
+    transitionName: 'casa-principal-image',
+  },
+  {
+    href: '/alojamiento-independiente',
+    eyebrow: 'Otra forma de alojarse',
+    title: 'Alojamiento independiente',
+    copy: 'Un espacio privado y equipado dentro del mismo entorno.',
+    facts: 'Dormitorio · baño · cocina · sala de estar',
+    action: 'Ver el alojamiento',
+    image: journeys.departamento.rooms[1].images[0],
+    transitionName: 'alojamiento-independiente-image',
+  },
+];
+---
+
+<section
+  id="alojamientos"
+  class="accommodation-selector"
+  aria-labelledby="accommodation-selector-title"
+  data-nav-section="inicio"
+  data-nav-theme="dark"
+>
+  <header class="accommodation-selector__header site-shell">
+    <p class="eyebrow">Elegí tu espacio</p>
+    <h2 id="accommodation-selector-title">Dos escalas de estadía.<br />Un mismo paisaje.</h2>
+  </header>
+
+  <div class="accommodation-selector__grid site-shell">
+    {
+      choices.map((choice) => (
+        <a
+          class="accommodation-choice"
+          href={choice.href}
+          aria-label={`${choice.action}. ${choice.facts}`}
+        >
+          <figure style={`--choice-transition-name: ${choice.transitionName}`}>
+            <ResponsivePropertyImage
+              image={choice.image}
+              sizes="(max-width: 767px) calc(100vw - 2.5rem), 48vw"
+              alt={choice.image.alt}
+            />
+            <span class="accommodation-choice__shade" aria-hidden="true"></span>
+            <figcaption>
+              <p>{choice.eyebrow}</p>
+              <h3>{choice.title}</h3>
+              <span>{choice.copy}</span>
+              <small>{choice.facts}</small>
+              <strong>
+                {choice.action}
+                <ArrowUpRight size={21} strokeWidth={1.7} aria-hidden="true" />
+              </strong>
+            </figcaption>
+          </figure>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="selector-booking site-shell">
+    <p>¿Ya sabés qué fechas necesitás?</p>
+    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+      Consultar disponibilidad
+      <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
+    </a>
+  </div>
+</section>

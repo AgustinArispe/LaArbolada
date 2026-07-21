@@ -1,25 +1,28 @@
 ---
 import Footer from '@/components/Footer.astro';
-import AmenitiesSection from '@/components/amenities/AmenitiesSection.astro';
-import ImmersiveContact from '@/components/contact/ImmersiveContact.astro';
+import BookingCTA from '@/components/contact/BookingCTA.astro';
 import { WhatsAppBubble } from '@/components/contact/WhatsAppBubble';
+import AccommodationSelector from '@/components/home/AccommodationSelector.astro';
+import CompactServices from '@/components/home/CompactServices.astro';
+import OutdoorExperience from '@/components/home/OutdoorExperience.astro';
+import PropertyIntroduction from '@/components/home/PropertyIntroduction.astro';
 import { ImmersiveHero } from '@/components/hero/ImmersiveHero';
-import PropertyJourney from '@/components/journey/PropertyJourney.astro';
-import PropertyPrelude from '@/components/journey/PropertyPrelude.astro';
+import LocationCard from '@/components/location/LocationCard.astro';
 import { ImmersiveNavbar } from '@/components/navigation/ImmersiveNavbar';
-import { heroFrames, journeys } from '@/data/journeys';
+import { heroFrames } from '@/data/journeys';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
 <BaseLayout>
-  <ImmersiveNavbar client:load />
+  <ImmersiveNavbar client:load currentPath="/" />
   <main id="contenido">
     <ImmersiveHero client:load frames={heroFrames} />
-    <PropertyPrelude />
-    <AmenitiesSection />
-    <PropertyJourney journey={journeys.casa} />
-    <PropertyJourney journey={journeys.departamento} />
-    <ImmersiveContact />
+    <PropertyIntroduction />
+    <AccommodationSelector />
+    <OutdoorExperience />
+    <CompactServices />
+    <LocationCard />
+    <BookingCTA showImportantInfo />
   </main>
   <Footer />
   <WhatsAppBubble client:load />

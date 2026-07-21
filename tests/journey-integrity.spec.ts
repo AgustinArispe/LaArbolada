@@ -1,235 +1,218 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const baseUrl = process.env.SITE_URL ?? 'http://127.0.0.1:4321';
+const whatsappUrl =
+  'https://wa.me/5492494567808?text=Hola%2C%20quisiera%20consultar%20disponibilidad%20en%20Casa%20La%20Arbolada.';
+const directionsUrl =
+  'https://www.google.com/maps/search/?api=1&query=Casa+La+Arbolada%2C+Tandil%2C+Buenos+Aires';
 
-const expected = {
-  casa: [
-    'Parque y llegada',
-    'Exterior',
-    'Sala de estar y comedor',
-    'Cocina',
-    'Dormitorio 1',
-    'Dormitorio 2',
-    'Dormitorio 3',
-    'Dormitorio 4',
-    'Baño 1',
-    'Baño 2',
-    'Patio',
-    'Parque y arroyo',
-  ],
-  departamento: [
-    'Acceso privado',
-    'Sala de estar',
-    'Cocina',
-    'Dormitorio',
-    'Baño',
-    'Entorno natural',
-  ],
-} as const;
+async function goto(page: Page, path: string) {
+  await page.goto(`${baseUrl}${path}`, { waitUntil: 'networkidle' });
+}
 
-test.use({
-  viewport: { width: 390, height: 844 },
-  contextOptions: { reducedMotion: 'no-preference' },
+test.use({ viewport: { width: 390, height: 844 } });
+
+test('homepage is concise and links to both crawlable property routes', async ({ page }) => {
+  await goto(page, '/');
+  await expect(page.locator('h1')).toContainText('Casa La Arbolada');
+  await expect(page.locator('.room-chapter')).toHaveCount(0);
+  await expect(page.locator('.horizontal-gallery')).toHaveCount(0);
+  await expect(page.locator('main > section')).toHaveCount(6);
+  await expect(page.locator('.immersive-nav__links a.is-active')).toHaveCount(1);
+  await expect(page.locator('.immersive-nav__links a.is-active')).toHaveAttribute('href', '/#inicio');
+  await expect(page.getByRole('link', { name: /Ver la casa principal/ })).toHaveAttribute(
+    'href',
+    '/casa-principal',
+  );
+  await expect(page.getByRole('link', { name: /Ver el alojamiento/ })).toHaveAttribute(
+    'href',
+    '/alojamiento-independiente',
+  );
+  await expect(page.locator('body')).not.toContainText(/Ver mapa|View map/i);
+  await expect(page.locator('iframe')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Cómo llegar' }).first()).toHaveAttribute(
+    'href',
+    directionsUrl,
+  );
 });
 
-test.beforeEach(async ({ page }) => {
-  await page.goto(baseUrl, { waitUntil: 'networkidle' });
-});
+test('dedicated routes work directly and keep complete, non-duplicated galleries', async ({ page }) => {
+  const expected = [
+    { path: '/casa-principal', title: 'Casa principal', rooms: 12, property: 'casa' },
+    {
+      path: '/alojamiento-independiente',
+      title: 'Alojamiento independiente',
+      rooms: 6,
+      property: 'departamento',
+    },
+  ];
 
-test('page hierarchy places amenities between introduction and main house', async ({ page }) => {
-  const order = await page
-    .locator('main > *')
-    .evaluateAll((elements) => elements.map((element) => element.id || element.className));
-  const introIndex = order.findIndex((value) => String(value).includes('property-prelude'));
-  const amenitiesIndex = order.indexOf('amenities');
-  const houseIndex = await page
-    .locator('#casa')
-    .evaluate((element) =>
-      [...(element.parentElement?.parentElement?.children ?? [])].indexOf(element.parentElement!),
+  for (const route of expected) {
+    await goto(page, route.path);
+    await expect(page.locator('h1')).toHaveText(route.title);
+    await expect(page.locator(`.room-chapter[data-property="${route.property}"]`)).toHaveCount(
+      route.rooms,
     );
-  expect(introIndex).toBeGreaterThan(-1);
-  expect(amenitiesIndex).toBeGreaterThan(introIndex);
-  expect(houseIndex).toBeGreaterThan(amenitiesIndex);
-});
-
-test('las comodidades confirmadas se muestran en español', async ({ page }) => {
-  const amenities = page.locator('#amenities');
-  const amenitiesText = (await amenities.innerText()).replace(/\s+/g, ' ');
-  for (const text of [
-    '4 habitaciones',
-    '7 camas',
-    '8 personas',
-    '1 habitación · 3 camas',
-    'Alojamiento independiente',
-    'Calefacción por radiadores',
-    'Hogar a leña',
-    'Wi-Fi',
-    'Smart TV',
-    'Ropa de cama incluida',
-    'Toallas incluidas',
-    'Parrilla',
-    'Horno de barro',
-    'Disponibles para uso de los huéspedes',
-    'Amplio estacionamiento interno',
-    'Parque arbolado',
-    'Arroyo',
-  ]) {
-    expect(amenitiesText.toLowerCase()).toContain(text.toLowerCase());
-  }
-  await expect(amenities).not.toContainText(/pets|mascotas/i);
-  await expect(page.locator('#casa')).toContainText('4 habitaciones · 7 camas · hasta 8 personas');
-  await expect(page.locator('#alojamiento-independiente')).toContainText('1 habitación · 3 camas');
-});
-
-test('el desplazamiento nativo avanza con fluidez y no queda bloqueado', async ({ page }) => {
-  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
-  await page.mouse.wheel(0, 720);
-  await page.waitForTimeout(350);
-
-  const state = await page.evaluate(() => ({
-    scrollY,
-    bodyOverflow: getComputedStyle(document.body).overflowY,
-    heroHeight: document.querySelector('.immersive-hero')?.getBoundingClientRect().height ?? 0,
-    viewportHeight: innerHeight,
-  }));
-
-  expect(state.scrollY).toBeGreaterThan(100);
-  expect(state.bodyOverflow).not.toBe('hidden');
-  expect(state.heroHeight).toBeLessThanOrEqual(state.viewportHeight * 2.31);
-});
-
-test('each room keeps its title, sequence, images, and manual presentation synchronized', async ({
-  page,
-}) => {
-  for (const [property, titles] of Object.entries(expected)) {
-    const chapters = page.locator(`.room-chapter[data-property="${property}"]`);
-    await expect(chapters).toHaveCount(titles.length);
-
-    for (const [index, title] of titles.entries()) {
-      const chapter = chapters.nth(index);
-      await expect(chapter).toHaveAttribute('data-room', title);
-      await expect(chapter).toHaveAttribute('data-room-number', String(index + 1));
-      await expect(chapter.locator('h3')).toHaveText(title);
-      await expect(chapter.locator('.room-chapter__progress')).toHaveCount(0);
-      await expect(chapter.locator('.room-chapter__image-count')).toHaveCount(0);
-      await expect(chapter.locator('.horizontal-gallery')).toHaveAttribute('data-room', title);
-      const imageRooms = JSON.parse((await chapter.getAttribute('data-image-rooms')) ?? '[]');
-      expect(imageRooms.every((room: string) => room === title)).toBeTruthy();
-      expect(await chapter.getAttribute('class')).toMatch(
-        /room-chapter--(hero-media|framed|split|dark|panoramic|detail)/,
-      );
-    }
+    await expect(page.locator('.booking-action--primary')).toHaveCount(2);
+    const imageIds = await page.locator('.room-chapter').evaluateAll((chapters) =>
+      chapters.flatMap((chapter) => JSON.parse(chapter.getAttribute('data-image-ids') ?? '[]')),
+    );
+    expect(new Set(imageIds).size).toBe(imageIds.length);
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(
+      process.env.PUBLIC_SITE_URL ? 1 : 0,
+    );
+    await expect(page).toHaveTitle(new RegExp(`${route.title}.*Casa La Arbolada`));
+    await expect(page.locator('nav a[aria-current="location"]').first()).toHaveAttribute(
+      'href',
+      '#espacios',
+    );
   }
 });
 
-test('gallery controls are symmetrical and frame remains static through transition', async ({
-  page,
-}) => {
-  const chapter = page.locator('#casa-ambiente-3');
-  await chapter.scrollIntoViewIfNeeded();
-  const gallery = chapter.locator('.horizontal-gallery');
-  const next = chapter.getByRole('button', { name: 'Fotografía siguiente' });
-  const counter = chapter.locator('.horizontal-gallery__status');
-  const frame = chapter.locator('.horizontal-gallery__frame');
-
-  const dimensions = await page.locator('.gallery-navigation-button').evaluateAll((buttons) =>
-    buttons.slice(0, 2).map((button) => {
-      const style = getComputedStyle(button);
-      return {
-        width: style.width,
-        height: style.height,
-        padding: style.padding,
-        border: style.borderWidth,
-        radius: style.borderRadius,
-      };
-    }),
-  );
-  expect(dimensions[0]).toEqual(dimensions[1]);
-  const counterWidth = await counter.evaluate((element) => getComputedStyle(element).width);
-  await next.click();
-  await expect(gallery).toHaveAttribute('data-transitioning', 'true');
-  expect(await frame.evaluate((element) => getComputedStyle(element).transform)).toBe('none');
-  await expect(gallery).toHaveAttribute('data-transitioning', 'false');
-  expect(await counter.evaluate((element) => getComputedStyle(element).width)).toBe(counterWidth);
-  await expect(counter).toContainText('02 / 04');
-  await expect(chapter.locator('.horizontal-gallery__image')).toHaveAttribute(
-    'data-image-room',
-    'Sala de estar y comedor',
-  );
+test('history navigation and real route anchors remain functional', async ({ page }) => {
+  await goto(page, '/');
+  await page.getByRole('link', { name: /Ver la casa principal/ }).click();
+  await expect(page).toHaveURL(/\/casa-principal$/);
+  await page.goBack({ waitUntil: 'networkidle' });
+  await expect(page).toHaveURL(new RegExp(`${baseUrl}/?$`));
+  await page.goForward({ waitUntil: 'networkidle' });
+  await expect(page).toHaveURL(/\/casa-principal$/);
 });
 
-test('thumbnails, swipe, keyboard, and lightbox select the correct image', async ({ page }) => {
+test('mobile menu traps focus, closes cleanly, and uses route-aware links', async ({ page }) => {
+  await goto(page, '/casa-principal');
+  await page.getByRole('button', { name: 'Abrir menú' }).click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toBeVisible();
+  await page.keyboard.press('Tab');
+  expect(await dialog.evaluate((element) => element.contains(document.activeElement))).toBeTruthy();
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+  await expect(page.getByRole('link', { name: 'La Arbolada' }).first()).toHaveAttribute('href', '/');
+});
+
+test('gallery controls, keyboard navigation, thumbnails, and lightbox work', async ({ page }) => {
+  await goto(page, '/casa-principal');
   const chapter = page.locator('#casa-ambiente-3');
   await chapter.scrollIntoViewIfNeeded();
   const gallery = chapter.locator('.horizontal-gallery');
-  const secondThumbnail = chapter.getByRole('button', { name: 'Ver fotografía 2 de 4' });
-  await secondThumbnail.click();
+  await expect(gallery).toHaveAttribute('data-gallery-total', '4');
+  await expect(page.locator('.whatsapp-bubble')).toHaveCSS('visibility', 'hidden');
+  await chapter.getByRole('button', { name: 'Ver fotografía 2 de 4' }).click();
   await expect(gallery).toHaveAttribute('data-gallery-index', '2');
-  await expect(secondThumbnail).toHaveAttribute('aria-current', 'true');
   await expect(gallery).toHaveAttribute('data-transitioning', 'false');
-
   await gallery.focus();
   await page.keyboard.press('ArrowRight');
   await expect(gallery).toHaveAttribute('data-gallery-index', '3');
   await expect(gallery).toHaveAttribute('data-transitioning', 'false');
-
-  const frame = chapter.locator('.horizontal-gallery__frame');
-  const box = await frame.boundingBox();
-  if (!box) throw new Error('Gallery frame missing');
-  await page.mouse.move(box.x + box.width * 0.78, box.y + box.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(box.x + box.width * 0.2, box.y + box.height / 2, { steps: 6 });
-  await page.mouse.up();
-  await expect(gallery).toHaveAttribute('data-gallery-index', '4');
-  await expect(gallery).toHaveAttribute('data-transitioning', 'false');
-
-  const imageId = await chapter.locator('.horizontal-gallery__image').getAttribute('data-image-id');
-  await chapter
-    .getByRole('button', { name: /Abrir Sala de estar y comedor en pantalla completa/ })
-    .click();
-  const dialog = page.getByRole('dialog');
-  await expect(dialog).toBeVisible();
-  await expect(dialog.locator('.gallery-dialog__media img')).toHaveAttribute(
-    'data-image-id',
-    imageId ?? '',
-  );
+  await chapter.getByRole('button', { name: /Abrir Sala de estar y comedor/ }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
   await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).toBeHidden();
 });
 
-test('mobile menu, WhatsApp, and equal contact actions work', async ({ page }) => {
-  await page.getByRole('button', { name: 'Abrir menú' }).click();
-  await expect(page.getByRole('dialog')).toBeVisible();
-  await page.getByRole('link', { name: 'Comodidades' }).click();
-  await expect(page.getByRole('dialog')).toBeHidden();
+test('slow scrolling and gallery hydration never reposition the document', async ({ page }) => {
+  await goto(page, '/casa-principal');
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+  });
 
-  const url =
-    'https://wa.me/5492494567808?text=Hola%2C%20quisiera%20consultar%20disponibilidad%20en%20Casa%20La%20Arbolada.';
-  await expect(page.locator('.whatsapp-bubble')).toHaveAttribute('href', url);
-  await expect(page.locator('.contact-panel__action--primary')).toHaveAttribute('href', url);
+  for (let step = 0; step < 24; step += 1) {
+    const before = await page.evaluate(() => window.scrollY);
+    await page.mouse.wheel(0, 96);
+    await page.waitForTimeout(90);
+    const after = await page.evaluate(() => window.scrollY);
+    expect(after).toBeGreaterThanOrEqual(before);
+    expect(after - before).toBeLessThanOrEqual(180);
+  }
+
+  const chapter = page.locator('#casa-ambiente-3');
+  await chapter.scrollIntoViewIfNeeded();
+  const beforeThumbnail = await page.evaluate(() => window.scrollY);
+  await chapter.getByRole('button', { name: 'Ver fotografía 2 de 4' }).click();
+  await expect(chapter.locator('.horizontal-gallery')).toHaveAttribute(
+    'data-transitioning',
+    'false',
+  );
+  const afterThumbnail = await page.evaluate(() => window.scrollY);
+  expect(Math.abs(afterThumbnail - beforeThumbnail)).toBeLessThanOrEqual(1);
+});
+
+test('WhatsApp is branded, exact, non-overlapping, and contact actions are accessible', async ({ page }) => {
+  await goto(page, '/');
   const bubble = page.locator('.whatsapp-bubble');
-  await expect(bubble).toBeVisible();
-  await page.locator('.contact-panel__action--primary').scrollIntoViewIfNeeded();
+  await expect(bubble).toHaveAttribute('href', whatsappUrl);
+  await expect(bubble).toHaveAttribute('target', '_blank');
+  await expect(bubble).toHaveAttribute('rel', 'noopener noreferrer');
+  await expect(bubble.locator('svg path')).toHaveCount(1);
+  const dimensions = await bubble.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    return { width: rect.width, height: rect.height, radius: getComputedStyle(element).borderRadius };
+  });
+  expect(dimensions.width).toBe(58);
+  expect(dimensions.height).toBe(58);
+  expect(dimensions.radius).toBe('50%');
+
+  const cta = page.locator('.booking-action--primary').last();
+  await expect(cta).toHaveAttribute('href', whatsappUrl);
+  await cta.scrollIntoViewIfNeeded();
   await expect(bubble).toHaveCSS('pointer-events', 'none');
   await expect(bubble).toHaveCSS('visibility', 'hidden');
-  const primary = await page.locator('.contact-panel__action--primary').boundingBox();
-  const secondary = await page.locator('.contact-panel__action--secondary').boundingBox();
-  expect(primary?.height).toBe(secondary?.height);
 });
 
-test('mobile layout has no overflow or undersized controls', async ({ page }) => {
+for (const path of ['/', '/casa-principal', '/alojamiento-independiente']) {
+  test(`${path} has no overflow, broken images, undersized controls, or console errors`, async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    page.on('console', (message) => {
+      if (message.type() === 'error') errors.push(message.text());
+    });
+    await goto(page, path);
+    await page.evaluate(async () => {
+      for (let top = 0; top < document.documentElement.scrollHeight; top += innerHeight) {
+        scrollTo(0, top);
+        await new Promise((resolve) => setTimeout(resolve, 20));
+      }
+      scrollTo(0, 0);
+    });
+    const result = await page.evaluate(() => ({
+      overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      brokenImages: [...document.images].filter((image) => image.complete && image.naturalWidth === 0).length,
+      undersized: [...document.querySelectorAll<HTMLElement>('button, a')]
+        .filter((element) => {
+          const rect = element.getBoundingClientRect();
+          return rect.width > 0 && rect.height > 0 && (rect.width < 44 || rect.height < 44);
+        })
+        .map((element) => element.getAttribute('aria-label') || element.textContent?.trim()),
+    }));
+    expect(result.overflow).toBeLessThanOrEqual(1);
+    expect(result.brokenImages).toBe(0);
+    expect(result.undersized).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+}
+
+test('reduced motion disables long hero and route animations', async ({ browser }) => {
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    reducedMotion: 'reduce',
+  });
+  const page = await context.newPage();
+  await goto(page, '/');
   const result = await page.evaluate(() => ({
-    overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    undersized: [...document.querySelectorAll('button, a')]
-      .filter((element) => {
-        const rect = element.getBoundingClientRect();
-        return rect.width > 0 && rect.height > 0 && (rect.width < 44 || rect.height < 44);
-      })
-      .map((element) => element.getAttribute('aria-label') || element.textContent?.trim()),
-    smallBody: [...document.querySelectorAll('main p, main li')]
-      .filter((element) => Number.parseFloat(getComputedStyle(element).fontSize) < 18)
-      .map((element) => element.className),
+    heroHeight: document.querySelector('.immersive-hero')?.getBoundingClientRect().height,
+    viewportHeight: innerHeight,
+    visibleFrames: [...document.querySelectorAll('.immersive-hero__frame')].filter(
+      (element) => getComputedStyle(element).display !== 'none',
+    ).length,
+    bubbleAnimations: getComputedStyle(document.querySelector('.whatsapp-bubble')!).animationDuration,
   }));
-  expect(result.overflow).toBeLessThanOrEqual(1);
-  expect(result.undersized).toEqual([]);
-  expect(result.smallBody).toEqual([]);
+  expect(result.heroHeight).toBe(result.viewportHeight);
+  expect(result.visibleFrames).toBe(1);
+  expect(['1e-05s', '0.01ms']).toContain(result.bubbleAnimations.split(',')[0].trim());
+  await context.close();
 });

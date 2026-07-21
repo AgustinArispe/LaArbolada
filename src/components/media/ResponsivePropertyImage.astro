@@ -1,0 +1,34 @@
+---
+import type { CuratedImage } from '@/data/journeys';
+
+interface Props {
+  image: CuratedImage;
+  sizes: string;
+  alt?: string;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'low' | 'auto';
+}
+
+const {
+  image,
+  sizes,
+  alt = image.alt,
+  class: className,
+  loading = 'lazy',
+  fetchpriority = 'auto',
+} = Astro.props;
+---
+
+<img
+  class={className}
+  src={image.sources.desktop}
+  srcset={`${image.sources.mobile} 900w, ${image.sources.desktop} 1600w${image.sources.large ? `, ${image.sources.large} 2400w` : ''}`}
+  {sizes}
+  {alt}
+  {loading}
+  fetchpriority={fetchpriority}
+  decoding="async"
+  width="1600"
+  height="1000"
+/>

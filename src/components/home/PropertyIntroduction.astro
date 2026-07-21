@@ -1,0 +1,62 @@
+---
+import ResponsivePropertyImage from '@/components/media/ResponsivePropertyImage.astro';
+import { journeys } from '@/data/journeys';
+
+const primaryImage = journeys.casa.rooms[0].images[1];
+const detailImage = journeys.casa.rooms[11].images[3];
+const summary = [
+  ['4', 'dormitorios'],
+  ['7', 'camas'],
+  ['2', 'baños'],
+  ['2', 'opciones de alojamiento'],
+  ['Wi-Fi', 'incluido'],
+  ['Estacionamiento', 'dentro del predio'],
+];
+---
+
+<section
+  class="property-introduction"
+  aria-labelledby="property-introduction-title"
+  data-nav-section="inicio"
+  data-nav-theme="light"
+>
+  <div class="property-introduction__layout site-shell">
+    <div class="property-introduction__media" data-reveal-media>
+      <figure class="property-introduction__primary">
+        <ResponsivePropertyImage
+          image={primaryImage}
+          sizes="(max-width: 767px) calc(100vw - 2.5rem), 50vw"
+          alt="Ingreso arbolado a Casa La Arbolada junto al arroyo."
+        />
+      </figure>
+      <figure class="property-introduction__detail">
+        <ResponsivePropertyImage
+          image={detailImage}
+          sizes="(max-width: 767px) 38vw, 18vw"
+          alt="Detalle del parque visto desde Casa La Arbolada."
+        />
+      </figure>
+    </div>
+
+    <div class="property-introduction__copy">
+      <p class="eyebrow">Casa La Arbolada · Tandil</p>
+      <h2 id="property-introduction-title">Una propiedad, dos formas de habitarla.</h2>
+      <p>
+        La Arbolada reúne una casa principal y un alojamiento independiente dentro del mismo
+        predio, rodeados por parque, piedra y arroyo.
+      </p>
+      <p>Cada espacio ofrece privacidad y confort, con acceso al mismo entorno natural.</p>
+    </div>
+  </div>
+
+  <div class="property-summary site-shell" aria-label="Resumen de la propiedad">
+    {
+      summary.map(([value, label]) => (
+        <div class="property-summary__item">
+          <strong>{value}</strong>
+          <span>{label}</span>
+        </div>
+      ))
+    }
+  </div>
+</section>
