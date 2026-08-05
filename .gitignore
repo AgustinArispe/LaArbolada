@@ -1,5 +1,7 @@
 # build output
 dist/
+dist-original/
+dist-gemini/
 
 # Original photographs downloaded from Google Drive. Processed assets remain tracked.
 assets-raw/
@@ -13,12 +15,20 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+reports/preview.*.log
+reports/screenshots/
+test-results/
 pnpm-debug.log*
 
 
 # environment variables
 .env
-.env.production
+.env.*
+!.env.example
+
+# Provider inputs, raw responses, cache metadata, and partial processing files.
+.photo-work/
+public/images-gemini/
 
 # macOS-specific files
 .DS_Store

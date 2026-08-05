@@ -10,6 +10,7 @@ interface Props {
   heading?: string;
   eyebrow?: string;
   showImportantInfo?: boolean;
+  simple?: boolean;
 }
 
 const {
@@ -18,33 +19,42 @@ const {
   heading = 'Tu estadía empieza por una fecha.',
   eyebrow = 'Planificá tu visita',
   showImportantInfo = false,
+  simple = false,
 } = Astro.props;
 const contactImage = journeys.casa.rooms[2].images[0];
 ---
 
 <section
   {id}
-  class:list={['booking-cta', { 'booking-cta--compact': compact }]}
-  aria-labelledby={compact ? undefined : 'booking-title'}
+  class:list={['booking-cta', { 'booking-cta--compact': compact, 'booking-cta--simple': simple }]}
+  aria-label={simple ? 'Consultar disponibilidad' : undefined}
+  aria-labelledby={!simple && !compact ? 'booking-title' : undefined}
   data-nav-section="contacto"
   data-nav-theme="dark"
 >
   <div class="booking-cta__layout site-shell">
     {
-      !compact && (
+      !compact && !simple && (
         <figure class="booking-cta__media">
           <ResponsivePropertyImage
             image={contactImage}
             sizes="(max-width: 767px) calc(100vw - 2.5rem), 42vw"
-            alt="Sala de estar y comedor de Casa La Arbolada."
+            alt="Sala de estar y comedor de La Arbolada."
           />
         </figure>
       )
     }
     <div class="booking-cta__copy">
-      <p class="eyebrow">{eyebrow}</p>
-      {compact ? <h2>{heading}</h2> : <h2 id="booking-title">{heading}</h2>}
-      <p>Escribinos para conocer fechas disponibles y elegir el alojamiento indicado para tu estadía.</p>
+      {!simple && <p class="eyebrow">{eyebrow}</p>}
+      {!simple && (compact ? <h2>{heading}</h2> : <h2 id="booking-title">{heading}</h2>)}
+      {
+        !simple && (
+          <p>
+            Escribinos para conocer fechas disponibles y elegir el alojamiento indicado para tu
+            estadía.
+          </p>
+        )
+      }
       <div class="booking-cta__actions">
         <a
           class="booking-action booking-action--primary"
@@ -56,7 +66,7 @@ const contactImage = journeys.casa.rooms[2].images[0];
           <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
         </a>
         {
-          !compact && (
+          !compact && !simple && (
             <a
               class="booking-action booking-action--secondary"
               href={contact.directionsUrl}
@@ -70,7 +80,7 @@ const contactImage = journeys.casa.rooms[2].images[0];
         }
       </div>
       {
-        showImportantInfo && (
+        showImportantInfo && !simple && (
           <aside class="important-info" aria-label="Información importante">
             <strong>Información importante</strong>
             <span>No se aceptan mascotas.</span>

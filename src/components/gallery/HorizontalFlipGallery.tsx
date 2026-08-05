@@ -62,6 +62,7 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
   const thumbnailSyncReadyRef = useRef(false);
   const reducedMotion = useReducedMotion();
   const instanceId = useId();
+  const accessibleRoom = room.replace(/\s+\d+$/, '');
 
   useEffect(() => setHydrated(true), []);
 
@@ -156,7 +157,7 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
         className="horizontal-gallery"
         role="region"
         aria-roledescription="carrusel"
-        aria-label={`${room}, ${property === 'casa' ? 'casa principal' : 'alojamiento independiente'}`}
+        aria-label={`${accessibleRoom}, ${property === 'casa' ? 'residencia principal' : 'departamento independiente'}`}
         data-property={property}
         data-room={room}
         data-gallery-index={currentIndex + 1}
@@ -273,7 +274,7 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
             className="horizontal-gallery__fullscreen gallery-navigation-button"
             onClick={() => setSelected(current)}
             disabled={!hydrated}
-            aria-label={`Abrir ${room} en pantalla completa`}
+            aria-label={`Abrir ${accessibleRoom} en pantalla completa`}
           >
             <Maximize2 size={21} strokeWidth={1.8} aria-hidden="true" />
           </button>
@@ -283,7 +284,7 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
           <div
             ref={thumbnailsContainerRef}
             className="horizontal-gallery__thumbnails"
-            aria-label={`Fotografías de ${room}`}
+            aria-label={`Fotografías de ${accessibleRoom}`}
           >
             {images.map((image, index) => (
               <button

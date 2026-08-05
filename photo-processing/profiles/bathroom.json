@@ -1,0 +1,86 @@
+{
+  "id": "bathroom",
+  "version": 2,
+  "description": "Bright, clean bathroom development with controlled reflections, neutral whites, rich material separation, and no harsh digital finish.",
+  "adjustments": {
+    "exposure": {
+      "intensity": "strong",
+      "direction": "increase",
+      "instruction": "Increase overall exposure decisively for a bright, welcoming interior while preserving mirror, ceramic, marble, and window highlight detail."
+    },
+    "shadows": {
+      "intensity": "aggressive",
+      "direction": "lift",
+      "instruction": "Open deep shadows beneath countertops, vanities, and in corners decisively while retaining natural depth and dark material separation."
+    },
+    "highlights": {
+      "intensity": "strong",
+      "direction": "recover",
+      "instruction": "Recover bright highlights in sinks, mirrors, lights, stone, and reflective surfaces; keep ceramics and whites bright but never porcelain-white clipped."
+    },
+    "contrast": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Restore clean tonal separation after shadow recovery while preserving texture in dark stone, tile, and joinery."
+    },
+    "whiteBalance": {
+      "intensity": "subtle",
+      "direction": "warm",
+      "instruction": "Neutralize casts for clean whites with a subtle natural warmth; do not yellow ceramics, walls, or metal."
+    },
+    "vibrance": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Enrich muted material color moderately while keeping whites, chrome, stone, tile, and joinery realistic."
+    },
+    "saturation": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Use restrained saturation only where needed; preserve neutral whites and avoid artificial color in stone or tile."
+    },
+    "texture": {
+      "intensity": "moderate-strong",
+      "direction": "increase",
+      "instruction": "Reveal existing marble, tile, metal, and joinery texture without inventing detail or producing gritty surfaces."
+    },
+    "clarity": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Use moderate clean local clarity for material separation without halos, brittle edges, or harsh sharpening."
+    },
+    "sharpness": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Apply only light final sharpening."
+    }
+  },
+  "materialPriorities": [
+    {
+      "when": "marble",
+      "material": "marble",
+      "instruction": "Deepen existing marble tonal separation and natural color while preserving its exact veining, reflectance, edges, and pattern."
+    },
+    {
+      "when": "wood",
+      "material": "wood",
+      "instruction": "Warm and enrich existing natural wood grain without an orange cast."
+    },
+    {
+      "when": "metal",
+      "material": "metal",
+      "instruction": "Keep chrome and metal reflections clean, controlled and physically believable."
+    }
+  ],
+  "specialInstructions": [
+    {
+      "when": "lensFlare",
+      "instruction": "Remove only the detected optical lens flare, circular flare or veiling glare. Reconstruct only obscured photographic detail that is already implied by surrounding pixels; do not redesign or invent architecture, fixtures or materials."
+    }
+  ],
+  "prohibitions": [
+    "no clipped ceramics",
+    "no invented reflections",
+    "no redesigned fixtures",
+    "no artificial marble"
+  ]
+}

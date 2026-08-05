@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Casa La Arbolada · Raw Gemini Inspection</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          sans-serif;
+        background: #0c100d;
+        color: #f4f0e7;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: radial-gradient(circle at 50% -10%, #283326 0, transparent 34rem), #0c100d;
+      }
+
+      main {
+        width: min(1800px, calc(100% - 32px));
+        margin: auto;
+        padding: 44px 0 72px;
+      }
+
+      header {
+        display: grid;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .eyebrow,
+      dt,
+      .label {
+        color: #aeb7a8;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 980px;
+        margin: 0;
+        font-family: Georgia, serif;
+        font-size: clamp(2rem, 5vw, 4.6rem);
+        font-weight: 500;
+        line-height: 1.02;
+      }
+
+      header p {
+        max-width: 920px;
+        margin: 0;
+        color: #c9cfc4;
+        line-height: 1.65;
+      }
+
+      .notice {
+        padding: 14px 16px;
+        border: 1px solid #4b543f;
+        border-radius: 12px;
+        background: #171d16;
+        color: #d9ddcf;
+      }
+
+      .comparison {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      article {
+        overflow: hidden;
+        border: 1px solid #354031;
+        border-radius: 18px;
+        background: #131813;
+        box-shadow: 0 24px 80px #0008;
+      }
+
+      article > header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 0;
+        padding: 18px 20px;
+      }
+
+      h2 {
+        margin: 4px 0 0;
+        font-size: 1.25rem;
+      }
+
+      .raw {
+        padding: 7px 10px;
+        border: 1px solid #56624e;
+        border-radius: 999px;
+        color: #d9e6d2;
+        font-size: 0.72rem;
+        font-weight: 800;
+      }
+
+      .image-stage {
+        display: grid;
+        min-height: min(66vh, 820px);
+        place-items: center;
+        overflow: auto;
+        border-block: 1px solid #30392d;
+        background:
+          linear-gradient(45deg, #101410 25%, transparent 25%) 0 0 / 20px 20px,
+          linear-gradient(45deg, transparent 75%, #101410 75%) 0 0 / 20px 20px,
+          linear-gradient(45deg, transparent 75%, #101410 75%) 10px -10px / 20px 20px,
+          linear-gradient(45deg, #101410 25%, #090c09 25%) 10px -10px / 20px 20px;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: 78vh;
+        object-fit: contain;
+      }
+
+      dl {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1px;
+        margin: 0;
+        background: #30392d;
+      }
+
+      dl > div {
+        min-width: 0;
+        padding: 15px 17px;
+        background: #151a14;
+      }
+
+      dd {
+        margin: 5px 0 0;
+        overflow-wrap: anywhere;
+        color: #f1ede4;
+        font-variant-numeric: tabular-nums;
+      }
+
+      a {
+        color: #c9ddb9;
+      }
+
+      .difference {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        margin-top: 20px;
+        overflow: hidden;
+        border: 1px solid #354031;
+        border-radius: 14px;
+        background: #354031;
+      }
+
+      .difference > div {
+        padding: 17px;
+        background: #171d16;
+      }
+
+      .difference strong {
+        display: block;
+        margin-top: 5px;
+        font-family: Georgia, serif;
+        font-size: clamp(1.25rem, 2vw, 1.8rem);
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+      }
+
+      footer {
+        margin-top: 18px;
+        color: #9fa99a;
+        font-size: 0.82rem;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 900px) {
+        .comparison {
+          grid-template-columns: 1fr;
+        }
+
+        .image-stage {
+          min-height: auto;
+        }
+
+        .difference {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 520px) {
+        main {
+          width: min(100% - 20px, 1800px);
+          padding-top: 26px;
+        }
+
+        article > header,
+        dl {
+          grid-template-columns: 1fr;
+        }
+
+        article > header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <span class="eyebrow">Casa La Arbolada · Inspection only</span>
+        <h1>Raw Gemini return for casa-fachada2</h1>
+        <p>
+          Byte-preserved provider input and raw Gemini response. This page performs no approval,
+          normalization, crop, resize, derivative generation, or publication. Browser display
+          scaling affects presentation only; both source files remain unchanged.
+        </p>
+        <div class="notice">
+          Gemini was asked for 4:3 and returned 1200×896 (75:56). This page exists only to inspect
+          the exact returned raster visually.
+        </div>
+      </header>
+
+      <section class="comparison" aria-label="Original and Gemini-returned raster comparison">
+        <article>
+          <header>
+            <div>
+              <span class="label">Canonical provider input</span>
+              <h2>Original photograph</h2>
+            </div>
+            <span class="raw">Unmodified JPEG</span>
+          </header>
+          <div class="image-stage">
+            <img
+              src="../.photo-work/provider-edits/e704f3993edea16750859698b4cd1f22bbe9e8074b994930090cb118593787ab/original.jpg"
+              alt="Original casa-fachada2 provider input"
+            />
+          </div>
+          <dl>
+            <div>
+              <dt>Dimensions</dt>
+              <dd>4032 × 3024 px</dd>
+            </div>
+            <div>
+              <dt>Pixel count</dt>
+              <dd>12,192,768</dd>
+            </div>
+            <div>
+              <dt>Aspect ratio</dt>
+              <dd>4:3 · 1.333333333</dd>
+            </div>
+            <div>
+              <dt>MIME type</dt>
+              <dd>image/jpeg</dd>
+            </div>
+            <div>
+              <dt>File size</dt>
+              <dd>5,657,319 bytes · 5.40 MiB</dd>
+            </div>
+            <div>
+              <dt>Raw file</dt>
+              <dd>
+                <a
+                  href="../.photo-work/provider-edits/e704f3993edea16750859698b4cd1f22bbe9e8074b994930090cb118593787ab/original.jpg"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Open exact file</a
+                >
+              </dd>
+            </div>
+            <div style="grid-column: 1 / -1">
+              <dt>SHA-256</dt>
+              <dd>23041963285fe56468313697eed29f703b0503a81db35e125d9e4d417c7ea1d7</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article>
+          <header>
+            <div>
+              <span class="label">Exact API response</span>
+              <h2>Raw Gemini returned image</h2>
+            </div>
+            <span class="raw">Unmodified JPEG</span>
+          </header>
+          <div class="image-stage">
+            <img
+              src="../.photo-work/provider-edits/e704f3993edea16750859698b4cd1f22bbe9e8074b994930090cb118593787ab/gemini-returned.jpg"
+              alt="Raw Gemini-returned casa-fachada2 image"
+            />
+          </div>
+          <dl>
+            <div>
+              <dt>Dimensions</dt>
+              <dd>1200 × 896 px</dd>
+            </div>
+            <div>
+              <dt>Pixel count</dt>
+              <dd>1,075,200</dd>
+            </div>
+            <div>
+              <dt>Aspect ratio</dt>
+              <dd>75:56 · 1.339285714</dd>
+            </div>
+            <div>
+              <dt>MIME type</dt>
+              <dd>image/jpeg</dd>
+            </div>
+            <div>
+              <dt>File size</dt>
+              <dd>923,346 bytes · 901.71 KiB</dd>
+            </div>
+            <div>
+              <dt>Raw file</dt>
+              <dd>
+                <a
+                  href="../.photo-work/provider-edits/e704f3993edea16750859698b4cd1f22bbe9e8074b994930090cb118593787ab/gemini-returned.jpg"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Open exact file</a
+                >
+              </dd>
+            </div>
+            <div style="grid-column: 1 / -1">
+              <dt>SHA-256</dt>
+              <dd>c09806df901d3190b22973f1e387f91d178367e4dc7569a14c0ba3771aa8214d</dd>
+            </div>
+          </dl>
+        </article>
+      </section>
+
+      <section class="difference" aria-label="Scaling and geometry differences">
+        <div>
+          <span class="label">Width retained</span>
+          <strong>29.761905%</strong>
+          <span>1200 vs 4032 px</span>
+        </div>
+        <div>
+          <span class="label">Height retained</span>
+          <strong>29.629630%</strong>
+          <span>896 vs 3024 px</span>
+        </div>
+        <div>
+          <span class="label">Pixels retained</span>
+          <strong>8.818342%</strong>
+          <span>1,075,200 vs 12,192,768</span>
+        </div>
+        <div>
+          <span class="label">Aspect difference</span>
+          <strong>+0.446429%</strong>
+          <span>Relative to original</span>
+        </div>
+        <div>
+          <span class="label">Width scale to original</span>
+          <strong>3.360000×</strong>
+          <span>Not applied</span>
+        </div>
+        <div>
+          <span class="label">Height scale to original</span>
+          <strong>3.375000×</strong>
+          <span>Not applied</span>
+        </div>
+        <div>
+          <span class="label">File size retained</span>
+          <strong>16.321265%</strong>
+          <span>923,346 vs 5,657,319 bytes</span>
+        </div>
+        <div>
+          <span class="label">Pipeline action</span>
+          <strong>None</strong>
+          <span>Inspection only</span>
+        </div>
+      </section>
+
+      <footer>
+        No image data is embedded or transformed by this page. It references the two preserved
+        raster files directly from the failed single-image test cache.
+      </footer>
+    </main>
+  </body>
+</html>

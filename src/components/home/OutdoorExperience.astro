@@ -4,7 +4,7 @@ import { journeys } from '@/data/journeys';
 
 const landscape = journeys.casa.rooms[11].images[0];
 const detail = journeys.casa.rooms[10].images[3];
-const features = ['Parque arbolado', 'Arroyo', 'Parrilla', 'Horno de barro', 'Patio', 'Estacionamiento amplio'];
+const features = ['Parque arbolado', 'Arroyo', 'Estacionamiento amplio'];
 ---
 
 <section
@@ -15,11 +15,14 @@ const features = ['Parque arbolado', 'Arroyo', 'Parrilla', 'Horno de barro', 'Pa
 >
   <div class="outdoor-experience__layout site-shell">
     <header class="outdoor-experience__copy">
-      <p class="eyebrow">El entorno compartido</p>
-      <h2 id="outdoor-title">Afuera, el tiempo cambia de ritmo.</h2>
-      <p>Árboles maduros, piedra y agua envuelven ambos alojamientos en un mismo paisaje.</p>
+      <p class="eyebrow">El entorno</p>
+      <h2 id="outdoor-title">Árboles añejos, piedra y agua para un merecido descanso</h2>
       <ul aria-label="Experiencias exteriores">
         {features.map((feature) => <li>{feature}</li>)}
+        <li class="outdoor-experience__feature-pair">
+          <span>Parrilla</span>
+          <span>Horno de barro</span>
+        </li>
       </ul>
     </header>
 
@@ -28,14 +31,14 @@ const features = ['Parque arbolado', 'Arroyo', 'Parrilla', 'Horno de barro', 'Pa
         <ResponsivePropertyImage
           image={landscape}
           sizes="(max-width: 767px) calc(100vw - 2.5rem), 68vw"
-          alt="Parque arbolado y arroyo de Casa La Arbolada."
+          alt="Parque arbolado y arroyo de La Arbolada."
         />
       </figure>
       <figure class="outdoor-experience__detail">
         <ResponsivePropertyImage
           image={detail}
           sizes="(max-width: 767px) 46vw, 25vw"
-          alt="Patio y espacios exteriores de Casa La Arbolada."
+          alt="Patio y espacios exteriores de La Arbolada."
         />
       </figure>
     </div>

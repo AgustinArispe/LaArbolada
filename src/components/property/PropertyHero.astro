@@ -4,14 +4,15 @@ import type { CuratedImage } from '@/data/journeys';
 
 interface Props {
   title: string;
-  eyebrow: string;
-  subtitle: string;
-  facts: string;
+  eyebrow?: string;
+  subtitle?: string;
+  facts?: string;
   image: CuratedImage;
   transitionName: string;
 }
 
 const { title, eyebrow, subtitle, facts, image, transitionName } = Astro.props;
+const focalPoint = image.focalPoint;
 ---
 
 <section
@@ -20,7 +21,7 @@ const { title, eyebrow, subtitle, facts, image, transitionName } = Astro.props;
   aria-labelledby="property-hero-title"
   data-nav-section="espacios"
   data-nav-theme="photo"
-  style={`--property-transition-name: ${transitionName}`}
+  style={`--property-transition-name: ${transitionName}; --property-focal-desktop: ${focalPoint?.desktop.x ?? 50}% ${focalPoint?.desktop.y ?? 50}%; --property-focal-mobile: ${focalPoint?.mobile.x ?? 50}% ${focalPoint?.mobile.y ?? 50}%`}
 >
   <figure>
     <ResponsivePropertyImage
@@ -33,10 +34,10 @@ const { title, eyebrow, subtitle, facts, image, transitionName } = Astro.props;
     <span aria-hidden="true"></span>
   </figure>
   <div class="property-hero__copy site-shell">
-    <p>{eyebrow}</p>
+    {eyebrow && <p>{eyebrow}</p>}
     <h1 id="property-hero-title"><span>{title}</span></h1>
-    <p>{subtitle}</p>
-    <strong>{facts}</strong>
+    {subtitle && <p>{subtitle}</p>}
+    {facts && <strong>{facts}</strong>}
     <a href="#espacios">Ver los espacios</a>
   </div>
 </section>

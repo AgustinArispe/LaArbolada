@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "casa-fachada2",
+  "status": "not-run",
+  "reason": "Provider raster aspect ratio differs from the original (1200x896 vs 4032x3024); normalization rejected.",
+  "providerRequests": 0
+}

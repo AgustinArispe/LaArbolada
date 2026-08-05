@@ -7,23 +7,19 @@ import { journeys } from '@/data/journeys';
 const choices = [
   {
     href: '/casa-principal',
-    eyebrow: 'La residencia',
-    title: 'Casa principal',
-    copy: 'Amplitud, piedra, madera y vistas abiertas al parque.',
-    facts: '4 dormitorios · 7 camas · 2 baños',
-    action: 'Ver la casa principal',
+    title: 'Residencia principal',
+    action: 'Ver Residencia principal',
     image: journeys.casa.overviewImage,
     transitionName: 'casa-principal-image',
+    imageClass: 'accommodation-choice--residence',
   },
   {
     href: '/alojamiento-independiente',
-    eyebrow: 'Otra forma de alojarse',
-    title: 'Alojamiento independiente',
-    copy: 'Un espacio privado y equipado dentro del mismo entorno.',
-    facts: 'Dormitorio · baño · cocina · sala de estar',
-    action: 'Ver el alojamiento',
-    image: journeys.departamento.rooms[1].images[0],
+    title: 'Departamento independiente',
+    action: 'Ver el departamento',
+    image: journeys.departamento.overviewImage,
     transitionName: 'alojamiento-independiente-image',
+    imageClass: 'accommodation-choice--department',
   },
 ];
 ---
@@ -44,22 +40,21 @@ const choices = [
     {
       choices.map((choice) => (
         <a
-          class="accommodation-choice"
+          class:list={['accommodation-choice', choice.imageClass]}
           href={choice.href}
-          aria-label={`${choice.action}. ${choice.facts}`}
+          aria-label={choice.action}
         >
-          <figure style={`--choice-transition-name: ${choice.transitionName}`}>
+          <figure
+            style={`--choice-transition-name: ${choice.transitionName}; --choice-focal-desktop: ${choice.image.focalPoint?.desktop.x ?? 50}% ${choice.image.focalPoint?.desktop.y ?? 50}%; --choice-focal-mobile: ${choice.image.focalPoint?.mobile.x ?? 50}% ${choice.image.focalPoint?.mobile.y ?? 50}%`}
+          >
             <ResponsivePropertyImage
               image={choice.image}
               sizes="(max-width: 767px) calc(100vw - 2.5rem), 48vw"
               alt={choice.image.alt}
             />
-            <span class="accommodation-choice__shade" aria-hidden="true"></span>
+            <span class="accommodation-choice__shade" aria-hidden="true" />
             <figcaption>
-              <p>{choice.eyebrow}</p>
               <h3>{choice.title}</h3>
-              <span>{choice.copy}</span>
-              <small>{choice.facts}</small>
               <strong>
                 {choice.action}
                 <ArrowUpRight size={21} strokeWidth={1.7} aria-hidden="true" />

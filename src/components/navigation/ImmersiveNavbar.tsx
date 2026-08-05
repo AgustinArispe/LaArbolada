@@ -13,10 +13,15 @@ type Props = {
 const homeLinks = [
   { href: '/#inicio', label: 'La Arbolada', section: 'inicio' },
   { href: '/#comodidades', label: 'Comodidades', section: 'comodidades' },
-  { href: '/casa-principal', label: 'Casa principal', section: 'casa-principal', route: '/casa-principal' },
+  {
+    href: '/casa-principal',
+    label: 'Residencia principal',
+    section: 'casa-principal',
+    route: '/casa-principal',
+  },
   {
     href: '/alojamiento-independiente',
-    label: 'Alojamiento independiente',
+    label: 'Departamento independiente',
     section: 'alojamiento-independiente',
     route: '/alojamiento-independiente',
   },
@@ -91,8 +96,8 @@ export function ImmersiveNavbar({ pageKind = 'home', currentPath = '/' }: Props)
       transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }}
     >
       <div className="immersive-nav__inner">
-        <a href="/" className="immersive-nav__brand" aria-label="Casa La Arbolada, inicio">
-          Casa La Arbolada
+        <a href="/" className="immersive-nav__brand" aria-label="La Arbolada, inicio">
+          La Arbolada
         </a>
 
         <nav className="immersive-nav__links" aria-label="Navegación principal">
@@ -118,7 +123,7 @@ export function ImmersiveNavbar({ pageKind = 'home', currentPath = '/' }: Props)
             <Dialog.Overlay className="mobile-menu__overlay" />
             <Dialog.Content className="mobile-menu__content" aria-describedby={undefined}>
               <div className="mobile-menu__top">
-                <Dialog.Title className="mobile-menu__title">Casa La Arbolada</Dialog.Title>
+                <Dialog.Title className="mobile-menu__title">La Arbolada</Dialog.Title>
                 <Dialog.Close asChild>
                   <button type="button" className="mobile-menu__close" aria-label="Cerrar menú">
                     <X size={24} strokeWidth={1.5} aria-hidden="true" />

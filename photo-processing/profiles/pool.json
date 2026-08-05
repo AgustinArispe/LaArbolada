@@ -1,0 +1,76 @@
+{
+  "id": "pool",
+  "version": 2,
+  "description": "Clean, natural pool development with realistic cyan-blue water, controlled reflections, and defined existing edges and surrounding materials.",
+  "adjustments": {
+    "exposure": {
+      "intensity": "moderate",
+      "direction": "balance",
+      "instruction": "Balance exposure across water, deck, sky, and surroundings for a luminous result without a tropical advertising look."
+    },
+    "shadows": {
+      "intensity": "moderate",
+      "direction": "lift",
+      "instruction": "Open deep poolside and vegetation shadows while retaining natural outdoor depth."
+    },
+    "highlights": {
+      "intensity": "strong",
+      "direction": "recover",
+      "instruction": "Control water sparkle, pale paving, and other reflective highlights while preserving their real reflections and texture."
+    },
+    "contrast": {
+      "intensity": "moderate",
+      "direction": "balance",
+      "instruction": "Create clean water, edge, and surrounding-material separation without artificial HDR or resort-style exaggeration."
+    },
+    "whiteBalance": {
+      "intensity": "subtle",
+      "direction": "neutral-warm",
+      "instruction": "Keep surroundings neutral and natural while preserving realistic water color and atmosphere."
+    },
+    "vibrance": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Enrich muted color moderately without artificial tropical vegetation or water color."
+    },
+    "saturation": {
+      "intensity": "light-moderate",
+      "direction": "increase",
+      "instruction": "Use controlled saturation in existing water and vegetation; preserve natural blue-cyan and green balance."
+    },
+    "texture": {
+      "intensity": "light-moderate",
+      "direction": "increase",
+      "instruction": "Reveal real water, paving, and vegetation texture without inventing detail or distorting reflections."
+    },
+    "clarity": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Use restrained clarity so water remains photographic."
+    },
+    "sharpness": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Apply light final sharpening."
+    }
+  },
+  "materialPriorities": [
+    {
+      "when": "water",
+      "material": "water",
+      "instruction": "Keep water clean with natural blue-cyan balance and preserve every existing reflection, ripple, boundary, and depth cue."
+    },
+    {
+      "when": "vegetation",
+      "material": "vegetation",
+      "instruction": "Keep surrounding vegetation realistic and distinct without tropical transformation."
+    }
+  ],
+  "specialInstructions": [],
+  "prohibitions": [
+    "no artificial tropical transformation",
+    "no invented reflections",
+    "no changed pool boundaries",
+    "no neon cyan water"
+  ]
+}

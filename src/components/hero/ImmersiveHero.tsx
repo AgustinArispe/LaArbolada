@@ -159,10 +159,6 @@ export function ImmersiveHero({ frames }: Props) {
         <div className="immersive-hero__copy" data-hero-copy>
           <h1 id="hero-title">
             <span className="immersive-hero__title-line">
-              <span data-hero-line>Casa</span>
-            </span>
-            {' '}
-            <span className="immersive-hero__title-line">
               <span data-hero-line>La Arbolada</span>
             </span>
           </h1>

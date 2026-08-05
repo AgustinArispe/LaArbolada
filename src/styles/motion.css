@@ -27,15 +27,6 @@
   }
 }
 
-@keyframes line-reveal {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
 @keyframes text-mask-reveal {
   from {
     clip-path: inset(0 0 100% 0);
@@ -58,17 +49,6 @@
   }
 }
 
-@keyframes amenity-mask-reveal {
-  from {
-    clip-path: inset(0 0 16% 0);
-    opacity: 0.45;
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-    opacity: 1;
-  }
-}
-
 @keyframes service-reveal {
   from {
     clip-path: inset(0 100% 0 0);
@@ -80,52 +60,13 @@
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .property-prelude__line {
-      animation: line-reveal both linear;
-      animation-range: entry 10% entry 65%;
-      animation-timeline: view();
-    }
-
-    .property-prelude__intro h2,
-    .amenities-section__header h2,
-    .property-journey__copy h2,
     .room-chapter__header h3 {
       animation: text-mask-reveal both linear;
       animation-range: entry 0% entry 66%;
       animation-timeline: view();
     }
 
-    .property-prelude__copy p,
-    .property-journey__copy > span,
-    .property-journey__copy > strong {
-      animation: service-reveal both var(--ease-out);
-      animation-range: entry 8% entry 72%;
-      animation-timeline: view();
-    }
-
-    .amenity-feature {
-      animation: amenity-mask-reveal both var(--ease-out);
-      animation-range: entry 4% entry 58%;
-      animation-timeline: view();
-    }
-
-    .amenity-feature:nth-child(2n) {
-      animation-range: entry 10% entry 66%;
-    }
-    .amenity-feature:nth-child(3n) {
-      animation-range: entry 16% entry 72%;
-    }
-
-    .supporting-amenity {
-      animation: service-reveal both var(--ease-out);
-      animation-range: entry 0% entry 72%;
-      animation-timeline: view();
-    }
-
-    .property-journey__media,
-    .room-chapter__gallery .horizontal-gallery__frame,
-    .location-story__media,
-    .contact-panel__media {
+    .room-chapter__gallery .horizontal-gallery__frame {
       animation: media-clip-reveal both var(--ease-out);
       animation-range: entry 5% entry 64%;
       animation-timeline: view();
@@ -135,11 +76,6 @@
       --clip-origin: right;
     }
 
-    .interactive-map {
-      animation: amenity-mask-reveal both var(--ease-out);
-      animation-range: entry 5% entry 55%;
-      animation-timeline: view();
-    }
   }
 }
 

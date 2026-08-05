@@ -13,17 +13,36 @@ interface Props {
   theme: 'warm' | 'forest';
   presentation: Presentation;
   navSection?: string;
+  showHeading?: boolean;
 }
 
-const { property, room, roomNumber, title, description, images, theme, presentation, navSection } = Astro.props;
+const {
+  property,
+  room,
+  roomNumber,
+  title,
+  description,
+  images,
+  theme,
+  presentation,
+  navSection,
+  showHeading = true,
+} = Astro.props;
 
 const chapterId = `${property}-ambiente-${roomNumber}`;
+const accessibleTitle = title.replace(/\s+\d+$/, '');
 ---
 
 <section
   id={chapterId}
-  class:list={['room-chapter', `room-chapter--${theme}`, `room-chapter--${presentation}`]}
-  aria-labelledby={`${chapterId}-title`}
+  class:list={[
+    'room-chapter',
+    `room-chapter--${theme}`,
+    `room-chapter--${presentation}`,
+    { 'room-chapter--photo-only': !showHeading },
+  ]}
+  aria-label={!showHeading ? `Fotografías de ${accessibleTitle}` : undefined}
+  aria-labelledby={showHeading ? `${chapterId}-title` : undefined}
   data-nav-section={navSection ?? (property === 'casa' ? 'casa' : 'alojamiento-independiente')}
   data-nav-theme={theme === 'forest' ? 'dark' : 'light'}
   data-property={property}
@@ -33,10 +52,14 @@ const chapterId = `${property}-ambiente-${roomNumber}`;
   data-image-rooms={JSON.stringify(images.map((image) => image.room))}
 >
   <div class="room-chapter__inner">
-    <header class="room-chapter__header">
-      <h3 id={`${chapterId}-title`}>{title}</h3>
-      {description && <p class="room-chapter__description">{description}</p>}
-    </header>
+    {
+      showHeading && (
+        <header class="room-chapter__header">
+          <h3 id={`${chapterId}-title`}>{title}</h3>
+          {description && <p class="room-chapter__description">{description}</p>}
+        </header>
+      )
+    }
 
     <div class="room-chapter__gallery">
       <HorizontalFlipGallery

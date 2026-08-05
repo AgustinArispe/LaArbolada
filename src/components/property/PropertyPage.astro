@@ -11,9 +11,9 @@ type AmenityItem = { label: string; Icon: typeof Wifi };
 
 interface Props {
   journey: PropertyJourneyData;
-  eyebrow: string;
-  subtitle: string;
-  heroFacts: string;
+  eyebrow?: string;
+  subtitle?: string;
+  heroFacts?: string;
   overview: string;
   quickFacts: Fact[];
   amenities: AmenityItem[];
@@ -35,7 +35,8 @@ const {
   otherLabel,
 } = Astro.props;
 
-const roomPreview = journey.rooms.find((room) => room.title.includes('Sala'))?.images[0] ?? journey.overviewImage;
+const roomPreview =
+  journey.rooms.find((room) => room.title.includes('Sala'))?.images[0] ?? journey.overviewImage;
 ---
 
 <PropertyHero
@@ -95,30 +96,29 @@ const roomPreview = journey.rooms.find((room) => room.title.includes('Sala'))?.i
     <ul>
       {
         amenities.map(({ label, Icon }) => (
-          <li><Icon size={23} strokeWidth={1.55} aria-hidden="true" /><span>{label}</span></li>
+          <li>
+            <>
+              <Icon size={23} strokeWidth={1.55} aria-hidden="true" />
+              <span>{label}</span>
+            </>
+          </li>
         ))
       }
     </ul>
   </div>
 </section>
 
-<BookingCTA
-  id="consultar-antes-galeria"
-  compact
-  eyebrow="Antes de seguir"
-  heading="¿Coincide con tu viaje? Consultá tus fechas."
-/>
+<BookingCTA id="consultar-antes-galeria" compact simple />
 
 <section
   id="galeria"
   class="property-gallery"
-  aria-labelledby="property-gallery-title"
+  aria-label="Galería de fotos"
   data-nav-section="galeria"
   data-nav-theme="light"
 >
   <header class="property-gallery__header site-shell">
-    <p class="eyebrow">Galería completa</p>
-    <h2 id="property-gallery-title">Los espacios de {journey.heading.toLowerCase()}.</h2>
+    <p class="eyebrow">Galería de fotos</p>
     <p>Usá las flechas, miniaturas o gestos laterales para avanzar.</p>
   </header>
   <div class="property-gallery__rooms">
@@ -134,6 +134,7 @@ const roomPreview = journey.rooms.find((room) => room.title.includes('Sala'))?.i
           theme={room.theme}
           presentation={room.presentation}
           navSection="galeria"
+          showHeading={false}
         />
       ))
     }
@@ -153,4 +154,4 @@ const roomPreview = journey.rooms.find((room) => room.title.includes('Sala'))?.i
   </a>
 </nav>
 
-<BookingCTA showImportantInfo />
+<BookingCTA simple />

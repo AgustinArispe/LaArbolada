@@ -1,4 +1,4 @@
-import { propertyImages, type PropertyImage } from '@/data/images.generated';
+import { propertyImages, type PropertyImage } from '@/data/images';
 import { coverFocalPoints, imageOverrides, type FocalPoint } from '@/data/imageOverrides';
 import { casaRoomOrder, departamentoRoomOrder, type Presentation } from '@/data/roomOrder';
 
@@ -56,7 +56,7 @@ function curateImage(id: string, room: string, fallbackOrder: number): CuratedIm
     order: override?.order ?? fallbackOrder,
     alt:
       override?.alt ??
-      `${room} de ${image.property === 'casa' ? 'Casa La Arbolada' : 'el alojamiento independiente de La Arbolada'}.`,
+      `${room.replace(/\s+\d+$/, '')} de ${image.property === 'casa' ? 'La Arbolada' : 'el departamento independiente de La Arbolada'}.`,
     focalPoint: override?.focalPoint ?? coverFocalPoints[id],
   };
 }
@@ -243,40 +243,53 @@ const departamentoRooms: JourneyRoom[] = [
   ),
 ];
 
+const departamentoExteriorImage: CuratedImage = {
+  ...casaRooms[1].images[2],
+  property: 'departamento',
+  room: 'Exterior del departamento',
+  space: 'Exterior del departamento',
+  alt: 'Frente de piedra y acceso lateral del departamento independiente de La Arbolada.',
+  focalPoint: {
+    desktop: { x: 72, y: 72 },
+    mobile: { x: 73, y: 68 },
+  },
+};
+
 export const journeys: Record<PropertyKey, PropertyJourneyData> = {
   casa: {
     id: 'casa',
     anchorId: 'casa',
-    name: 'Casa principal',
-    heading: 'Casa principal',
+    name: 'Residencia principal',
+    heading: 'Residencia principal',
     introduction: 'Ambientes amplios, piedra, madera y vistas abiertas hacia el parque.',
-    facts: '4 habitaciones · 7 camas · hasta 8 personas · 2 baños',
-    overviewImage: casaRooms[1].images[1],
+    facts: '3 dormitorios · 7 camas · 3 baños',
+    overviewImage: casaRooms[1].images[3],
     rooms: casaRooms,
   },
   departamento: {
     id: 'departamento',
     anchorId: 'alojamiento-independiente',
-    name: 'Alojamiento independiente',
-    heading: 'Alojamiento independiente',
-    introduction: 'Un espacio privado y totalmente equipado dentro del mismo entorno natural.',
-    facts: '1 habitación · 3 camas · baño · sala de estar · cocina · acceso privado',
-    overviewImage: departamentoRooms[0].images[0],
+    name: 'Departamento independiente',
+    heading: 'Departamento independiente',
+    introduction:
+      'Este departamento cuenta con un dormitorio con 3 camas, baño y cocina comedor amplia.',
+    facts: '1 dormitorio · 3 camas · baño · cocina comedor',
+    overviewImage: departamentoExteriorImage,
     rooms: departamentoRooms,
   },
 };
 
 const heroFrameConfigs: HeroFrameConfig[] = [
   {
-    imageId: 'casa-fachada2',
-    desktopPosition: '57% 52%',
-    mobilePosition: '59% 53%',
-    mobileMode: 'cover',
-  },
-  {
     imageId: 'casa-fachada4',
     desktopPosition: '56% 52%',
     mobilePosition: '63% 52%',
+    mobileMode: 'cover',
+  },
+  {
+    imageId: 'casa-fachada1',
+    desktopPosition: '52% 54%',
+    mobilePosition: '55% 55%',
     mobileMode: 'cover',
   },
   {
@@ -286,10 +299,10 @@ const heroFrameConfigs: HeroFrameConfig[] = [
     mobileMode: 'contained-layer',
   },
   {
-    imageId: 'departamento-verdedpto1',
-    desktopPosition: '53% 53%',
-    mobilePosition: '53% 55%',
-    mobileMode: 'contained-layer',
+    imageId: 'casa-fachada3',
+    desktopPosition: '72% 72%',
+    mobilePosition: '73% 68%',
+    mobileMode: 'cover',
   },
 ];
 

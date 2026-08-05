@@ -1,0 +1,81 @@
+{
+  "id": "facade",
+  "version": 2,
+  "description": "Bright, legible architectural exterior development with controlled highlights, natural sky, and realistic material depth.",
+  "adjustments": {
+    "exposure": {
+      "intensity": "strong",
+      "direction": "increase",
+      "instruction": "Increase overall exposure decisively to create a bright, welcoming exterior while retaining detail in sunlit walls, glazing, and pale paving."
+    },
+    "shadows": {
+      "intensity": "aggressive",
+      "direction": "lift",
+      "instruction": "Open deep shadows beneath roof overhangs, along building bases, and in the foreground; retain believable architectural depth."
+    },
+    "highlights": {
+      "intensity": "moderate",
+      "direction": "recover",
+      "instruction": "Recover highlight detail in render, walls, glazing, and other bright existing surfaces; prevent clipping without dulling sunlight."
+    },
+    "contrast": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Restore crisp architectural tonal separation after shadow recovery without HDR compression or exaggerated local contrast."
+    },
+    "whiteBalance": {
+      "intensity": "subtle",
+      "direction": "warm",
+      "instruction": "Neutralize unwanted casts and warm only enough to make stone, plaster, and wood inviting while keeping neutral building materials believable."
+    },
+    "vibrance": {
+      "intensity": "strong",
+      "direction": "increase",
+      "instruction": "Enrich muted existing color clearly while preserving natural variation between vegetation, sky, stone, plaster, and wood."
+    },
+    "saturation": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Increase saturation only with controlled channel separation; preserve realistic greens, blue sky, and neutral façades."
+    },
+    "texture": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Reveal existing stone, plaster, and wood texture through tonal richness; do not redraw or invent surface detail."
+    },
+    "clarity": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Add moderate, clean architectural clarity for legibility without halos, crunchy surfaces, or edge glow."
+    },
+    "sharpness": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Apply only light final sharpening with natural edges."
+    }
+  },
+  "materialPriorities": [
+    {
+      "when": "grass",
+      "material": "grass",
+      "instruction": "Enrich dull existing grass toward a rich natural green while preserving blade, dry-area, hue, and luminance variation; never fluorescent or uniform."
+    },
+    {
+      "when": "sky",
+      "material": "sky",
+      "instruction": "Deepen only the existing sky while preserving real clouds, highlight roll-off, atmosphere, and time of day."
+    },
+    {
+      "when": "stone",
+      "material": "stone",
+      "instruction": "Reveal existing stone texture, earth tones and tonal richness without crunchy microcontrast."
+    },
+    {
+      "when": "wood",
+      "material": "wood",
+      "instruction": "Keep existing wood warm, rich and realistic without an orange or red cast."
+    }
+  ],
+  "specialInstructions": [],
+  "prohibitions": ["no fluorescent greens", "no artificial sky", "no clipped walls", "no HDR halos"]
+}

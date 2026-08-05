@@ -1,0 +1,76 @@
+{
+  "id": "bedroom",
+  "version": 2,
+  "description": "Soft, calm hospitality bedroom development with clean bedding whites, open shadows, warm natural materials, and gentle contrast.",
+  "adjustments": {
+    "exposure": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Increase exposure enough for soft, welcoming natural light while preserving bedding and window highlight detail."
+    },
+    "shadows": {
+      "intensity": "moderate",
+      "direction": "lift",
+      "instruction": "Open dark room areas enough to reveal existing detail while preserving calm natural depth."
+    },
+    "highlights": {
+      "intensity": "moderate",
+      "direction": "recover",
+      "instruction": "Recover window and pale-textile highlights while keeping bedding whites clean and naturally textured."
+    },
+    "contrast": {
+      "intensity": "light-moderate",
+      "direction": "balance",
+      "instruction": "Establish gentle, clean tonal separation for a calm hospitality mood without flattening the room."
+    },
+    "whiteBalance": {
+      "intensity": "subtle",
+      "direction": "warm",
+      "instruction": "Keep light warmly natural without orange or yellow casts; maintain clean, neutral bedding whites."
+    },
+    "vibrance": {
+      "intensity": "light-moderate",
+      "direction": "increase",
+      "instruction": "Enrich muted existing room color gently while preserving natural textiles and wood."
+    },
+    "saturation": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Keep saturation conservative and textiles neutral."
+    },
+    "texture": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Reveal bedding and fabric texture softly without harsh detail or artificial crispness."
+    },
+    "clarity": {
+      "intensity": "low-moderate",
+      "direction": "increase",
+      "instruction": "Use low-to-moderate clarity to retain softness."
+    },
+    "sharpness": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Apply light final sharpening."
+    }
+  },
+  "materialPriorities": [
+    {
+      "when": "textiles",
+      "material": "textiles",
+      "instruction": "Keep bedding and textiles neutral, soft and faithful to the original."
+    },
+    {
+      "when": "wood",
+      "material": "wood",
+      "instruction": "Retain natural warm wood without orange saturation."
+    }
+  ],
+  "specialInstructions": [],
+  "prohibitions": [
+    "no orange cast",
+    "no yellow bedding",
+    "no excessive clarity",
+    "no artificial staging"
+  ]
+}

@@ -2,9 +2,9 @@ import { expect, test, type Page } from '@playwright/test';
 
 const baseUrl = process.env.SITE_URL ?? 'http://127.0.0.1:4321';
 const whatsappUrl =
-  'https://wa.me/5492494567808?text=Hola%2C%20quisiera%20consultar%20disponibilidad%20en%20Casa%20La%20Arbolada.';
+  'https://wa.me/5492494567808?text=Hola%2C%20quisiera%20consultar%20disponibilidad%20en%20La%20Arbolada.';
 const directionsUrl =
-  'https://www.google.com/maps/search/?api=1&query=Casa+La+Arbolada%2C+Tandil%2C+Buenos+Aires';
+  'https://www.google.com/maps/search/?api=1&query=La+Arbolada%2C+Tandil%2C+Buenos+Aires';
 
 async function goto(page: Page, path: string) {
   await page.goto(`${baseUrl}${path}`, { waitUntil: 'networkidle' });
@@ -14,17 +14,20 @@ test.use({ viewport: { width: 390, height: 844 } });
 
 test('homepage is concise and links to both crawlable property routes', async ({ page }) => {
   await goto(page, '/');
-  await expect(page.locator('h1')).toContainText('Casa La Arbolada');
+  await expect(page.locator('h1')).toContainText('La Arbolada');
   await expect(page.locator('.room-chapter')).toHaveCount(0);
   await expect(page.locator('.horizontal-gallery')).toHaveCount(0);
   await expect(page.locator('main > section')).toHaveCount(6);
   await expect(page.locator('.immersive-nav__links a.is-active')).toHaveCount(1);
-  await expect(page.locator('.immersive-nav__links a.is-active')).toHaveAttribute('href', '/#inicio');
-  await expect(page.getByRole('link', { name: /Ver la casa principal/ })).toHaveAttribute(
+  await expect(page.locator('.immersive-nav__links a.is-active')).toHaveAttribute(
+    'href',
+    '/#inicio',
+  );
+  await expect(page.getByRole('link', { name: 'Ver Residencia principal' })).toHaveAttribute(
     'href',
     '/casa-principal',
   );
-  await expect(page.getByRole('link', { name: /Ver el alojamiento/ })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'Ver el departamento' })).toHaveAttribute(
     'href',
     '/alojamiento-independiente',
   );
@@ -36,12 +39,14 @@ test('homepage is concise and links to both crawlable property routes', async ({
   );
 });
 
-test('dedicated routes work directly and keep complete, non-duplicated galleries', async ({ page }) => {
+test('dedicated routes work directly and keep complete, non-duplicated galleries', async ({
+  page,
+}) => {
   const expected = [
-    { path: '/casa-principal', title: 'Casa principal', rooms: 12, property: 'casa' },
+    { path: '/casa-principal', title: 'Residencia principal', rooms: 12, property: 'casa' },
     {
       path: '/alojamiento-independiente',
-      title: 'Alojamiento independiente',
+      title: 'Departamento independiente',
       rooms: 6,
       property: 'departamento',
     },
@@ -54,14 +59,16 @@ test('dedicated routes work directly and keep complete, non-duplicated galleries
       route.rooms,
     );
     await expect(page.locator('.booking-action--primary')).toHaveCount(2);
-    const imageIds = await page.locator('.room-chapter').evaluateAll((chapters) =>
-      chapters.flatMap((chapter) => JSON.parse(chapter.getAttribute('data-image-ids') ?? '[]')),
-    );
+    const imageIds = await page
+      .locator('.room-chapter')
+      .evaluateAll((chapters) =>
+        chapters.flatMap((chapter) => JSON.parse(chapter.getAttribute('data-image-ids') ?? '[]')),
+      );
     expect(new Set(imageIds).size).toBe(imageIds.length);
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(
       process.env.PUBLIC_SITE_URL ? 1 : 0,
     );
-    await expect(page).toHaveTitle(new RegExp(`${route.title}.*Casa La Arbolada`));
+    await expect(page).toHaveTitle(new RegExp(`${route.title}.*La Arbolada`));
     await expect(page.locator('nav a[aria-current="location"]').first()).toHaveAttribute(
       'href',
       '#espacios',
@@ -71,7 +78,7 @@ test('dedicated routes work directly and keep complete, non-duplicated galleries
 
 test('history navigation and real route anchors remain functional', async ({ page }) => {
   await goto(page, '/');
-  await page.getByRole('link', { name: /Ver la casa principal/ }).click();
+  await page.getByRole('link', { name: 'Ver Residencia principal' }).click();
   await expect(page).toHaveURL(/\/casa-principal$/);
   await page.goBack({ waitUntil: 'networkidle' });
   await expect(page).toHaveURL(new RegExp(`${baseUrl}/?$`));
@@ -89,7 +96,10 @@ test('mobile menu traps focus, closes cleanly, and uses route-aware links', asyn
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();
   await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
-  await expect(page.getByRole('link', { name: 'La Arbolada' }).first()).toHaveAttribute('href', '/');
+  await expect(page.getByRole('link', { name: 'La Arbolada' }).first()).toHaveAttribute(
+    'href',
+    '/',
+  );
 });
 
 test('gallery controls, keyboard navigation, thumbnails, and lightbox work', async ({ page }) => {
@@ -140,7 +150,9 @@ test('slow scrolling and gallery hydration never reposition the document', async
   expect(Math.abs(afterThumbnail - beforeThumbnail)).toBeLessThanOrEqual(1);
 });
 
-test('WhatsApp is branded, exact, non-overlapping, and contact actions are accessible', async ({ page }) => {
+test('WhatsApp is branded, exact, non-overlapping, and contact actions are accessible', async ({
+  page,
+}) => {
   await goto(page, '/');
   const bubble = page.locator('.whatsapp-bubble');
   await expect(bubble).toHaveAttribute('href', whatsappUrl);
@@ -149,7 +161,11 @@ test('WhatsApp is branded, exact, non-overlapping, and contact actions are acces
   await expect(bubble.locator('svg path')).toHaveCount(1);
   const dimensions = await bubble.evaluate((element) => {
     const rect = element.getBoundingClientRect();
-    return { width: rect.width, height: rect.height, radius: getComputedStyle(element).borderRadius };
+    return {
+      width: rect.width,
+      height: rect.height,
+      radius: getComputedStyle(element).borderRadius,
+    };
   });
   expect(dimensions.width).toBe(58);
   expect(dimensions.height).toBe(58);
@@ -181,7 +197,9 @@ for (const path of ['/', '/casa-principal', '/alojamiento-independiente']) {
     });
     const result = await page.evaluate(() => ({
       overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-      brokenImages: [...document.images].filter((image) => image.complete && image.naturalWidth === 0).length,
+      brokenImages: [...document.images].filter(
+        (image) => image.complete && image.naturalWidth === 0,
+      ).length,
       undersized: [...document.querySelectorAll<HTMLElement>('button, a')]
         .filter((element) => {
           const rect = element.getBoundingClientRect();
@@ -209,7 +227,8 @@ test('reduced motion disables long hero and route animations', async ({ browser 
     visibleFrames: [...document.querySelectorAll('.immersive-hero__frame')].filter(
       (element) => getComputedStyle(element).display !== 'none',
     ).length,
-    bubbleAnimations: getComputedStyle(document.querySelector('.whatsapp-bubble')!).animationDuration,
+    bubbleAnimations: getComputedStyle(document.querySelector('.whatsapp-bubble')!)
+      .animationDuration,
   }));
   expect(result.heroHeight).toBe(result.viewportHeight);
   expect(result.visibleFrames).toBe(1);

@@ -1,0 +1,86 @@
+{
+  "id": "garden",
+  "version": 2,
+  "description": "Natural garden development with rich but realistic vegetation, open shaded depth, controlled highlights, and visible ground materials.",
+  "adjustments": {
+    "exposure": {
+      "intensity": "moderate",
+      "direction": "balance",
+      "instruction": "Balance exposure across vegetation, ground, and architecture for visible depth without creating artificial sunlight."
+    },
+    "shadows": {
+      "intensity": "moderate",
+      "direction": "lift",
+      "instruction": "Open shaded vegetation enough to reveal natural plant separation and depth without flattening foliage."
+    },
+    "highlights": {
+      "intensity": "moderate",
+      "direction": "recover",
+      "instruction": "Recover bright foliage, sky, and reflective highlights while retaining the real weather and time of day."
+    },
+    "contrast": {
+      "intensity": "moderate",
+      "direction": "balance",
+      "instruction": "Create clean natural depth between plants and ground without dramatic contrast or HDR compression."
+    },
+    "whiteBalance": {
+      "intensity": "subtle",
+      "direction": "warm-natural",
+      "instruction": "Neutralize unwanted casts and keep a natural, slightly warm balance while preserving weather and time of day."
+    },
+    "vibrance": {
+      "intensity": "moderate-strong",
+      "direction": "increase",
+      "instruction": "Enrich natural color separation while preserving variation among plant species, soil, stone, and wood."
+    },
+    "saturation": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Increase saturation only with strict green-channel control; never make vegetation neon, uniform, or synthetic."
+    },
+    "texture": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Reveal existing soil, bark, leaf, and stone texture naturally without crunchy foliage or invented detail."
+    },
+    "clarity": {
+      "intensity": "light-moderate",
+      "direction": "increase",
+      "instruction": "Use restrained clarity for natural depth without crunchy foliage."
+    },
+    "sharpness": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Apply light natural sharpening."
+    }
+  },
+  "materialPriorities": [
+    {
+      "when": "grass",
+      "material": "grass",
+      "instruction": "Enrich existing grass naturally while preserving color variation and avoiding uniform artificial green."
+    },
+    {
+      "when": "vegetation",
+      "material": "vegetation",
+      "instruction": "Keep plant species distinct with rich but believable natural greens."
+    },
+    {
+      "when": "sky",
+      "material": "sky",
+      "instruction": "Keep the existing sky natural and preserve real cloud structure."
+    },
+    {
+      "when": "stone",
+      "material": "stone",
+      "instruction": "Keep existing soil and stone texture visible, neutral, and realistic without altering landscape structure."
+    }
+  ],
+  "specialInstructions": [],
+  "prohibitions": [
+    "no fluorescent vegetation",
+    "no uniform lawn color",
+    "no fake landscaping",
+    "no sky replacement"
+  ]
+}

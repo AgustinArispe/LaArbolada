@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 // https://astro.build/config
 export default defineConfig({
+  outDir: process.env.BUILD_OUTPUT_DIR || 'dist',
   devToolbar: { enabled: false },
   integrations: [react()],
   vite: {

@@ -1,0 +1,76 @@
+{
+  "id": "living-room",
+  "version": 2,
+  "description": "Warm, natural living-room development with open interior shadows, protected window detail, and authentic textile and wood response.",
+  "adjustments": {
+    "exposure": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Increase overall exposure for an inviting room while preserving existing window and exterior-view detail."
+    },
+    "shadows": {
+      "intensity": "moderate",
+      "direction": "lift",
+      "instruction": "Open dark furniture and room-corner shadows clearly enough to reveal existing detail without flattening form."
+    },
+    "highlights": {
+      "intensity": "strong",
+      "direction": "recover",
+      "instruction": "Recover available window and lamp highlights without creating exterior detail or brightness that is not present."
+    },
+    "contrast": {
+      "intensity": "moderate",
+      "direction": "balance",
+      "instruction": "Balance indoor and outdoor luminance with soft natural depth and material separation; never HDR-like."
+    },
+    "whiteBalance": {
+      "intensity": "moderate",
+      "direction": "warm",
+      "instruction": "Use warm natural ambience while keeping walls, textiles, and wood free from orange or yellow casts."
+    },
+    "vibrance": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Enrich muted existing color moderately while keeping furnishings, textiles, and wood natural."
+    },
+    "saturation": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Use restrained saturation so the room remains elegant and believable."
+    },
+    "texture": {
+      "intensity": "light-moderate",
+      "direction": "increase",
+      "instruction": "Reveal existing textile, wood, and stone tonal fidelity with restrained, photographic texture."
+    },
+    "clarity": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Apply low clarity for a polished photographic finish."
+    },
+    "sharpness": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Apply light natural sharpening."
+    }
+  },
+  "materialPriorities": [
+    {
+      "when": "wood",
+      "material": "wood",
+      "instruction": "Protect warm natural wood color and grain without oversaturation."
+    },
+    {
+      "when": "textiles",
+      "material": "textiles",
+      "instruction": "Preserve existing textile weave, neutral color and softness."
+    }
+  ],
+  "specialInstructions": [],
+  "prohibitions": [
+    "no artificial staging",
+    "no fake lamps",
+    "no orange cast",
+    "no invented window view"
+  ]
+}

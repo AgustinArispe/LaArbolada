@@ -1,0 +1,76 @@
+{
+  "id": "kitchen",
+  "version": 3,
+  "description": "Bright, clean neutral-to-warm kitchen development with controlled reflective highlights and natural cabinetry materials.",
+  "adjustments": {
+    "exposure": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Increase overall exposure decisively enough for a bright, welcoming kitchen without clipping counters, lights, appliances, or windows."
+    },
+    "shadows": {
+      "intensity": "moderate",
+      "direction": "lift",
+      "instruction": "Open shadows beneath cabinetry and counters to reveal existing detail while retaining natural depth."
+    },
+    "highlights": {
+      "intensity": "moderate",
+      "direction": "recover",
+      "instruction": "Recover window, appliance, and reflective work-surface highlights while retaining a clean luminous finish."
+    },
+    "contrast": {
+      "intensity": "moderate",
+      "direction": "balance",
+      "instruction": "Establish clean material separation without harsh edges, HDR compression, or sterile contrast."
+    },
+    "whiteBalance": {
+      "intensity": "moderate",
+      "direction": "neutral-warm",
+      "instruction": "Neutralize casts for clean whites with slight natural warmth; no yellow cabinetry or blue-white surfaces."
+    },
+    "vibrance": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Enrich muted existing color moderately while keeping cabinetry, counters, and appliances realistic."
+    },
+    "saturation": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Use only a light controlled saturation increase."
+    },
+    "texture": {
+      "intensity": "moderate",
+      "direction": "increase",
+      "instruction": "Reveal existing cabinetry and countertop texture through natural tonal separation, never invented detail."
+    },
+    "clarity": {
+      "intensity": "light-moderate",
+      "direction": "increase",
+      "instruction": "Add restrained clarity without making appliances or edges brittle."
+    },
+    "sharpness": {
+      "intensity": "light",
+      "direction": "increase",
+      "instruction": "Apply light final sharpening."
+    }
+  },
+  "materialPriorities": [
+    {
+      "when": "wood",
+      "material": "wood",
+      "instruction": "Keep cabinetry wood warm and realistic without orange color."
+    },
+    {
+      "when": "metal",
+      "material": "metal",
+      "instruction": "Control stainless-steel and metallic reflections while retaining a clean neutral finish."
+    }
+  ],
+  "specialInstructions": [
+    {
+      "when": "lensFlare",
+      "instruction": "Remove only a detected optical lens flare, lens glare, or veiling glare. Restore only photographic detail already established by immediately adjacent pixels; preserve every light fixture, reflection, appliance, cabinet, tile, and architectural element exactly."
+    }
+  ],
+  "prohibitions": ["no yellow cast", "no blue whites", "no blown metallic reflections"]
+}

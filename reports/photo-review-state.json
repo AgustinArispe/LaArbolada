@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-07-23T16:07:11.458Z",
+  "decisions": {
+    "casa-5casa": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:07:11.458Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-banio1casa1": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:05.665Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-banio1casa2": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:08.970Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-banio1casa3": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:11.112Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-banio2casa1": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:12.952Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-banio2casa2": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:14.870Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-banio2casa3": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:16.874Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-cocinacasa1": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:19.209Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-cocinacasa2": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:21.234Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-cocinacasa3": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:24.393Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-cocinacasa4": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:26.311Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-cocinacasa5": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:28.075Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-dorm1casa1": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:29.814Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-dorm1casa2": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:31.850Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-dorm1casa3": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:34.257Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-dorm1casa5": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:37.065Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-dorm2casa1": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:39.414Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-dorm2casa2": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:42.539Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-dorm2casa3": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:44.460Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-dorm3casa1": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:46.053Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-dorm3casa2": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:49.018Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-dorm4casa1": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:51.736Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-dorm4casa2": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:36:53.940Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-fachada1": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:37:47.158Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-fachada2": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:37:48.593Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-fachada3": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:37:50.725Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-fachada4": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:37:58.823Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-livingcasa3": {
+      "status": "skipped",
+      "updatedAt": "2026-07-23T16:07:11.458Z",
+      "locked": true,
+      "reason": "LOCKED owner-approved website image; permanently excluded from AI processing."
+    },
+    "casa-livingcasa": {
+      "status": "skipped",
+      "updatedAt": "2026-07-23T16:07:11.458Z",
+      "locked": true,
+      "reason": "LOCKED owner-approved website image; permanently excluded from AI processing."
+    },
+    "casa-mesalivingcasa4": {
+      "status": "skipped",
+      "updatedAt": "2026-07-23T16:07:11.458Z",
+      "locked": true,
+      "reason": "LOCKED owner-approved website image; permanently excluded from AI processing."
+    },
+    "casa-patio1": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:08.562Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-patio2": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:14.531Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-patio3": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:16.815Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-patio4": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:19.388Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-patio5": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:21.632Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-patio6": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:23.062Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-patio7": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:24.384Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-patio8": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:25.714Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-patio9": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:27.150Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-patio10": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:10.749Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-patio11": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:12.789Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-verdedorm1casa": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:29.528Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-verdedorm2casa": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:32.596Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-verdedorm3casa": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:34.279Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-verdeliving1casa": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:35.917Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-verdeliving2casa": {
+      "status": "approved",
+      "updatedAt": "2026-07-22T19:38:37.447Z",
+      "locked": false,
+      "reason": null
+    },
+    "casa-verdeliving3casa": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:06:42.306Z",
+      "locked": false,
+      "reason": null
+    },
+    "departamento-banio1dpto": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:06:44.619Z",
+      "locked": false,
+      "reason": null
+    },
+    "departamento-baniodpto2": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:06:46.417Z",
+      "locked": false,
+      "reason": null
+    },
+    "departamento-cocinadpto1": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:06:48.978Z",
+      "locked": false,
+      "reason": null
+    },
+    "departamento-dormdpto1": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:06:50.766Z",
+      "locked": false,
+      "reason": null
+    },
+    "departamento-dormdpto2": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:06:52.251Z",
+      "locked": false,
+      "reason": null
+    },
+    "departamento-dormdpto3": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:06:54.005Z",
+      "locked": false,
+      "reason": null
+    },
+    "departamento-livingdpto1": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:06:55.330Z",
+      "locked": false,
+      "reason": null
+    },
+    "departamento-livingdpto2": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:06:56.807Z",
+      "locked": false,
+      "reason": null
+    },
+    "departamento-verdedpto1": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:06:58.115Z",
+      "locked": false,
+      "reason": null
+    },
+    "departamento-verdedpto2": {
+      "status": "approved",
+      "updatedAt": "2026-07-23T16:07:00.213Z",
+      "locked": false,
+      "reason": null
+    }
+  }
+}

@@ -52,10 +52,10 @@ export function GalleryLightbox({ images, selected, onOpenChange }: Props) {
       <Dialog.Portal>
         <Dialog.Overlay className="gallery-dialog__overlay" />
         <Dialog.Content className="gallery-dialog__content" aria-describedby={undefined}>
-          <Dialog.Title className="sr-only">{image.room}</Dialog.Title>
+          <Dialog.Title className="sr-only">{image.alt}</Dialog.Title>
           <div className="gallery-dialog__top">
             <span>
-              {image.property === 'casa' ? 'Casa principal' : 'Alojamiento independiente'}
+              {image.property === 'casa' ? 'Residencia principal' : 'Departamento independiente'}
             </span>
             <Dialog.Close asChild>
               <button type="button" className="gallery-dialog__close" aria-label="Cerrar galería">
@@ -102,7 +102,6 @@ export function GalleryLightbox({ images, selected, onOpenChange }: Props) {
               <ArrowLeft size={21} strokeWidth={1.5} aria-hidden="true" />
             </button>
             <div>
-              <span>{image.room}</span>
               <small>
                 {String(index + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
               </small>

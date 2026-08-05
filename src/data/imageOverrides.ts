@@ -20,19 +20,19 @@ export const imageOverrides: Record<string, ImageOverride> = {
   'casa-5casa': {
     room: 'Sala de estar y comedor',
     order: 5,
-    alt: 'Hogar de piedra y madera de la sala de estar de Casa La Arbolada.',
+    alt: 'Hogar de piedra y madera de la sala de estar de La Arbolada.',
     note: '5CASA.HEIC muestra el hogar de la sala de estar. Se elimina la clasificación “Espacio 5”.',
   },
   'casa-livingcasa': {
     room: 'Sala de estar y comedor',
     order: 1,
-    alt: 'Vista amplia de la sala de estar y el comedor de Casa La Arbolada.',
+    alt: 'Vista amplia de la sala de estar y el comedor de La Arbolada.',
     note: 'El archivo no tiene número final; se ubica primero por ser la vista general.',
   },
   'casa-verdeliving3casa': {
     room: 'Entorno y llegada',
     order: 1,
-    alt: 'Acceso de piedra y portón de entrada a Casa La Arbolada.',
+    alt: 'Acceso de piedra y portón de entrada a La Arbolada.',
     note: 'La fotografía muestra el acceso, no una categoría genérica de entorno verde.',
   },
   'casa-patio7': {
@@ -54,13 +54,13 @@ export const imageOverrides: Record<string, ImageOverride> = {
   'casa-patio8': {
     room: 'Parque, arroyo y entorno verde',
     order: 1,
-    alt: 'Arroyo entre sauces y parque de Casa La Arbolada.',
+    alt: 'Arroyo entre sauces y parque de La Arbolada.',
     note: 'La imagen corresponde al paisaje abierto y al arroyo.',
   },
   'casa-patio10': {
     room: 'Parque, arroyo y entorno verde',
     order: 2,
-    alt: 'Horno de barro y parque arbolado de Casa La Arbolada.',
+    alt: 'Horno de barro y parque arbolado de La Arbolada.',
     note: 'Se reserva para el cierre del recorrido exterior.',
   },
   'casa-patio11': {
@@ -102,19 +102,19 @@ export const imageOverrides: Record<string, ImageOverride> = {
   'departamento-banio1dpto': {
     room: 'Baño',
     order: 1,
-    alt: 'Baño del alojamiento independiente.',
+    alt: 'Baño del departamento independiente.',
     note: 'Se unifica con banioDPTO2 en un único capítulo Baño.',
   },
   'departamento-baniodpto2': {
     room: 'Baño',
     order: 2,
-    alt: 'Ducha y sanitarios del alojamiento independiente.',
+    alt: 'Ducha y sanitarios del departamento independiente.',
     note: 'Se unifica con banio1DPTO en un único capítulo Baño.',
   },
   'departamento-verdedpto1': {
     room: 'Acceso y entorno',
     order: 1,
-    alt: 'Vista del parque al ingresar al alojamiento independiente.',
+    alt: 'Vista del parque al ingresar al departamento independiente.',
     focalPoint: {
       desktop: { x: 53, y: 53 },
       mobile: { x: 53, y: 55 },
@@ -124,7 +124,7 @@ export const imageOverrides: Record<string, ImageOverride> = {
   'departamento-verdedpto2': {
     room: 'Entorno verde',
     order: 1,
-    alt: 'Parque arbolado junto al alojamiento independiente.',
+    alt: 'Parque arbolado junto al departamento independiente.',
     note: 'Se reserva para el cierre del recorrido por el departamento.',
   },
 };
@@ -137,6 +137,10 @@ export const coverFocalPoints: Record<string, FocalPoint> = {
   'casa-fachada4': {
     desktop: { x: 56, y: 52 },
     mobile: { x: 63, y: 52 },
+  },
+  'casa-fachada3': {
+    desktop: { x: 72, y: 72 },
+    mobile: { x: 73, y: 68 },
   },
   'casa-patio1': {
     desktop: { x: 50, y: 53 },

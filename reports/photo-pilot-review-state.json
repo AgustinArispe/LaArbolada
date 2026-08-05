@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 2,
+  "updatedAt": "2026-07-26T15:57:52.664Z",
+  "styleProfile": {
+    "profileId": "casa-la-arbolada",
+    "version": "1.0.0",
+    "sha256": "52466a31d0b61f4b8c0dd29b5129efc0ade6e04c296589a9b6a33eeda2e0b4ce"
+  },
+  "decisions": {
+    "casa-5casa": {
+      "status": "pending",
+      "resultSha256": null,
+      "processingIdentity": {
+        "sourceSha256": "5a00461a23b7e0a65760040198fb0b791803ed32abfe46035185a5aa1d2ececf",
+        "styleProfileSha256": "52466a31d0b61f4b8c0dd29b5129efc0ade6e04c296589a9b6a33eeda2e0b4ce",
+        "cacheIdentitySha256": "70138ea8059931c8994076069d443ba5ff2262a26f5154f750296b756b8d8b44",
+        "developerVersion": "gemini-image-edit-request-v1",
+        "providerModel": "gemini-3.6-flash+gemini-3.1-flash-image+4:3+4K+gemini-image-output-v2",
+        "promptVersion": "la-arbolada-style-development-v4+la-arbolada-photographic-development-v4",
+        "returnedRasterDimensions": {
+          "width": 4800,
+          "height": 3584
+        },
+        "normalizationAlgorithm": "lanczos3",
+        "normalizationVersion": "provider-raster-normalization-v1",
+        "developmentProfileId": "default",
+        "developmentProfileVersion": 2,
+        "developmentProfileSha256": "0152140b40a75fb8b77c025309a7039af9960b875d2abd955fabd861b6c70681",
+        "promptTemplateVersion": "la-arbolada-photographic-development-v4",
+        "structuredDevelopmentPlanSha256": "3cd0c1818dec9ff276b4220f84b204fd144bd58b61acd12134c2c746b5d818de",
+        "postAnalysisPromptVersion": null
+      },
+      "updatedAt": null
+    },
+    "casa-cocinacasa1": {
+      "status": "pending",
+      "resultSha256": null,
+      "processingIdentity": {
+        "sourceSha256": "e3a18e9c5706c0e93ddc129e3f8c9fa13b43c139cb210fad70413230062693eb",
+        "styleProfileSha256": "52466a31d0b61f4b8c0dd29b5129efc0ade6e04c296589a9b6a33eeda2e0b4ce",
+        "cacheIdentitySha256": "a3ffc4365cbc777a05c2e6b12d62d6a154d2a202bb6c296e40c81761dce6b1af",
+        "developerVersion": "gemini-image-edit-request-v1",
+        "providerModel": "gemini-3.6-flash+gemini-3.1-flash-image+4:3+4K+gemini-image-output-v2",
+        "promptVersion": "la-arbolada-style-development-v4+la-arbolada-photographic-development-v4",
+        "returnedRasterDimensions": {
+          "width": 4800,
+          "height": 3584
+        },
+        "normalizationAlgorithm": "lanczos3",
+        "normalizationVersion": "provider-raster-normalization-v1",
+        "developmentProfileId": "kitchen",
+        "developmentProfileVersion": 3,
+        "developmentProfileSha256": "fdcc24a93baeadfe99a7e889502e04592e36d4bd0d0bee0d9ffb9aa9a5ecefff",
+        "promptTemplateVersion": "la-arbolada-photographic-development-v4",
+        "structuredDevelopmentPlanSha256": "4bc891f08dc0eee5a27819c400253049d123aba9e8608733ce9aa4c8917f1e70",
+        "postAnalysisPromptVersion": null
+      },
+      "updatedAt": null
+    },
+    "casa-fachada2": {
+      "status": "pending",
+      "resultSha256": null,
+      "processingIdentity": {
+        "sourceSha256": "fdebe099044743c22ba5b51b823c2385521b7ff6bdf9d6d9789daa7a5d976ee3",
+        "styleProfileSha256": "52466a31d0b61f4b8c0dd29b5129efc0ade6e04c296589a9b6a33eeda2e0b4ce",
+        "cacheIdentitySha256": "2f95c7b7ba9f0d112384e9d1933ee73cb8ea7e2e154149e0a4e82f4951717bcd",
+        "developerVersion": "gemini-image-edit-request-v1",
+        "providerModel": "gemini-3.6-flash+gemini-3.1-flash-image+4:3+4K+gemini-image-output-v2",
+        "promptVersion": "la-arbolada-style-development-v4+la-arbolada-photographic-development-v4",
+        "returnedRasterDimensions": {
+          "width": 4800,
+          "height": 3584
+        },
+        "normalizationAlgorithm": "lanczos3",
+        "normalizationVersion": "provider-raster-normalization-v1",
+        "developmentProfileId": "facade",
+        "developmentProfileVersion": 2,
+        "developmentProfileSha256": "e7e7a082c858c64b02c397e1dcc8452eea38dad25a24b75109ef87ced16c1b24",
+        "promptTemplateVersion": "la-arbolada-photographic-development-v4",
+        "structuredDevelopmentPlanSha256": "7c13de15dad896a1a183a685e440a8c8dad9d190a1145bf682fcc32eb7073fd5",
+        "postAnalysisPromptVersion": null
+      },
+      "updatedAt": null
+    },
+    "casa-patio7": {
+      "status": "pending",
+      "resultSha256": null,
+      "processingIdentity": {
+        "sourceSha256": "46e111ff6075b49ddd87a49129b218a3f6b7ace08f5aa348b0af1a69b80a6244",
+        "styleProfileSha256": "52466a31d0b61f4b8c0dd29b5129efc0ade6e04c296589a9b6a33eeda2e0b4ce",
+        "cacheIdentitySha256": "26c5ba99fb08ceb48bbb3c6e3e29e5ced6316a7043eafb1fe3e1c54ce61e160a",
+        "developerVersion": "gemini-image-edit-request-v1",
+        "providerModel": "gemini-3.6-flash+gemini-3.1-flash-image+4:3+4K+gemini-image-output-v2",
+        "promptVersion": "la-arbolada-style-development-v4+la-arbolada-photographic-development-v4",
+        "returnedRasterDimensions": {
+          "width": 4800,
+          "height": 3584
+        },
+        "normalizationAlgorithm": "lanczos3",
+        "normalizationVersion": "provider-raster-normalization-v1",
+        "developmentProfileId": "patio",
+        "developmentProfileVersion": 2,
+        "developmentProfileSha256": "69af2ea472c4bfe10676f2377bba2f45e1a284ca546e0405d9d00d5742651555",
+        "promptTemplateVersion": "la-arbolada-photographic-development-v4",
+        "structuredDevelopmentPlanSha256": "06a333526b8c55d2fe40e39a7f34d23fd49957515cc4d0ea62fcb9d5869f84a6",
+        "postAnalysisPromptVersion": null
+      },
+      "updatedAt": null
+    },
+    "casa-patio11": {
+      "status": "pending",
+      "resultSha256": null,
+      "processingIdentity": {
+        "sourceSha256": "d42de906f432bc6b1a879aec4063909e514a39a7579de9af071363e7990a0ea7",
+        "styleProfileSha256": "52466a31d0b61f4b8c0dd29b5129efc0ade6e04c296589a9b6a33eeda2e0b4ce",
+        "cacheIdentitySha256": "a7a9b24143edf3fb3fa9942c5bd8c79df8b6c55c3130aa612f90cbcd2bf89d30",
+        "developerVersion": "gemini-image-edit-request-v1",
+        "providerModel": "gemini-3.6-flash+gemini-3.1-flash-image+4:3+4K+gemini-image-output-v2",
+        "promptVersion": "la-arbolada-style-development-v4+la-arbolada-photographic-development-v4",
+        "returnedRasterDimensions": {
+          "width": 4800,
+          "height": 3584
+        },
+        "normalizationAlgorithm": "lanczos3",
+        "normalizationVersion": "provider-raster-normalization-v1",
+        "developmentProfileId": "patio",
+        "developmentProfileVersion": 2,
+        "developmentProfileSha256": "69af2ea472c4bfe10676f2377bba2f45e1a284ca546e0405d9d00d5742651555",
+        "promptTemplateVersion": "la-arbolada-photographic-development-v4",
+        "structuredDevelopmentPlanSha256": "2198e8a18b36fc3db56080e93f1ddfc3f7ec0a6fa250021560ab6c45f5d6461b",
+        "postAnalysisPromptVersion": null
+      },
+      "updatedAt": null
+    }
+  }
+}

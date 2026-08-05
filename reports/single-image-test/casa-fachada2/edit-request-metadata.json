@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "casa-fachada2",
+  "sourceSha256": "fdebe099044743c22ba5b51b823c2385521b7ff6bdf9d6d9789daa7a5d976ee3",
+  "styleProfileSha256": "52466a31d0b61f4b8c0dd29b5129efc0ade6e04c296589a9b6a33eeda2e0b4ce",
+  "requestCacheIdentity": {
+    "components": {
+      "sourceSha256": "fdebe099044743c22ba5b51b823c2385521b7ff6bdf9d6d9789daa7a5d976ee3",
+      "styleProfileSha256": "52466a31d0b61f4b8c0dd29b5129efc0ade6e04c296589a9b6a33eeda2e0b4ce",
+      "developerVersion": "gemini-image-edit-request-v1",
+      "providerModel": "gemini-3.6-flash+gemini-3.1-flash-image",
+      "promptVersion": "la-arbolada-style-development-v3+la-arbolada-gemini-raster-development-v1"
+    },
+    "sha256": "e704f3993edea16750859698b4cd1f22bbe9e8074b994930090cb118593787ab"
+  },
+  "normalizationCacheIdentity": {
+    "components": {
+      "sourceSha256": "fdebe099044743c22ba5b51b823c2385521b7ff6bdf9d6d9789daa7a5d976ee3",
+      "styleProfileSha256": "52466a31d0b61f4b8c0dd29b5129efc0ade6e04c296589a9b6a33eeda2e0b4ce",
+      "developerVersion": "gemini-image-edit-request-v1",
+      "providerModel": "gemini-3.6-flash+gemini-3.1-flash-image",
+      "promptVersion": "la-arbolada-style-development-v3+la-arbolada-gemini-raster-development-v1",
+      "requestCacheIdentitySha256": "e704f3993edea16750859698b4cd1f22bbe9e8074b994930090cb118593787ab",
+      "returnedRasterDimensions": {
+        "width": 1200,
+        "height": 896
+      },
+      "normalizationAlgorithm": "lanczos3",
+      "normalizationVersion": "provider-raster-normalization-v1"
+    },
+    "sha256": "64cc5d5c441bbc42feee10c83d8c4589f71ee14d4abb55c62e2fc0c09e2fc2e6"
+  },
+  "analysisModel": "gemini-3.6-flash",
+  "imageModel": "gemini-3.1-flash-image",
+  "requestedAspectRatio": "4:3",
+  "promptVersion": "la-arbolada-gemini-raster-development-v1",
+  "promptSha256": "113fdc3541201cd490ea26082a23306e946eb3fb18b15427c0cff60b92797d57",
+  "response": {
+    "model": "gemini-3.1-flash-image",
+    "mode": "image-editing",
+    "requestId": null,
+    "editedAt": "2026-07-23T18:21:17.949Z",
+    "outputMimeType": "image/jpeg",
+    "outputSha256": "c09806df901d3190b22973f1e387f91d178367e4dc7569a14c0ba3771aa8214d",
+    "returnedDimensions": {
+      "width": 1200,
+      "height": 896
+    },
+    "normalizationAlgorithm": "lanczos3",
+    "normalizationVersion": "provider-raster-normalization-v1"
+  },
+  "credentialsIncluded": false
+}
