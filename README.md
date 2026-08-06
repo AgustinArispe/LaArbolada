@@ -50,18 +50,17 @@ src/
 
 public/
 ├── images/                # Fotografías actualmente publicadas
-└── images-processed/      # Candidatas procesadas; no se publican automáticamente
 
-photo-processing/          # Pipeline y perfiles para la curaduría asistida de fotos
-scripts/                   # Inventario, generación de derivados y herramientas de revisión
-reports/                   # Informes, comparadores y estado de aprobaciones
-tests/                     # Integridad de recorridos y pruebas del pipeline fotográfico
+scripts/                   # Inventario y generación de variantes de imágenes
+reports/                   # Inventario de fuentes y verificaciones del sitio
+tests/                     # Integridad de recorridos
+
 ```
 
 ### Datos y fotos
 
 - `src/data/images.generated.ts` es el catálogo generado de imágenes y variantes.
-- `src/data/images.ts` elige entre las fotos originales y las procesadas mediante `PUBLIC_IMAGE_SET`; el valor seguro y actual es `original`.
+- `src/data/images.ts` expone el catálogo de las fotografías actualmente publicadas.
 - `src/data/imageOverrides.ts` conserva ajustes manuales: ambiente, orden, textos alternativos y punto focal.
 - `src/data/journeys.ts` construye los recorridos curados y mantiene separadas Casa y Departamento.
 - Los originales viven en `assets-raw`; `scripts/process-images.mjs` genera las variantes web y actualiza el catálogo.
@@ -76,42 +75,6 @@ tests/                     # Integridad de recorridos y pruebas del pipeline fot
 - Fuentes locales DM Sans e Instrument Serif.
 
 El alias `@/*` apunta a `src/*`.
-
-## Edición fotográfica asistida con Gemini: plan en curso
-
-El proyecto está preparando un flujo de **revelado fotográfico controlado**, no generación libre de imágenes. Su objetivo es mejorar luz, color y lectura de las fotos arquitectónicas sin alterar la escena, la arquitectura, los objetos ni el encuadre.
-
-### Flujo previsto
-
-1. Se parte de una foto original aprobada y se excluyen las imágenes bloqueadas.
-2. Gemini analiza la foto y devuelve JSON validado contra un esquema: categoría, necesidades y señales visuales.
-3. El proyecto combina ese análisis con un perfil editorial versionado por tipo de ambiente (fachada, patio, baño, cocina, living, dormitorio, jardín, pileta o perfil conservador).
-4. Gemini recibe la foto original y el plan concreto para hacer una sola edición source-to-image. La instrucción prohíbe agregar, quitar, mover o redibujar elementos; también prohíbe crop, rotación, espejo, reencuadre y upscale.
-5. El pipeline conserva separadamente el original enviado, los bytes exactos devueltos por Gemini y una versión normalizada. Rechaza de inmediato cambios de relación de aspecto, rotación, espejo o recorte; si sólo varía la resolución, normaliza a las dimensiones originales con Lanczos3.
-6. Después calcula métricas de estructura y calidad (SSIM, edge SSIM, PSNR, luminancia y color) y hace una segunda validación semántica con Gemini.
-7. Cada resultado queda en reportes y comparadores para revisión humana. Nunca reemplaza fotos del sitio por sí mismo.
-
-Los perfiles, las plantillas y los planes tienen versión y SHA-256. Esos hashes forman parte de la identidad de caché, por lo que un cambio editorial invalida los resultados previos de forma trazable.
-
-### Protección y aprobación
-
-- Tres fotos de living ya aprobadas por la propietaria están bloqueadas permanentemente: no se analizan, suben, editan, comparan ni reemplazan.
-- La validación final puede ser `PASS`, `REJECT` o `MANUAL_REVIEW`. Cambios geométricos, semánticos, estructurales o sobreprocesamiento se rechazan; casos ambiguos pasan a revisión manual.
-- El piloto está compuesto por cinco imágenes representativas: exterior con cielo, vegetación e interior no bloqueado.
-- El lote completo sólo puede empezar tras aprobar explícitamente los cinco resultados actuales en `reports/photo-pilot-review-state.json`.
-- Aun después de aprobar, activar procesadas requiere una decisión explícita: cambiar `PUBLIC_IMAGE_SET=processed`, reconstruir y desplegar. La publicación vigente sigue usando originales.
-
-### Estado actual y próximos pasos
-
-El piloto pagado **no debe ejecutarse todavía**. La auditoría de preparación (`reports/production-readiness.md`) marca el sistema como no listo para producción por tres bloqueos principales:
-
-1. Gemini devuelve tamaños por niveles, que no cumplen el contrato actual de dimensiones/proporción exactas de las fotos fuente.
-2. La política de metadatos no está resuelta: la conversión local puede perder EXIF/orientación, aunque la configuración declara preservarlos.
-3. Los reportes y derivados todavía no se publican como un conjunto transaccional; además, la vuelta a originales exige rebuild/redeploy y no es un rollback inmediato.
-
-Antes de gastar créditos, hay que decidir el contrato de tamaño/normalización, definir honestamente qué metadatos se preservan, hacer atómica la promoción de cada conjunto de archivos y acordar el mecanismo de rollback. Luego se regeneran los reportes del piloto, se revisan y aprueban sus cinco fotos, y recién entonces se habilita el procesamiento completo.
-
-La documentación técnica detallada está en `photo-processing/README.md`; el diagnóstico vigente, en `reports/production-readiness.md`.
 
 ## Desarrollo local
 
@@ -133,26 +96,18 @@ astro dev --background
 
 Se administra con `astro dev status`, `astro dev logs` y `astro dev stop`.
 
-## Comandos de imágenes
+## Gestión de imágenes
 
 ```bash
 npm run assets:inventory       # Inventaría las fuentes
 npm run assets:process         # Genera variantes y catálogo de imágenes
-npm run photos:review          # Actualiza la revisión de clasificación
-npm run photos:match-review    # Actualiza el panel de correspondencias
-npm run photos:gemini          # Valida perfiles, locks y configuración; no usa API key
-npm run photos:test            # Ejecuta pruebas de seguridad del pipeline
-npm run photos:review-server   # Sirve el dashboard local de revisión
 ```
-
-Los comandos `photos:gemini-pilot -- --confirm-upload` y `photos:gemini-full -- --confirm-upload` están reservados para el momento en que se resuelvan los bloqueos de producción y exista una aprobación humana explícita.
 
 ## Configuración
 
 - Los datos de contacto están en `src/config/contact.ts`.
 - La identidad SEO está en `src/config/site.ts`.
-- Copiar `.env.example` a `.env` para la configuración local. Mantener `PUBLIC_IMAGE_SET=original` hasta completar la revisión fotográfica.
-- `GEMINI_API_KEY` sólo hace falta para análisis, edición o validación remotos aprobados; nunca debe versionarse.
+- Copiar `.env.example` a `.env` para la configuración local si se necesita definir `PUBLIC_SITE_URL`.
 
 ## Recorrido 3D
 

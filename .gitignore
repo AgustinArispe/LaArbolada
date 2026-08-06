@@ -1,7 +1,5 @@
 # build output
 dist/
-dist-original/
-dist-gemini/
 
 # Original photographs downloaded from Google Drive. Processed assets remain tracked.
 assets-raw/
@@ -25,10 +23,6 @@ pnpm-debug.log*
 .env
 .env.*
 !.env.example
-
-# Provider inputs, raw responses, cache metadata, and partial processing files.
-.photo-work/
-public/images-gemini/
 
 # macOS-specific files
 .DS_Store
