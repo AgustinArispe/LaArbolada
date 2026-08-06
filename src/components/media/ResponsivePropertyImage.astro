@@ -23,12 +23,12 @@ const {
 <img
   class={className}
   src={image.sources.desktop}
-  srcset={`${image.sources.mobile} 900w, ${image.sources.desktop} 1600w${image.sources.large ? `, ${image.sources.large} 2400w` : ''}`}
+  srcset={`${image.sources.mobile} 840w, ${image.sources.desktop} 1280w${image.sources.large ? `, ${image.sources.large} 1920w` : ''}`}
   {sizes}
   {alt}
   {loading}
   fetchpriority={fetchpriority}
   decoding="async"
-  width="1600"
-  height="1000"
+  width={image.width}
+  height={image.height}
 />

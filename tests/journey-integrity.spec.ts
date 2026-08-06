@@ -43,11 +43,11 @@ test('dedicated routes work directly and keep complete, non-duplicated galleries
   page,
 }) => {
   const expected = [
-    { path: '/casa-principal', title: 'Residencia principal', rooms: 12, property: 'casa' },
+    { path: '/casa-principal', title: 'Residencia principal', rooms: 7, property: 'casa' },
     {
       path: '/alojamiento-independiente',
       title: 'Departamento independiente',
-      rooms: 6,
+      rooms: 5,
       property: 'departamento',
     },
   ];
@@ -107,9 +107,9 @@ test('gallery controls, keyboard navigation, thumbnails, and lightbox work', asy
   const chapter = page.locator('#casa-ambiente-3');
   await chapter.scrollIntoViewIfNeeded();
   const gallery = chapter.locator('.horizontal-gallery');
-  await expect(gallery).toHaveAttribute('data-gallery-total', '4');
+  await expect(gallery).toHaveAttribute('data-gallery-total', '3');
   await expect(page.locator('.whatsapp-bubble')).toHaveCSS('visibility', 'hidden');
-  await chapter.getByRole('button', { name: 'Ver fotografía 2 de 4' }).click();
+  await chapter.getByRole('button', { name: 'Ver fotografía 2 de 3' }).click();
   await expect(gallery).toHaveAttribute('data-gallery-index', '2');
   await expect(gallery).toHaveAttribute('data-transitioning', 'false');
   await gallery.focus();
@@ -141,7 +141,7 @@ test('slow scrolling and gallery hydration never reposition the document', async
   const chapter = page.locator('#casa-ambiente-3');
   await chapter.scrollIntoViewIfNeeded();
   const beforeThumbnail = await page.evaluate(() => window.scrollY);
-  await chapter.getByRole('button', { name: 'Ver fotografía 2 de 4' }).click();
+  await chapter.getByRole('button', { name: 'Ver fotografía 2 de 3' }).click();
   await expect(chapter.locator('.horizontal-gallery')).toHaveAttribute(
     'data-transitioning',
     'false',

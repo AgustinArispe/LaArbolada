@@ -3,20 +3,14 @@ export const casaRoomOrder = [
   'Exterior',
   'Sala de estar y comedor',
   'Cocina',
-  'Dormitorio 1',
-  'Dormitorio 2',
-  'Dormitorio 3',
-  'Dormitorio 4',
-  'Baño 1',
-  'Baño 2',
-  'Patio',
+  'Dormitorios',
+  'Baños',
   'Parque y arroyo',
 ] as const;
 
 export const departamentoRoomOrder = [
   'Acceso privado',
-  'Sala de estar',
-  'Cocina',
+  'Cocina, comedor y estar',
   'Dormitorio',
   'Baño',
   'Entorno natural',

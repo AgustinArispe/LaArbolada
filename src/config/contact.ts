@@ -1,5 +1,5 @@
 export const contact = {
-  whatsappNumber: '5492494567808',
+  whatsappNumber: '5492494372901',
   whatsappMessage: 'Hola, quisiera consultar disponibilidad en La Arbolada.',
   location: 'Tandil, Buenos Aires',
   directionsUrl:

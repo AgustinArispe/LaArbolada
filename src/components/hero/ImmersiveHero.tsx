@@ -122,12 +122,12 @@ export function ImmersiveHero({ frames }: Props) {
                 <picture className="immersive-hero__background" aria-hidden="true">
                   <source
                     media="(max-width: 767px)"
-                    srcSet={`${image.sources.mobile} 900w, ${image.sources.desktop} 1600w`}
+                    srcSet={`${image.sources.mobile} 840w, ${image.sources.desktop} 1280w`}
                     sizes="100vw"
                   />
                   <img
                     src={image.sources.large ?? image.sources.desktop}
-                    srcSet={`${image.sources.desktop} 1600w${image.sources.large ? `, ${image.sources.large} 2400w` : ''}`}
+                    srcSet={`${image.sources.desktop} 1280w${image.sources.large ? `, ${image.sources.large} 1920w` : ''}`}
                     sizes="100vw"
                     alt=""
                     loading={index < 2 ? 'eager' : 'lazy'}
@@ -137,13 +137,13 @@ export function ImmersiveHero({ frames }: Props) {
                 <picture className="immersive-hero__picture">
                   <source
                     media="(max-width: 767px)"
-                    srcSet={`${image.sources.mobile} 900w, ${image.sources.desktop} 1600w`}
+                    srcSet={`${image.sources.mobile} 840w, ${image.sources.desktop} 1280w`}
                     sizes="100vw"
                   />
                   <img
                     data-hero-image
                     src={image.sources.large ?? image.sources.desktop}
-                    srcSet={`${image.sources.desktop} 1600w${image.sources.large ? `, ${image.sources.large} 2400w` : ''}`}
+                    srcSet={`${image.sources.desktop} 1280w${image.sources.large ? `, ${image.sources.large} 1920w` : ''}`}
                     sizes="100vw"
                     alt=""
                     fetchPriority={index === 0 ? 'high' : 'auto'}

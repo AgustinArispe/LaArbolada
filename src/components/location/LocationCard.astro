@@ -4,7 +4,7 @@ import ResponsivePropertyImage from '@/components/media/ResponsivePropertyImage.
 import { contact } from '@/config/contact';
 import { journeys } from '@/data/journeys';
 
-const locationImage = journeys.casa.rooms[11].images[0];
+const locationImage = journeys.casa.rooms[6].images[2];
 ---
 
 <section
@@ -31,7 +31,14 @@ const locationImage = journeys.casa.rooms[11].images[0];
     <div class="location-card__copy">
       <p class="eyebrow">Dónde estamos</p>
       <h2 id="location-title">La Arbolada, Tandil</h2>
-      <p>Un entorno natural dentro de Tandil, con acceso directo y estacionamiento en el predio.</p>
+      <p>
+        La Arbolada se encuentra en el barrio El Paraíso, en la ciudad de Tandil.
+      </p>
+      <p>
+        Su acceso es fácil y ágil por dos vías principales: una más directa, por la RN 226; y otra
+        por la avenida Fleming, un paseo pintoresco que atraviesa el Country, el Golf Club y el
+        barrio del Golf.
+      </p>
       <a href={contact.directionsUrl} target="_blank" rel="noopener noreferrer">
         Cómo llegar
         <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />

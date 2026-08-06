@@ -1,0 +1,219 @@
+[
+  {
+    "id": "casa-exterior-hero",
+    "property": "casa",
+    "source": "public/images/Gnral La Arbolada 1.0/24728807-0FF5-4654-B3D7-4EC5DD7044B1.PNG",
+    "alt": "Residencia principal de La Arbolada, con fachada de piedra, galería y parque.",
+    "focalPoint": { "desktop": { "x": 54, "y": 53 }, "mobile": { "x": 54, "y": 54 } }
+  },
+  {
+    "id": "casa-exterior-park",
+    "property": "casa",
+    "source": "public/images/Gnral La Arbolada 1.0/E7A9305B-D70F-4657-B667-0F28E82FAC4F.PNG",
+    "alt": "Residencia principal vista desde el parque, con piedra, pérgola y arboleda.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 50, "y": 51 } }
+  },
+  {
+    "id": "casa-arrival-bridge",
+    "property": "casa",
+    "source": "public/images/Gnral La Arbolada 1.0/030AEC37-735F-4CAB-9299-56E673E495E4.PNG",
+    "alt": "Puente de piedra sobre el arroyo en el parque de La Arbolada.",
+    "focalPoint": { "desktop": { "x": 54, "y": 56 }, "mobile": { "x": 56, "y": 56 } }
+  },
+  {
+    "id": "casa-arrival-entrance",
+    "property": "casa",
+    "source": "public/images/Gnral La Arbolada 1.0/B939E445-A10C-47B0-815B-4401DDAD55A0.PNG",
+    "alt": "Entrada principal de La Arbolada, con piedra y puerta de madera.",
+    "focalPoint": { "desktop": { "x": 50, "y": 50 }, "mobile": { "x": 50, "y": 50 } }
+  },
+  {
+    "id": "casa-living-wide",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/C0E4FF75-6E81-4D49-A028-CECF10661DC8.PNG",
+    "alt": "Sala de estar y comedor de la residencia, con techo de madera y vistas al parque.",
+    "focalPoint": { "desktop": { "x": 51, "y": 50 }, "mobile": { "x": 52, "y": 49 } }
+  },
+  {
+    "id": "casa-living-dining",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/54C5D173-D947-479A-91BA-7CA61757B48F.PNG",
+    "alt": "Comedor y sala de estar de La Arbolada, con vigas de madera.",
+    "focalPoint": { "desktop": { "x": 51, "y": 51 }, "mobile": { "x": 52, "y": 50 } }
+  },
+  {
+    "id": "casa-living-hearth",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/835AB9BF-A9FB-4630-B40A-87892ED8DD16.PNG",
+    "alt": "Rincón de estar con hogar de piedra, madera y vista al parque.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 51, "y": 52 } }
+  },
+  {
+    "id": "casa-kitchen-island",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/02568D04-2853-49B0-B438-D49E00D1299F.PNG",
+    "alt": "Cocina con isla, techo de madera y barra desayunadora.",
+    "focalPoint": { "desktop": { "x": 51, "y": 52 }, "mobile": { "x": 52, "y": 52 } }
+  },
+  {
+    "id": "casa-kitchen-detail",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/D8444BE8-B225-46A9-991A-BF4242F533B3.PNG",
+    "alt": "Cocina equipada de La Arbolada con barra de madera y vista al verde.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 51, "y": 52 } }
+  },
+  {
+    "id": "casa-kitchen-dining",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/DDA96AC8-0A99-4A26-A231-A3EDF3EB4F44.PNG",
+    "alt": "Cocina y comedor diario de la residencia principal.",
+    "focalPoint": { "desktop": { "x": 50, "y": 51 }, "mobile": { "x": 50, "y": 51 } }
+  },
+  {
+    "id": "casa-bedroom-main",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/137C2916-229F-4CCB-968D-F8F697D5E3B7.PNG",
+    "alt": "Dormitorio principal con techo de madera y ventana hacia el parque.",
+    "focalPoint": { "desktop": { "x": 51, "y": 52 }, "mobile": { "x": 52, "y": 52 } }
+  },
+  {
+    "id": "casa-bedroom-twin",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/66BA1958-E26E-44E6-8BC7-90409F82B338.PNG",
+    "alt": "Dormitorio con camas individuales de la residencia principal.",
+    "focalPoint": { "desktop": { "x": 51, "y": 52 }, "mobile": { "x": 51, "y": 52 } }
+  },
+  {
+    "id": "casa-bedroom-garden",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/EE0CCB4A-ADD9-4CAB-9F94-640B4F0BAEF4.PNG",
+    "alt": "Dormitorio de la residencia con salida hacia la terraza y el parque.",
+    "focalPoint": { "desktop": { "x": 51, "y": 51 }, "mobile": { "x": 51, "y": 51 } }
+  },
+  {
+    "id": "casa-bedroom-terrace",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/C6A83CA2-A4C1-4853-A2A0-5A0A1EE889DC.PNG",
+    "alt": "Dormitorio luminoso con techo de madera y acceso a la terraza.",
+    "focalPoint": { "desktop": { "x": 51, "y": 52 }, "mobile": { "x": 52, "y": 52 } }
+  },
+  {
+    "id": "casa-bath-main",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/10DD31C7-96A6-46BC-A96C-790536CEC5FD.PNG",
+    "alt": "Baño de la residencia principal con terminaciones de piedra y madera.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 50, "y": 52 } }
+  },
+  {
+    "id": "casa-bath-secondary",
+    "property": "casa",
+    "source": "public/images/La Arbolada 1.0/F9FB49C6-6FD3-4365-81C5-399C9DEC620E.PNG",
+    "alt": "Baño secundario de la residencia principal.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 50, "y": 52 } }
+  },
+  {
+    "id": "casa-patio-sunset",
+    "property": "casa",
+    "source": "public/images/Gnral La Arbolada 1.0/50091321-D799-4443-AF00-8C6933F461FF.PNG",
+    "alt": "Jardín de piedra al atardecer junto a la residencia principal.",
+    "focalPoint": { "desktop": { "x": 50, "y": 53 }, "mobile": { "x": 50, "y": 53 } }
+  },
+  {
+    "id": "casa-park-stone",
+    "property": "casa",
+    "source": "public/images/Gnral La Arbolada 1.0/08CB1FE0-3DDE-402F-8E07-D92212DABEBC.PNG",
+    "alt": "Parque de La Arbolada al atardecer, con senderos y muros de piedra.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 50, "y": 52 } }
+  },
+  {
+    "id": "casa-creek",
+    "property": "casa",
+    "source": "public/images/Gnral La Arbolada 1.0/1F6E207F-24B3-4B09-8039-41329F0E93F5.PNG",
+    "alt": "Arroyo y puente entre los árboles del parque de La Arbolada.",
+    "focalPoint": { "desktop": { "x": 52, "y": 54 }, "mobile": { "x": 54, "y": 54 } }
+  },
+  {
+    "id": "casa-park-willow",
+    "property": "casa",
+    "source": "public/images/Gnral La Arbolada 1.0/CD085BBB-3A17-4A6B-8705-13AF0C7E3588.PNG",
+    "alt": "Sauces y parque arbolado de La Arbolada al atardecer.",
+    "focalPoint": { "desktop": { "x": 52, "y": 52 }, "mobile": { "x": 52, "y": 52 } }
+  },
+  {
+    "id": "departamento-exterior-hero",
+    "property": "departamento",
+    "source": "public/images/Dpto Arbolada 1.0/124784A0-36E3-47F5-A7EE-49F554E1AC18.PNG",
+    "alt": "Fachada de piedra y acceso del departamento independiente de La Arbolada.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 51, "y": 52 } }
+  },
+  {
+    "id": "departamento-exterior-wide",
+    "property": "departamento",
+    "source": "public/images/Gnral La Arbolada 1.0/43C288E5-C509-48C1-B7E8-34D2CBDC27C2.PNG",
+    "alt": "Exterior y acceso lateral del departamento independiente, integrado al parque.",
+    "focalPoint": { "desktop": { "x": 55, "y": 52 }, "mobile": { "x": 56, "y": 52 } }
+  },
+  {
+    "id": "departamento-living-wide",
+    "property": "departamento",
+    "source": "public/images/Dpto Arbolada 1.0/CD0ADB2D-1FB3-4FAC-8DF1-2E357921DF7E.PNG",
+    "alt": "Sala de estar y comedor del departamento independiente.",
+    "focalPoint": { "desktop": { "x": 51, "y": 52 }, "mobile": { "x": 51, "y": 52 } }
+  },
+  {
+    "id": "departamento-dining",
+    "property": "departamento",
+    "source": "public/images/Dpto Arbolada 1.0/8C33E584-859B-4EB1-8596-F10276E5203A.PNG",
+    "alt": "Comedor del departamento independiente de La Arbolada.",
+    "focalPoint": { "desktop": { "x": 52, "y": 52 }, "mobile": { "x": 52, "y": 52 } }
+  },
+  {
+    "id": "departamento-kitchen",
+    "property": "departamento",
+    "source": "public/images/Dpto Arbolada 1.0/92F79282-2309-4D65-AE8F-6F2D72397181.PNG",
+    "alt": "Cocina equipada del departamento independiente.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 50, "y": 52 } }
+  },
+  {
+    "id": "departamento-bedroom-main",
+    "property": "departamento",
+    "source": "public/images/Dpto Arbolada 1.0/42DCF1DD-AF01-4FFC-A437-3316906EA655.PNG",
+    "alt": "Dormitorio del departamento independiente con placard integrado.",
+    "focalPoint": { "desktop": { "x": 51, "y": 52 }, "mobile": { "x": 52, "y": 52 } }
+  },
+  {
+    "id": "departamento-bedroom-twin",
+    "property": "departamento",
+    "source": "public/images/Dpto Arbolada 1.0/BAA7B0AF-8E71-448D-9C11-354CB1DD5E12.PNG",
+    "alt": "Dormitorio con camas individuales y vista al verde del departamento.",
+    "focalPoint": { "desktop": { "x": 51, "y": 52 }, "mobile": { "x": 52, "y": 52 } }
+  },
+  {
+    "id": "departamento-bath-wide",
+    "property": "departamento",
+    "source": "public/images/Dpto Arbolada 1.0/5333EF57-25E3-48BC-8651-9E8D89215BB7.PNG",
+    "alt": "Baño completo del departamento independiente.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 50, "y": 52 } }
+  },
+  {
+    "id": "departamento-bath-detail",
+    "property": "departamento",
+    "source": "public/images/Dpto Arbolada 1.0/07A7C837-1226-4DAC-9D94-E94CF1B84C6E.PNG",
+    "alt": "Detalle del baño con ducha del departamento independiente.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 50, "y": 52 } }
+  },
+  {
+    "id": "departamento-wood-oven",
+    "property": "departamento",
+    "source": "public/images/Gnral La Arbolada 1.0/A8C61A30-CBE2-44EE-8AC3-C719D75B5896.PNG",
+    "alt": "Horno de barro de piedra en el parque compartido de La Arbolada.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 50, "y": 52 } }
+  },
+  {
+    "id": "departamento-pergola",
+    "property": "departamento",
+    "source": "public/images/Gnral La Arbolada 1.0/ABF1F507-6246-426F-9FD1-58F2B0CE9FD3.PNG",
+    "alt": "Pérgola y parque compartido de La Arbolada.",
+    "focalPoint": { "desktop": { "x": 50, "y": 52 }, "mobile": { "x": 50, "y": 52 } }
+  }
+]

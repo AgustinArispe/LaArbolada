@@ -1,5 +1,4 @@
-import { propertyImages, type PropertyImage } from '@/data/images';
-import { coverFocalPoints, imageOverrides, type FocalPoint } from '@/data/imageOverrides';
+import { propertyImages, type FocalPoint, type PropertyImage } from '@/data/images';
 import { casaRoomOrder, departamentoRoomOrder, type Presentation } from '@/data/roomOrder';
 
 export type PropertyKey = 'casa' | 'departamento';
@@ -39,25 +38,21 @@ export type PropertyJourneyData = {
   introduction: string;
   facts: string;
   overviewImage: CuratedImage;
+  homeCardImage: CuratedImage;
   rooms: JourneyRoom[];
 };
 
 const imageById = new Map(propertyImages.map((image) => [image.id, image]));
 
-function curateImage(id: string, room: string, fallbackOrder: number): CuratedImage {
+function curateImage(id: string, room: string, order: number): CuratedImage {
   const image = imageById.get(id);
   if (!image) throw new Error(`No se encontró la imagen curada: ${id}`);
-  const override = imageOverrides[id];
 
   return {
     ...image,
     room,
     space: room,
-    order: override?.order ?? fallbackOrder,
-    alt:
-      override?.alt ??
-      `${room.replace(/\s+\d+$/, '')} de ${image.property === 'casa' ? 'La Arbolada' : 'el departamento independiente de La Arbolada'}.`,
-    focalPoint: override?.focalPoint ?? coverFocalPoints[id],
+    order,
   };
 }
 
@@ -70,17 +65,13 @@ function makeRoom(
   theme: 'warm' | 'forest' = 'warm',
   description?: string,
 ): JourneyRoom {
-  const images = ids
-    .map((id, index) => curateImage(id, title, index + 1))
-    .sort((a, b) => a.order - b.order);
-
   return {
     property,
     room: title,
     roomNumber,
     title,
     description,
-    images,
+    images: ids.map((id, index) => curateImage(id, title, index + 1)),
     theme,
     presentation,
   };
@@ -91,40 +82,34 @@ const casaRooms: JourneyRoom[] = [
     'casa',
     1,
     casaRoomOrder[0],
-    ['casa-verdeliving3casa', 'casa-patio7', 'casa-patio9'],
+    ['casa-arrival-entrance', 'casa-arrival-bridge'],
     'hero-media',
     'forest',
-    'La llegada recorre árboles, piedra y el puente sobre el arroyo.',
+    'La llegada recorre el arroyo, la piedra y la entrada de madera.',
   ),
   makeRoom(
     'casa',
     2,
     casaRoomOrder[1],
-    ['casa-fachada1', 'casa-fachada2', 'casa-fachada3', 'casa-fachada4'],
+    ['casa-exterior-hero', 'casa-exterior-park'],
     'framed',
     'warm',
-    'Piedra, madera y grandes aberturas hacia el parque.',
+    'La residencia se abre al parque entre muros de piedra, pérgola y arboleda.',
   ),
   makeRoom(
     'casa',
     3,
     casaRoomOrder[2],
-    ['casa-livingcasa', 'casa-livingcasa3', 'casa-mesalivingcasa4', 'casa-5casa'],
+    ['casa-living-wide', 'casa-living-dining'],
     'split',
     'warm',
-    'Techos de madera, hogar de piedra y vistas abiertas al parque.',
+    'Madera, piedra y vistas abiertas construyen el ambiente común.',
   ),
   makeRoom(
     'casa',
     4,
     casaRoomOrder[3],
-    [
-      'casa-cocinacasa1',
-      'casa-cocinacasa2',
-      'casa-cocinacasa3',
-      'casa-cocinacasa4',
-      'casa-cocinacasa5',
-    ],
+    ['casa-kitchen-island', 'casa-kitchen-detail', 'casa-kitchen-dining'],
     'dark',
     'forest',
   ),
@@ -132,61 +117,19 @@ const casaRooms: JourneyRoom[] = [
     'casa',
     5,
     casaRoomOrder[4],
-    ['casa-dorm1casa1', 'casa-dorm1casa2', 'casa-dorm1casa3', 'casa-dorm1casa5'],
-    'detail',
-    'warm',
-  ),
-  makeRoom(
-    'casa',
-    6,
-    casaRoomOrder[5],
-    ['casa-dorm2casa1', 'casa-dorm2casa2', 'casa-dorm2casa3'],
+    ['casa-bedroom-main', 'casa-living-hearth', 'casa-bedroom-garden', 'casa-bedroom-terrace', 'casa-bedroom-twin'],
     'framed',
     'warm',
   ),
-  makeRoom('casa', 7, casaRoomOrder[6], ['casa-dorm3casa1', 'casa-dorm3casa2'], 'split', 'warm'),
-  makeRoom('casa', 8, casaRoomOrder[7], ['casa-dorm4casa1', 'casa-dorm4casa2'], 'dark', 'forest'),
+  makeRoom('casa', 6, casaRoomOrder[5], ['casa-bath-main', 'casa-bath-secondary'], 'detail', 'warm'),
   makeRoom(
     'casa',
-    9,
-    casaRoomOrder[8],
-    ['casa-banio1casa1', 'casa-banio1casa2', 'casa-banio1casa3'],
-    'detail',
-    'warm',
-  ),
-  makeRoom(
-    'casa',
-    10,
-    casaRoomOrder[9],
-    ['casa-banio2casa1', 'casa-banio2casa2', 'casa-banio2casa3'],
-    'framed',
-    'warm',
-  ),
-  makeRoom(
-    'casa',
-    11,
-    casaRoomOrder[10],
-    ['casa-patio1', 'casa-patio2', 'casa-patio3', 'casa-patio4', 'casa-patio5', 'casa-patio6'],
-    'panoramic',
-    'warm',
-  ),
-  makeRoom(
-    'casa',
-    12,
-    casaRoomOrder[11],
-    [
-      'casa-patio8',
-      'casa-patio10',
-      'casa-patio11',
-      'casa-verdedorm1casa',
-      'casa-verdedorm2casa',
-      'casa-verdedorm3casa',
-      'casa-verdeliving1casa',
-      'casa-verdeliving2casa',
-    ],
+    7,
+    casaRoomOrder[6],
+    ['casa-patio-sunset', 'casa-park-stone', 'casa-creek', 'casa-park-willow'],
     'hero-media',
     'forest',
-    'El arroyo, los árboles y el parque definen el entorno.',
+    'El parque, la piedra y el arroyo dan el cierre natural al recorrido.',
   ),
 ];
 
@@ -195,16 +138,16 @@ const departamentoRooms: JourneyRoom[] = [
     'departamento',
     1,
     departamentoRoomOrder[0],
-    ['departamento-verdedpto1'],
+    ['departamento-exterior-wide', 'departamento-exterior-hero'],
     'hero-media',
     'forest',
-    'Un acceso privado dentro del mismo entorno arbolado.',
+    'Un acceso independiente, integrado al mismo parque arbolado.',
   ),
   makeRoom(
     'departamento',
     2,
     departamentoRoomOrder[1],
-    ['departamento-livingdpto1', 'departamento-livingdpto2'],
+    ['departamento-living-wide', 'departamento-dining', 'departamento-kitchen'],
     'split',
     'warm',
   ),
@@ -212,48 +155,28 @@ const departamentoRooms: JourneyRoom[] = [
     'departamento',
     3,
     departamentoRoomOrder[2],
-    ['departamento-cocinadpto1'],
-    'dark',
-    'forest',
+    ['departamento-bedroom-main', 'departamento-bedroom-twin'],
+    'framed',
+    'warm',
   ),
   makeRoom(
     'departamento',
     4,
     departamentoRoomOrder[3],
-    ['departamento-dormdpto1', 'departamento-dormdpto2', 'departamento-dormdpto3'],
-    'framed',
+    ['departamento-bath-wide', 'departamento-bath-detail'],
+    'detail',
     'warm',
   ),
   makeRoom(
     'departamento',
     5,
     departamentoRoomOrder[4],
-    ['departamento-banio1dpto', 'departamento-baniodpto2'],
-    'detail',
-    'warm',
-  ),
-  makeRoom(
-    'departamento',
-    6,
-    departamentoRoomOrder[5],
-    ['departamento-verdedpto2'],
+    ['departamento-pergola', 'departamento-wood-oven'],
     'panoramic',
     'warm',
-    'Una última vista abierta hacia el parque.',
+    'Una última vista hacia los espacios compartidos del parque.',
   ),
 ];
-
-const departamentoExteriorImage: CuratedImage = {
-  ...casaRooms[1].images[2],
-  property: 'departamento',
-  room: 'Exterior del departamento',
-  space: 'Exterior del departamento',
-  alt: 'Frente de piedra y acceso lateral del departamento independiente de La Arbolada.',
-  focalPoint: {
-    desktop: { x: 72, y: 72 },
-    mobile: { x: 73, y: 68 },
-  },
-};
 
 export const journeys: Record<PropertyKey, PropertyJourneyData> = {
   casa: {
@@ -263,7 +186,8 @@ export const journeys: Record<PropertyKey, PropertyJourneyData> = {
     heading: 'Residencia principal',
     introduction: 'Ambientes amplios, piedra, madera y vistas abiertas hacia el parque.',
     facts: '3 dormitorios · 7 camas · 3 baños',
-    overviewImage: casaRooms[1].images[3],
+    overviewImage: curateImage('casa-exterior-park', 'Exterior', 1),
+    homeCardImage: curateImage('casa-arrival-entrance', 'Entrada principal', 1),
     rooms: casaRooms,
   },
   departamento: {
@@ -274,45 +198,42 @@ export const journeys: Record<PropertyKey, PropertyJourneyData> = {
     introduction:
       'Este departamento cuenta con un dormitorio con 3 camas, baño y cocina comedor amplia.',
     facts: '1 dormitorio · 3 camas · baño · cocina comedor',
-    overviewImage: departamentoExteriorImage,
+    overviewImage: curateImage('departamento-exterior-hero', 'Exterior del departamento', 1),
+    homeCardImage: curateImage('departamento-exterior-hero', 'Exterior del departamento', 1),
     rooms: departamentoRooms,
   },
 };
 
 const heroFrameConfigs: HeroFrameConfig[] = [
   {
-    imageId: 'casa-fachada4',
-    desktopPosition: '56% 52%',
-    mobilePosition: '63% 52%',
+    imageId: 'casa-exterior-hero',
+    desktopPosition: '54% 53%',
+    mobilePosition: '54% 54%',
     mobileMode: 'cover',
   },
   {
-    imageId: 'casa-fachada1',
+    imageId: 'casa-arrival-entrance',
+    desktopPosition: '50% 50%',
+    mobilePosition: '50% 50%',
+    mobileMode: 'cover',
+  },
+  {
+    imageId: 'casa-creek',
     desktopPosition: '52% 54%',
-    mobilePosition: '55% 55%',
-    mobileMode: 'cover',
-  },
-  {
-    imageId: 'casa-patio7',
-    desktopPosition: '58% 58%',
-    mobilePosition: '66% 58%',
+    mobilePosition: '54% 54%',
     mobileMode: 'contained-layer',
   },
   {
-    imageId: 'casa-fachada3',
-    desktopPosition: '72% 72%',
-    mobilePosition: '73% 68%',
+    imageId: 'casa-living-wide',
+    desktopPosition: '51% 50%',
+    mobilePosition: '52% 49%',
     mobileMode: 'cover',
   },
 ];
 
 export const heroFrames: HeroFrame[] = heroFrameConfigs.map((config, index) => ({
   ...config,
-  image: curateImage(
-    config.imageId,
-    index < 2 ? 'Fachada' : index === 2 ? 'Entorno y llegada' : 'Acceso y entorno',
-    index + 1,
-  ),
+  image: curateImage(config.imageId, 'La Arbolada', index + 1),
 }));
 
 export function validateJourneys(
@@ -333,17 +254,9 @@ export function validateJourneys(
           `Capítulo desordenado en ${property}: se esperaba ${expectedNumber} y se recibió ${room.roomNumber}.`,
         );
       }
-      if (room.room !== room.title) {
-        throw new Error(
-          `Título y ambiente desincronizados en ${property}, capítulo ${room.roomNumber}.`,
-        );
-      }
-      room.images.forEach((image, imageIndex) => {
+      room.images.forEach((image) => {
         if (image.property !== property || image.room !== room.room) {
           throw new Error(`La imagen ${image.id} no pertenece a ${property} / ${room.room}.`);
-        }
-        if (imageIndex > 0 && room.images[imageIndex - 1].order > image.order) {
-          throw new Error(`Las imágenes de ${property} / ${room.room} no están ordenadas.`);
         }
       });
     });
