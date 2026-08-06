@@ -209,13 +209,13 @@ const heroFrameConfigs: HeroFrameConfig[] = [
     imageId: 'casa-exterior-hero',
     desktopPosition: '54% 53%',
     mobilePosition: '54% 54%',
-    mobileMode: 'cover',
+    mobileMode: 'contained-layer',
   },
   {
     imageId: 'casa-arrival-entrance',
     desktopPosition: '50% 50%',
     mobilePosition: '50% 50%',
-    mobileMode: 'cover',
+    mobileMode: 'contained-layer',
   },
   {
     imageId: 'casa-creek',
@@ -227,7 +227,7 @@ const heroFrameConfigs: HeroFrameConfig[] = [
     imageId: 'casa-living-wide',
     desktopPosition: '51% 50%',
     mobilePosition: '52% 49%',
-    mobileMode: 'cover',
+    mobileMode: 'contained-layer',
   },
 ];
 
