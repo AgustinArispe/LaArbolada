@@ -7,7 +7,6 @@ import { journeys } from '@/data/journeys';
 interface Props {
   id?: string;
   compact?: boolean;
-  heading?: string;
   eyebrow?: string;
   showImportantInfo?: boolean;
   simple?: boolean;
@@ -16,7 +15,6 @@ interface Props {
 const {
   id = 'contacto',
   compact = false,
-  heading = 'Tu estadía empieza por una fecha.',
   eyebrow = 'Planificá tu visita',
   showImportantInfo = false,
   simple = false,
@@ -27,8 +25,7 @@ const contactImage = journeys.casa.rooms[2].images[0];
 <section
   {id}
   class:list={['booking-cta', { 'booking-cta--compact': compact, 'booking-cta--simple': simple }]}
-  aria-label={simple ? 'Consultar disponibilidad' : undefined}
-  aria-labelledby={!simple && !compact ? 'booking-title' : undefined}
+  aria-label="Consultar disponibilidad"
   data-nav-section="contacto"
   data-nav-theme="dark"
 >
@@ -46,7 +43,6 @@ const contactImage = journeys.casa.rooms[2].images[0];
     }
     <div class="booking-cta__copy">
       {!simple && <p class="eyebrow">{eyebrow}</p>}
-      {!simple && (compact ? <h2>{heading}</h2> : <h2 id="booking-title">{heading}</h2>)}
       {
         !simple && (
           <p>

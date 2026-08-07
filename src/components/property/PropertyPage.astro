@@ -6,7 +6,6 @@ import RoomChapter from '@/components/journey/RoomChapter.astro';
 import ResponsivePropertyImage from '@/components/media/ResponsivePropertyImage.astro';
 import type { PropertyJourneyData } from '@/data/journeys';
 
-type Fact = { value: string; label: string };
 type AmenityItem = { label: string; Icon: typeof Wifi };
 
 interface Props {
@@ -15,7 +14,6 @@ interface Props {
   subtitle?: string;
   heroFacts?: string;
   overview: string;
-  quickFacts: Fact[];
   amenities: AmenityItem[];
   transitionName: string;
   otherHref: string;
@@ -28,7 +26,6 @@ const {
   subtitle,
   heroFacts,
   overview,
-  quickFacts,
   amenities,
   transitionName,
   otherHref,
@@ -68,29 +65,18 @@ const roomPreview =
       />
     </figure>
   </div>
-  <dl class="property-quick-facts site-shell">
-    {
-      quickFacts.map((fact) => (
-        <div>
-          <dt>{fact.label}</dt>
-          <dd>{fact.value}</dd>
-        </div>
-      ))
-    }
-  </dl>
 </section>
 
 <section
   id="comodidades"
   class="property-amenities"
-  aria-labelledby="property-amenities-title"
+  aria-label="Comodidades"
   data-nav-section="comodidades"
   data-nav-theme="dark"
 >
   <div class="property-amenities__layout site-shell">
     <header>
       <p class="eyebrow">Comodidades</p>
-      <h2 id="property-amenities-title">Todo lo necesario, sin exceso.</h2>
     </header>
     <ul>
       {
