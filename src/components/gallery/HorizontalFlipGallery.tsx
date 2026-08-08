@@ -184,7 +184,11 @@ export function HorizontalFlipGallery({ id, property, room, images }: Props) {
             dragRef.current = null;
             if (event.currentTarget.hasPointerCapture(event.pointerId))
               event.currentTarget.releasePointerCapture(event.pointerId);
-            if (Math.abs(distance) > 44 || velocity > 0.42) go(distance < 0 ? 1 : -1);
+            if (Math.abs(distance) > 44 || velocity > 0.42) {
+              go(distance < 0 ? 1 : -1);
+            } else {
+              setSelected(current);
+            }
           }}
           onPointerCancel={() => {
             dragRef.current = null;

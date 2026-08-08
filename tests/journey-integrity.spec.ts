@@ -102,24 +102,55 @@ test('mobile menu traps focus, closes cleanly, and uses route-aware links', asyn
   );
 });
 
-test('gallery controls, keyboard navigation, thumbnails, and lightbox work', async ({ page }) => {
+test('gallery controls, zoomable lightbox, and close interactions work', async ({ page }) => {
   await goto(page, '/casa-principal');
   const chapter = page.locator('#casa-ambiente-3');
   await chapter.scrollIntoViewIfNeeded();
   const gallery = chapter.locator('.horizontal-gallery');
-  await expect(gallery).toHaveAttribute('data-gallery-total', '3');
-  await expect(page.locator('.whatsapp-bubble')).toHaveCSS('visibility', 'hidden');
-  await chapter.getByRole('button', { name: 'Ver fotografía 2 de 3' }).click();
+  await expect(gallery).toHaveAttribute('data-gallery-total', '2');
+  await chapter.getByRole('button', { name: 'Ver fotografía 2 de 2' }).click();
   await expect(gallery).toHaveAttribute('data-gallery-index', '2');
   await expect(gallery).toHaveAttribute('data-transitioning', 'false');
   await gallery.focus();
   await page.keyboard.press('ArrowRight');
-  await expect(gallery).toHaveAttribute('data-gallery-index', '3');
+  await expect(gallery).toHaveAttribute('data-gallery-index', '1');
   await expect(gallery).toHaveAttribute('data-transitioning', 'false');
+  await chapter.locator('.horizontal-gallery__frame').click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toBeVisible();
+  const lightboxImage = dialog.locator('.gallery-dialog__media img');
+  await lightboxImage.hover();
+  await page.mouse.wheel(0, -220);
+  await expect(lightboxImage).toHaveAttribute('style', /scale\((?!1\))/);
+  const imageBox = await lightboxImage.boundingBox();
+  if (!imageBox) throw new Error('Lightbox image is not visible');
+  await page.mouse.move(imageBox.x + imageBox.width / 2, imageBox.y + imageBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(imageBox.x + imageBox.width / 2 + 80, imageBox.y + imageBox.height / 2 + 30);
+  await page.mouse.up();
+  await expect(lightboxImage).toHaveAttribute('style', /translate3d\((?!0px, 0px)/);
+  await dialog.getByRole('button', { name: 'Imagen siguiente' }).click();
+  await expect(dialog.getByText('01 / 02')).toBeVisible();
+  await dialog.getByRole('button', { name: 'Cerrar galería' }).click();
+  await expect(dialog).toBeHidden();
+
   await chapter.getByRole('button', { name: /Abrir Sala de estar y comedor/ }).click();
-  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(dialog).toBeVisible();
+  await page.goBack();
+  await expect(dialog).toBeHidden();
+
+  await chapter.locator('.horizontal-gallery__frame').click();
+  await expect(dialog).toBeVisible();
+  const media = dialog.locator('.gallery-dialog__media');
+  const box = await media.boundingBox();
+  if (!box) throw new Error('Lightbox media area is not visible');
+  await page.mouse.click(box.x + 4, box.y + 4);
+  await expect(dialog).toBeHidden();
+
+  await chapter.locator('.horizontal-gallery__frame').click();
+  await expect(dialog).toBeVisible();
   await page.keyboard.press('Escape');
-  await expect(page.getByRole('dialog')).toBeHidden();
+  await expect(dialog).toBeHidden();
 });
 
 test('slow scrolling and gallery hydration never reposition the document', async ({ page }) => {
